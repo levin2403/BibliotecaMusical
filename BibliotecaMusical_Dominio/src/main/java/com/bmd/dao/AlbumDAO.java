@@ -4,10 +4,12 @@
  */
 package com.bmd.dao;
 
+import com.bmd.daoInterfaces.IAlbumDAO;
+
 /**
  *
  * @author skevi
  */
-public class AlbumDAO {
+public class AlbumDAO implements IAlbumDAO {
     
 }

@@ -4,10 +4,12 @@
  */
 package com.bmd.dao;
 
+import com.bmd.daoInterfaces.IBandaDAO;
+
 /**
  *
  * @author skevi
  */
-public class BandaDAO {
+public class BandaDAO implements IBandaDAO {
     
 }

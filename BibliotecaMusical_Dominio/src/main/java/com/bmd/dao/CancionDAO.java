@@ -4,10 +4,12 @@
  */
 package com.bmd.dao;
 
+import com.bmd.daoInterfaces.ICancionDAO;
+
 /**
  *
  * @author skevi
  */
-public class CancionDAO {
+public class CancionDAO implements ICancionDAO {
     
 }

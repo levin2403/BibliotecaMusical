@@ -4,10 +4,12 @@
  */
 package com.bmd.dao;
 
+import com.bmd.daoInterfaces.IFavoritoDAO;
+
 /**
  *
  * @author skevi
  */
-public class FavoritoDAO {
+public class FavoritoDAO implements IFavoritoDAO {
     
 }

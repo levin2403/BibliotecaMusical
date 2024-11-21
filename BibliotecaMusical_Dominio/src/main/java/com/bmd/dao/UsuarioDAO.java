@@ -4,10 +4,12 @@
  */
 package com.bmd.dao;
 
+import com.bmd.daoInterfaces.IUsuarioDAO;
+
 /**
  *
  * @author skevi
  */
-public class UsuarioDAO {
+public class UsuarioDAO implements IUsuarioDAO {
     
 }

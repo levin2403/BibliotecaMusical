@@ -4,10 +4,12 @@
  */
 package com.bmd.dao;
 
+import com.bmd.daoInterfaces.IArtistaDAO;
+
 /**
  *
  * @author skevi
  */
-public class ArtistaDAO {
+public class ArtistaDAO implements IArtistaDAO {
     
 }

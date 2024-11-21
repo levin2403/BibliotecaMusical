@@ -4,10 +4,12 @@
  */
 package com.bmd.dao;
 
+import com.bmd.daoInterfaces.IIntegranteDAO;
+
 /**
  *
  * @author skevi
  */
-public class IntegranteDAO {
+public class IntegranteDAO implements IIntegranteDAO {
     
 }
