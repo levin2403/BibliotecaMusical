@@ -8,12 +8,12 @@ package presentacion;
  *
  * @author Sebastian Murrieta Verduzco -233463
  */
-public class Inicio extends javax.swing.JFrame {
+public class Registro extends javax.swing.JFrame {
 
     /**
      * Creates new form Inicio
      */
-    public Inicio() {
+    public Registro() {
         initComponents();
     }
 
@@ -29,9 +29,15 @@ public class Inicio extends javax.swing.JFrame {
         Fondo = new javax.swing.JPanel();
         panelRound1 = new controlador.PanelRound();
         jLabel1 = new javax.swing.JLabel();
+        panelGlowingGradient1 = new javaswingdev.pggb.PanelGlowingGradient();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         panelGlowingGradient3 = new javaswingdev.pggb.PanelGlowingGradient();
         jLabel6 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
+        panelGlowingGradient4 = new javaswingdev.pggb.PanelGlowingGradient();
+        jLabel7 = new javax.swing.JLabel();
+        jPasswordField2 = new javax.swing.JPasswordField();
         panelGlowingGradient2 = new javaswingdev.pggb.PanelGlowingGradient();
         jLabel5 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
@@ -53,26 +59,45 @@ public class Inicio extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("OCR A Extended", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("INICIO");
+        jLabel1.setText("REGISTRO");
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(155, 155, 155)
+                .addGap(132, 132, 132)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(188, 188, 188))
+                .addGap(211, 211, 211))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(30, 30, 30))
+                .addGap(31, 31, 31))
         );
 
         Fondo.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 32, 440, -1));
+
+        panelGlowingGradient1.setBackground(new java.awt.Color(24, 40, 54));
+        panelGlowingGradient1.setBackgroundLight(new java.awt.Color(24, 40, 54));
+        panelGlowingGradient1.setGradientColor1(new java.awt.Color(102, 255, 255));
+        panelGlowingGradient1.setGradientColor2(new java.awt.Color(0, 153, 204));
+
+        jLabel3.setFont(new java.awt.Font("OCR A Extended", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(159, 159, 159));
+        jLabel3.setText("Nombre:");
+        panelGlowingGradient1.add(jLabel3);
+        jLabel3.setBounds(30, 20, 90, 30);
+
+        jTextField1.setBackground(new java.awt.Color(24, 40, 54));
+        jTextField1.setFont(new java.awt.Font("OCR A Extended", 0, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        panelGlowingGradient1.add(jTextField1);
+        jTextField1.setBounds(110, 20, 310, 30);
+
+        Fondo.add(panelGlowingGradient1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 450, 70));
 
         panelGlowingGradient3.setBackground(new java.awt.Color(24, 40, 54));
         panelGlowingGradient3.setBackgroundLight(new java.awt.Color(24, 40, 54));
@@ -83,14 +108,32 @@ public class Inicio extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(159, 159, 159));
         jLabel6.setText("Contraseña:");
         panelGlowingGradient3.add(jLabel6);
-        jLabel6.setBounds(30, 30, 121, 30);
+        jLabel6.setBounds(30, 20, 130, 30);
 
         jPasswordField1.setBackground(new java.awt.Color(24, 40, 54));
         jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
         panelGlowingGradient3.add(jPasswordField1);
-        jPasswordField1.setBounds(160, 30, 260, 30);
+        jPasswordField1.setBounds(160, 20, 260, 30);
 
-        Fondo.add(panelGlowingGradient3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 450, 91));
+        Fondo.add(panelGlowingGradient3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 450, 70));
+
+        panelGlowingGradient4.setBackground(new java.awt.Color(24, 40, 54));
+        panelGlowingGradient4.setBackgroundLight(new java.awt.Color(24, 40, 54));
+        panelGlowingGradient4.setGradientColor1(new java.awt.Color(102, 255, 255));
+        panelGlowingGradient4.setGradientColor2(new java.awt.Color(0, 153, 204));
+
+        jLabel7.setFont(new java.awt.Font("OCR A Extended", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(159, 159, 159));
+        jLabel7.setText("Contraseña:");
+        panelGlowingGradient4.add(jLabel7);
+        jLabel7.setBounds(30, 20, 121, 30);
+
+        jPasswordField2.setBackground(new java.awt.Color(24, 40, 54));
+        jPasswordField2.setForeground(new java.awt.Color(255, 255, 255));
+        panelGlowingGradient4.add(jPasswordField2);
+        jPasswordField2.setBounds(160, 20, 260, 30);
+
+        Fondo.add(panelGlowingGradient4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 450, 70));
 
         panelGlowingGradient2.setBackground(new java.awt.Color(24, 40, 54));
         panelGlowingGradient2.setBackgroundLight(new java.awt.Color(24, 40, 54));
@@ -101,26 +144,26 @@ public class Inicio extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(159, 159, 159));
         jLabel5.setText("Correo:");
         panelGlowingGradient2.add(jLabel5);
-        jLabel5.setBounds(30, 30, 80, 30);
+        jLabel5.setBounds(30, 20, 80, 30);
 
         jTextField2.setBackground(new java.awt.Color(24, 40, 54));
         jTextField2.setFont(new java.awt.Font("OCR A Extended", 0, 12)); // NOI18N
         jTextField2.setForeground(new java.awt.Color(255, 255, 255));
         panelGlowingGradient2.add(jTextField2);
-        jTextField2.setBounds(110, 30, 310, 30);
+        jTextField2.setBounds(110, 20, 310, 30);
 
-        Fondo.add(panelGlowingGradient2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 450, 91));
+        Fondo.add(panelGlowingGradient2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 450, 70));
 
         jLabel4.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(159, 159, 159));
-        jLabel4.setText("Registrarse");
+        jLabel4.setText("Regresar");
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
             }
         });
-        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 600, -1, -1));
+        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 600, -1, -1));
 
         panelRound3.setBackground(new java.awt.Color(81, 137, 161));
         panelRound3.setCursorHandEnabled(true);
@@ -131,16 +174,16 @@ public class Inicio extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Iniciar sesion");
+        jLabel2.setText("Registrarse");
 
         javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
         panelRound3.setLayout(panelRound3Layout);
         panelRound3Layout.setHorizontalGroup(
             panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound3Layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
+            .addGroup(panelRound3Layout.createSequentialGroup()
+                .addGap(72, 72, 72)
                 .addComponent(jLabel2)
-                .addGap(49, 49, 49))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
         panelRound3Layout.setVerticalGroup(
             panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,10 +209,34 @@ public class Inicio extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Inicio().setVisible(true);
+                new Registro().setVisible(true);
             }
         });
     }
@@ -178,13 +245,19 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField jPasswordField2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient1;
     private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient2;
     private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient3;
+    private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient4;
     private controlador.PanelRound panelRound1;
     private controlador.PanelRound panelRound3;
     // End of variables declaration//GEN-END:variables
