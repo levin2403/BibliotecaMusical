@@ -4,6 +4,7 @@
  */
 package com.bmd.dao;
 
+import com.bmd.conexionIntefaces.IConexionMongo;
 import com.bmd.daoInterfaces.IArtistaDAO;
 
 /**
@@ -11,5 +12,11 @@ import com.bmd.daoInterfaces.IArtistaDAO;
  * @author skevi
  */
 public class ArtistaDAO implements IArtistaDAO {
+    
+    private IConexionMongo conexion;
+
+    public ArtistaDAO(IConexionMongo conexion) {
+        this.conexion = conexion;
+    }
     
 }

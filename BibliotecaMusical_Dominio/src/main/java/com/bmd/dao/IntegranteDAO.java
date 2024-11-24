@@ -12,4 +12,6 @@ import com.bmd.daoInterfaces.IIntegranteDAO;
  */
 public class IntegranteDAO implements IIntegranteDAO {
     
+    
+    
 }

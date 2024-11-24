@@ -4,6 +4,7 @@
  */
 package com.bmd.dao;
 
+import com.bmd.conexionIntefaces.IConexionMongo;
 import com.bmd.daoInterfaces.ICancionDAO;
 
 /**
@@ -11,5 +12,11 @@ import com.bmd.daoInterfaces.ICancionDAO;
  * @author skevi
  */
 public class CancionDAO implements ICancionDAO {
+    
+    private IConexionMongo conexion;
+
+    public CancionDAO(IConexionMongo conexion) {
+        this.conexion = conexion;
+    }
     
 }

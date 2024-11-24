@@ -4,6 +4,7 @@
  */
 package com.bmd.dao;
 
+import com.bmd.conexionIntefaces.IConexionMongo;
 import com.bmd.daoInterfaces.IAlbumDAO;
 
 /**
@@ -11,5 +12,13 @@ import com.bmd.daoInterfaces.IAlbumDAO;
  * @author skevi
  */
 public class AlbumDAO implements IAlbumDAO {
+    
+    private IConexionMongo conexion;
+
+    public AlbumDAO(IConexionMongo conexion) {
+        this.conexion = conexion;
+    }
+
+    
     
 }
