@@ -4,6 +4,8 @@
  */
 package com.bmd.entities;
 
+import java.util.List;
+
 /**
  *
  * @author skevi
@@ -13,7 +15,7 @@ public class Cancion {
     private final String id;
     private final String titulo;
     private final String duracion;
-    private final Album album;
+    private  Album album;
 
     private Cancion(Builder builder) {
         this.id = builder.id;
@@ -38,6 +40,10 @@ public class Cancion {
         return album;
     }
 
+    
+    
+    
+    
     @Override
     public String toString() {
         return "Cancion{" +
@@ -80,4 +86,3 @@ public class Cancion {
     }
 
 }
-

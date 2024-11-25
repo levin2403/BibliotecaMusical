@@ -21,7 +21,7 @@ public class Artista {
     private final String imagen;
     private final Genero genero;
     private final List<Integrante> integrantes;
-    private final List<Album> albums;
+    private List<Album> albums;
 
     private Artista(Builder builder) {
         this.id = builder.id;
@@ -59,6 +59,10 @@ public class Artista {
 
     public List<Album> getAlbums() {
         return albums;
+    }
+    
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
     }
 
     @Override
