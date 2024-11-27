@@ -10,6 +10,7 @@ import com.bmd.entities.Artista;
 import com.bmd.entities.Usuario;
 import com.bmd.enums.Genero;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -19,6 +20,7 @@ public interface IAlbumDAO {
     
     public Album obtenerPorTitulo(String titulo, Usuario usuario) throws DAOException;
     
-    public Artista Buscar(String nombre, LocalDate fecha, 
+    public List<Artista>  BuscarPorFiltro(String nombre, LocalDate fecha, LocalDate fin, 
             Genero genero,Usuario usuario) throws DAOException;
+    
 }
