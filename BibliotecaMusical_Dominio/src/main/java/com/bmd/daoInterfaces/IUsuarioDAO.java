@@ -14,6 +14,8 @@ import com.bmd.enums.Genero;
  */
 public interface IUsuarioDAO {
     
+    public void añadirUsuario(Usuario usuario) throws DAOException;
+    
     public Usuario buscaPorCorreo(String correo) throws DAOException;
     
     public void actualizarUsuario(Usuario usuario) throws DAOException;
