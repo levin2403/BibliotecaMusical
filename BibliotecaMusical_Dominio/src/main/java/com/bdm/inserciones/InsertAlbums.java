@@ -6,7 +6,7 @@ import com.bmd.enums.Genero;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+import com.bdm.inserciones.*;
 public class InsertAlbums {
 
     public static List<Album> getAlbums(Artista artista) {

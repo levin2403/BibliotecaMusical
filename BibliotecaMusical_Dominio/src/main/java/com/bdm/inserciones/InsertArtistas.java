@@ -5,6 +5,7 @@ import com.bmd.enums.Genero;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class InsertArtistas {
 
     public static List<Artista> getArtistas() {
