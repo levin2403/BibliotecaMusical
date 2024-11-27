@@ -90,7 +90,7 @@ public class Inicio extends javax.swing.JFrame {
         panelGlowingGradient3.add(jPasswordField1);
         jPasswordField1.setBounds(160, 30, 260, 30);
 
-        Fondo.add(panelGlowingGradient3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 450, 91));
+        Fondo.add(panelGlowingGradient3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 450, 91));
 
         panelGlowingGradient2.setBackground(new java.awt.Color(24, 40, 54));
         panelGlowingGradient2.setBackgroundLight(new java.awt.Color(24, 40, 54));
@@ -109,7 +109,7 @@ public class Inicio extends javax.swing.JFrame {
         panelGlowingGradient2.add(jTextField2);
         jTextField2.setBounds(110, 30, 310, 30);
 
-        Fondo.add(panelGlowingGradient2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 450, 91));
+        Fondo.add(panelGlowingGradient2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 450, 91));
 
         jLabel4.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(159, 159, 159));
