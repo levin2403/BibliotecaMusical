@@ -4,10 +4,22 @@
  */
 package com.bmd.daoInterfaces;
 
+import com.bdm.excepciones.DAOException;
+import com.bmd.entities.Usuario;
+import com.bmd.enums.Genero;
+
 /**
  *
  * @author skevi
  */
 public interface IUsuarioDAO {
+    
+    public Usuario buscaPorCorreo(String correo) throws DAOException;
+    
+    public void actualizarUsuario(Usuario usuario) throws DAOException;
+    
+    public void añadirRestringido(Genero genero, Usuario usuario) throws DAOException;
+    
+    public void eliminarRestringido(Genero genero, Usuario usuario) throws DAOException;
     
 }

@@ -20,7 +20,7 @@ public class Album {
     private LocalDate fechaLanzamiento;
     private Genero genero;
     private Artista artista;
-    private List<Cancion> canciones;
+    private List<String> canciones;
 
     private Album(Builder builder) {
         this.id = builder.id;
@@ -56,11 +56,11 @@ public class Album {
         return artista;
     }
 
-    public List<Cancion> getCanciones() {
+    public List<String> getCanciones() {
         return canciones;
     }
 
-    public void setCanciones(List<Cancion> canciones) {
+    public void setCanciones(List<String> canciones) {
         this.canciones = canciones;
     }
 
@@ -81,7 +81,7 @@ public class Album {
         private LocalDate fechaLanzamiento;
         private Genero genero;
         private Artista artista;
-        private List<Cancion> canciones;
+        private List<String> canciones;
 
         public Builder setId(String id) {
             this.id = id;
@@ -113,7 +113,7 @@ public class Album {
             return this;
         }
 
-        public Builder setCanciones(List<Cancion> canciones) {
+        public Builder setCanciones(List<String> canciones) {
             this.canciones = canciones;
             return this;
         }

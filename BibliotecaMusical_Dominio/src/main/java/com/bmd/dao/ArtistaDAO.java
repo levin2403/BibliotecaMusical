@@ -4,8 +4,12 @@
  */
 package com.bmd.dao;
 
+import com.bdm.excepciones.DAOException;
 import com.bmd.conexionIntefaces.IConexionMongo;
 import com.bmd.daoInterfaces.IArtistaDAO;
+import com.bmd.entities.Artista;
+import com.bmd.entities.Usuario;
+import com.bmd.enums.Genero;
 
 /**
  *
@@ -17,6 +21,16 @@ public class ArtistaDAO implements IArtistaDAO {
 
     public ArtistaDAO(IConexionMongo conexion) {
         this.conexion = conexion;
+    }
+
+    @Override
+    public Artista buscarPorId() throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Artista buscarPorFiltro(String nombre, Genero genero, Usuario Usuario) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }
