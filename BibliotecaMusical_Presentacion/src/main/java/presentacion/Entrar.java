@@ -54,6 +54,11 @@ public class Entrar extends javax.swing.JFrame {
         entrarBtn.setRoundBottomRight(50);
         entrarBtn.setRoundTopLeft(50);
         entrarBtn.setRoundTopRight(50);
+        entrarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entrarBtnMouseClicked(evt);
+            }
+        });
 
         entrar.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         entrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -88,17 +93,9 @@ public class Entrar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_insertarBtnMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Entrar().setVisible(true);
-            }
-        });
-    }
+    private void entrarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entrarBtnMouseClicked
+        new Principal().setVisible(true);
+    }//GEN-LAST:event_entrarBtnMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
