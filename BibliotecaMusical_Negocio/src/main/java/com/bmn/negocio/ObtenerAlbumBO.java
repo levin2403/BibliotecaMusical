@@ -4,6 +4,10 @@
  */
 package com.bmn.negocio;
 
+import com.bmd.daoInterfaces.IAlbumDAO;
+import com.bmn.dto.AlbumDTO;
+import com.bmn.dto.UsuarioDTO;
+import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerAlbumBO;
 
 /**
@@ -12,4 +16,27 @@ import com.bmn.interfaces.IObtenerAlbumBO;
  */
 public class ObtenerAlbumBO implements IObtenerAlbumBO {
     
+    private IAlbumDAO albumDAO;
+
+    public ObtenerAlbumBO(IAlbumDAO albumDAO) {
+        this.albumDAO = albumDAO;
+    }
+
+    @Override
+    public AlbumDTO obtenerAlbum(String id, UsuarioDTO usuario) throws BOException {
+        validarCampos(id, usuario);
+        return procesarObtenerAlbum(id, usuario);
+    }
+    
+    private void validarCampos(String id, UsuarioDTO usuario) throws BOException {
+        
+    }
+    
+    private AlbumDTO procesarObtenerAlbum(String id, UsuarioDTO usuario) throws BOException {
+        return null;
+    }
+    
+    private void verificarFavorito(AlbumDTO album) throws BOException{
+        
+    }
 }

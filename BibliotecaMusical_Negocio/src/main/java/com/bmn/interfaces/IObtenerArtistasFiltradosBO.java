@@ -4,10 +4,18 @@
  */
 package com.bmn.interfaces;
 
+import com.bmn.dto.ArtistaDTO;
+import com.bmn.dto.UsuarioDTO;
+import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.excepciones.BOException;
+
 /**
  *
  * @author skevi
  */
 public interface IObtenerArtistasFiltradosBO {
+    
+    public ArtistaDTO buscarPorFiltro(String nombre, GeneroDTO genero, 
+            UsuarioDTO Usuario) throws BOException;
     
 }

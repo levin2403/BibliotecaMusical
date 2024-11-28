@@ -18,9 +18,9 @@ import java.util.List;
  */
 public interface IAlbumDAO {
     
-    public Album obtenerPorTitulo(String titulo, Usuario usuario) throws DAOException;
+    public Album obtenerAlbum(String id, Usuario usuario) throws DAOException;
     
-    public List<Artista>  BuscarPorFiltro(String nombre, LocalDate fecha, LocalDate fin, 
+    public List<Artista>  BuscarPorFiltro(String nombre, LocalDate fecha, 
             Genero genero,Usuario usuario) throws DAOException;
     
 }

@@ -4,10 +4,15 @@
  */
 package com.bmn.interfaces;
 
+import com.bmn.dto.ArtistaDTO;
+import com.bmn.excepciones.BOException;
+
 /**
  *
  * @author skevi
  */
 public interface IObtenerArtistaBO {
+    
+    public ArtistaDTO ObtenerArtista(String id) throws BOException;
     
 }

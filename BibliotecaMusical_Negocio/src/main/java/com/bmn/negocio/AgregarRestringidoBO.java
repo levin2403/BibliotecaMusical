@@ -4,8 +4,9 @@
  */
 package com.bmn.negocio;
 
-import com.bmn.dto.UsuarioDTO;
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bdm.excepciones.DAOException;
+import com.bmd.daoInterfaces.IUsuarioDAO;
+import com.bmn.dto.RestringidoDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IAgregarRestringidoBO;
 
@@ -15,9 +16,33 @@ import com.bmn.interfaces.IAgregarRestringidoBO;
  */
 public class AgregarRestringidoBO implements IAgregarRestringidoBO {
 
-    @Override
-    public void agregarRestringido(GeneroDTO genero, UsuarioDTO usuario) throws BOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private IUsuarioDAO usuarioDAO;
+
+    public AgregarRestringidoBO(IUsuarioDAO usuarioDAO) {
+        this.usuarioDAO = usuarioDAO;
     }
     
+    @Override
+    public void agregarRestringido(RestringidoDTO restringido) throws BOException {
+        verificarRestringido(restringido);
+    }
+    
+    private void verificarRestringido(RestringidoDTO restringido) throws BOException{
+        try{
+            //trensformamos a genero.
+            
+            //transformamos a usuario entidad.
+            
+            if (!usuarioDAO.verificarExistenciaRestringido(null, null)) { // genero, Usuario
+                usuarioDAO.añadirRestringido(null, null);
+            }
+            else{
+                throw new BOException("El genero ya se encuentra restringido");
+                }
+        }
+        catch(DAOException ex){
+            throw new BOException(ex.getMessage());
+        }
+    }
+
 }

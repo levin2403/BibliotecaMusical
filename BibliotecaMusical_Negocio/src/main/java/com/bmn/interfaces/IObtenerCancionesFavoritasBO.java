@@ -4,10 +4,17 @@
  */
 package com.bmn.interfaces;
 
+import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.excepciones.BOException;
+import java.time.LocalDate;
+
 /**
  *
  * @author skevi
  */
 public interface IObtenerCancionesFavoritasBO {
+    
+    public String obtenerCancionesFavoritas(GeneroDTO genero, 
+            LocalDate fechaAgregacion) throws BOException;
     
 }

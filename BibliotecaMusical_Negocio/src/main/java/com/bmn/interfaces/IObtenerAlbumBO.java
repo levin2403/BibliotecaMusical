@@ -4,10 +4,16 @@
  */
 package com.bmn.interfaces;
 
+import com.bmn.dto.AlbumDTO;
+import com.bmn.dto.UsuarioDTO;
+import com.bmn.excepciones.BOException;
+
 /**
  *
  * @author skevi
  */
 public interface IObtenerAlbumBO {
+    
+    public AlbumDTO obtenerAlbum(String id, UsuarioDTO usuario) throws BOException;
     
 }

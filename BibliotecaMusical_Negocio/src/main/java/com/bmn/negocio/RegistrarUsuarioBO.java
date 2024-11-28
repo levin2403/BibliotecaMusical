@@ -4,6 +4,7 @@
  */
 package com.bmn.negocio;
 
+import com.bmd.daoInterfaces.IUsuarioDAO;
 import com.bmn.dto.UsuarioRegistrarDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IRegistrarUsuarioBO;
@@ -14,6 +15,12 @@ import com.bmn.interfaces.IRegistrarUsuarioBO;
  */
 public class RegistrarUsuarioBO implements IRegistrarUsuarioBO{
 
+    private IUsuarioDAO usuarioDAO;
+
+    public RegistrarUsuarioBO(IUsuarioDAO usuarioDAO) {
+        this.usuarioDAO = usuarioDAO;
+    }
+    
     @Override
     public void registrarUsuario(UsuarioRegistrarDTO usuario) throws BOException {
         validarCamposVacios(usuario);

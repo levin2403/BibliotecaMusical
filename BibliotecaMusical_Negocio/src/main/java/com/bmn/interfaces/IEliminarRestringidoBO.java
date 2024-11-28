@@ -4,10 +4,15 @@
  */
 package com.bmn.interfaces;
 
+import com.bmn.dto.RestringidoDTO;
+import com.bmn.excepciones.BOException;
+
 /**
  *
  * @author skevi
  */
 public interface IEliminarRestringidoBO {
+    
+    public void eliminarRestringido(RestringidoDTO restringido) throws BOException;
     
 }

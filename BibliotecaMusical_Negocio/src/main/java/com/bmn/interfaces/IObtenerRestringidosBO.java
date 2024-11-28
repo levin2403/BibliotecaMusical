@@ -4,10 +4,17 @@
  */
 package com.bmn.interfaces;
 
+import com.bmn.dto.UsuarioDTO;
+import com.bmn.excepciones.BOException;
+import java.util.List;
+
 /**
  *
  * @author skevi
  */
 public interface IObtenerRestringidosBO {
+    
+    public List<String> obtenerRestringidos(UsuarioDTO usuario) 
+            throws BOException;
     
 }

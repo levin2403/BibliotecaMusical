@@ -7,6 +7,7 @@ package com.bmd.daoInterfaces;
 import com.bdm.excepciones.DAOException;
 import com.bmd.entities.Usuario;
 import com.bmd.enums.Genero;
+import java.util.List;
 
 /**
  *
@@ -26,6 +27,8 @@ public interface IUsuarioDAO {
     
     public void eliminarRestringido(Genero genero, Usuario usuario) throws DAOException;
     
-    public void verificarExistenciaRestringido(Genero genero, Usuario usuario);
+    public List<String> obtenerRestringidos(Usuario usuario) throws DAOException;
+    
+    public boolean verificarExistenciaRestringido(Genero genero, Usuario usuario);
     
 }

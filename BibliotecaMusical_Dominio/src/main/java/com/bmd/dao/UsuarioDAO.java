@@ -108,5 +108,15 @@ public class UsuarioDAO implements IUsuarioDAO {
     public boolean verificarExistenciaCorreo(String correo) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
+
+    @Override
+    public boolean verificarExistenciaRestringido(Genero genero, Usuario usuario) {
+        return false;
+    }
+
+    @Override
+    public List<String> obtenerRestringidos(Usuario usuario) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

@@ -4,7 +4,8 @@
  */
 package com.bmn.negocio;
 
-import com.bmd.daoInterfaces.IUsuarioDAO;
+import com.bdm.excepciones.DAOException;
+import com.bmd.daoInterfaces.IFavoritoDAO;
 import com.bmn.dto.FavoritoDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IAgregarFavoritoBO;
@@ -15,10 +16,10 @@ import com.bmn.interfaces.IAgregarFavoritoBO;
  */
 public class AgregarFavoritoBO implements IAgregarFavoritoBO {
     
-    private IUsuarioDAO userDAO;
+    private IFavoritoDAO favoritoDAO;
 
-    public AgregarFavoritoBO(IUsuarioDAO userDAO) {
-        this.userDAO = userDAO;
+    public AgregarFavoritoBO(IFavoritoDAO favoritoDAO) {
+        this.favoritoDAO = favoritoDAO;
     }
 
     @Override
@@ -44,9 +45,17 @@ public class AgregarFavoritoBO implements IAgregarFavoritoBO {
     
     private void verificarFavorito(FavoritoDTO favorito) throws BOException {
         try{
-            
-        }catch(Exception e){
-            
+            // si no existe dentro de los favoritos del usuario 
+            // lo guardamos
+            if (favoritoDAO.verificarExistenciaFavorito(null, null)) { // favorito , usuario
+                favoritoDAO.agregarFavorito(null, null); // favorito , usuario
+            }
+            else{
+                //si no esta en los favoritos del usuario lo guardamos.
+                favoritoDAO.eliminarFavorito(null, null); // favorito , usuario
+            }
+        }catch(DAOException ex){
+            throw new BOException(ex.getMessage());
         }
     }
     
