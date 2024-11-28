@@ -19,6 +19,9 @@ public class UsuarioDTO {
     private String imagenPerfil;
 //    private List<Favorito> favoritos;
 //    private List<String> generosBaneados;
+
+    public UsuarioDTO() {
+    }
     
     private UsuarioDTO (Builder builder) { 
         this.id = builder.id;
@@ -50,6 +53,7 @@ public class UsuarioDTO {
         return imagenPerfil;
     }
 
+    
 //    public List<Favorito> getFavoritos() {
 //        return favoritos;
 //    }
@@ -57,6 +61,14 @@ public class UsuarioDTO {
 //    public List<String> getGenerosBaneados() {
 //        return generosBaneados;
 //    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
 
     
     

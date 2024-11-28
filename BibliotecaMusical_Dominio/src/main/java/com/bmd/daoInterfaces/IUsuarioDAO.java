@@ -18,10 +18,14 @@ public interface IUsuarioDAO {
     
     public Usuario buscaPorCorreo(String correo) throws DAOException;
     
+    public boolean verificarExistenciaCorreo(String correo) throws DAOException;
+    
     public void actualizarUsuario(Usuario usuario) throws DAOException;
     
     public void añadirRestringido(Genero genero, Usuario usuario) throws DAOException;
     
     public void eliminarRestringido(Genero genero, Usuario usuario) throws DAOException;
+    
+    public void verificarExistenciaRestringido(Genero genero, Usuario usuario);
     
 }

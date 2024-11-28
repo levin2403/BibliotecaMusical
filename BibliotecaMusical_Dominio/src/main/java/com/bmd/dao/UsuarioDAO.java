@@ -103,5 +103,10 @@ public class UsuarioDAO implements IUsuarioDAO {
     public void eliminarRestringido(Genero genero, Usuario usuario) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
+
+    @Override
+    public boolean verificarExistenciaCorreo(String correo) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
     
 }
