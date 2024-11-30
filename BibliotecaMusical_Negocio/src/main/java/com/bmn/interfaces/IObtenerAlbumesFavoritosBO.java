@@ -8,6 +8,7 @@ import com.bmn.dto.AlbumDTO;
 import com.bmn.dto.constantes.GeneroDTO;
 import com.bmn.excepciones.BOException;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -15,6 +16,6 @@ import java.time.LocalDate;
  */
 public interface IObtenerAlbumesFavoritosBO {
     
-    public AlbumDTO obtenerAlbumesFavoritos(GeneroDTO genero, LocalDate fechaAgregacion) throws BOException;
+    public List<AlbumDTO> obtenerAlbumesFavoritos(GeneroDTO genero, LocalDate fechaAgregacion) throws BOException;
     
 }

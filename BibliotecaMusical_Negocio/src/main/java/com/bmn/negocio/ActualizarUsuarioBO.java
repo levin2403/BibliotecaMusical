@@ -6,6 +6,8 @@ package com.bmn.negocio;
 
 import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IUsuarioDAO;
+import com.bmd.entities.Usuario;
+import com.bmn.convertidores.UsuarioCVR;
 import com.bmn.dto.UsuarioDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IActualizarUsuarioBO;
@@ -20,12 +22,21 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
     
     private IUsuarioDAO usuarioDAO;
     private Hasher hasher;
+    private UsuarioCVR usuarioCVR;
 
-    public ActualizarUsuarioBO(IUsuarioDAO usuarioDAO, Hasher hasher) {
+    public ActualizarUsuarioBO(IUsuarioDAO usuarioDAO, Hasher hasher, UsuarioCVR usuarioCVR) {
         this.usuarioDAO = usuarioDAO;
         this.hasher = hasher;
+        this.usuarioCVR = usuarioCVR;
     }
 
+    /**
+     * Este es el metodo principal de la clase aqui se verifica cada uno de
+     * los pasos echos para actualizar el usuario.
+     * 
+     * @param usuario
+     * @throws BOException 
+     */
     @Override
     public void ActualizarUsuario(UsuarioDTO usuario) throws BOException {
         verificarCamposVacios(usuario);
@@ -84,16 +95,17 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
         usuario.setId(id);
     }
     
-    private void procesarActualizarUsuario(UsuarioDTO usuario) throws BOException  {
-//        try{
-//            //convertimos de dto a entidad
-//            
-//            //guardamos en la persistencia
-//            
-//        }
-//        catch(){
-//            
-//        }
+    private void procesarActualizarUsuario(UsuarioDTO usuarioDTO) throws BOException  {
+        try{
+            //convertimos de dto a entidad
+            Usuario usuario = usuarioCVR.toUsuario(usuarioDTO);
+            
+            //guardamos en la persistencia
+            usuarioDAO.actualizarUsuario(usuario);
+        }
+        catch(DAOException ex){
+            throw new BOException(ex.getMessage());
+        }
     }
     
 }

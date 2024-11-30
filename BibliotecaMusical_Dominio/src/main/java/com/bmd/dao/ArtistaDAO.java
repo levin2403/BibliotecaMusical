@@ -10,6 +10,7 @@ import com.bmd.daoInterfaces.IArtistaDAO;
 import com.bmd.entities.Artista;
 import com.bmd.entities.Usuario;
 import com.bmd.enums.Genero;
+import java.util.List;
 
 /**
  *
@@ -29,7 +30,7 @@ public class ArtistaDAO implements IArtistaDAO {
     }
 
     @Override
-    public Artista buscarPorFiltro(String nombre, Genero genero, Usuario Usuario) throws DAOException {
+    public List<Artista> buscarPorFiltro(String nombre, Genero genero, String idUsuario) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

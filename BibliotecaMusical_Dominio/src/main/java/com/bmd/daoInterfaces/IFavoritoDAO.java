@@ -8,9 +8,9 @@ import com.bdm.excepciones.DAOException;
 import com.bmd.entities.Album;
 import com.bmd.entities.Artista;
 import com.bmd.entities.Favorito;
-import com.bmd.entities.Usuario;
 import com.bmd.enums.Genero;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -18,20 +18,31 @@ import java.time.LocalDate;
  */
 public interface IFavoritoDAO {
     
-    public void agregarFavorito(Favorito favorito, Usuario usuario) throws DAOException;
+    public void agregarFavorito(Favorito favorito, String idUsuario) 
+            throws DAOException;
     
-    public boolean isFavorito(Favorito favorito, Usuario usuario) throws DAOException;
+    public boolean isFavorito(String idReferencia, String idUsuario) 
+            throws DAOException;
     
-    public boolean verificarExistenciaFavorito(Favorito favorito, Usuario usuario) throws DAOException;
+    public boolean verificarExistenciaFavorito(Favorito favorito, 
+            String idUsuario) throws DAOException;
     
-    public void eliminarFavorito(Favorito favorito, Usuario usuario) throws DAOException;
+    public boolean verificarCancionFavorita(String nombreCancion, 
+            String idReferencia, String idUsuario) throws DAOException;
     
-    public void eliminarFavoritoPorGenero(Genero genero, Usuario usuario) throws DAOException;
+    public void eliminarFavorito(Favorito favorito, String idUsuario) 
+            throws DAOException;
     
-    public Artista obtenerArtistasFavoritos(Genero genero, LocalDate fechaAgregacion) throws DAOException;
+    public void eliminarFavoritoPorGenero(Genero genero, String idUsuario) 
+            throws DAOException;
     
-    public String obtenerCancionesFavoritas(Genero genero, LocalDate fechaAgregacion) throws DAOException;
+    public List<Artista> obtenerArtistasFavoritos(Genero genero, 
+            LocalDate fechaAgregacion, String idUsuario) throws DAOException;
     
-    public Album obtenerAlbumesFavoritos(Genero genero, LocalDate fechaAgregacion) throws DAOException;
+    public List<String> obtenerCancionesFavoritas(Genero genero, 
+            LocalDate fechaAgregacion, String idUsuario) throws DAOException;
+    
+    public List<Album> obtenerAlbumesFavoritos(Genero genero, 
+            LocalDate fechaAgregacion, String idUsuario) throws DAOException;
     
 }

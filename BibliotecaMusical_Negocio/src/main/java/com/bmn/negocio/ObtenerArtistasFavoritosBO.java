@@ -4,12 +4,18 @@
  */
 package com.bmn.negocio;
 
+import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IFavoritoDAO;
+import com.bmd.entities.Artista;
+import com.bmd.enums.Genero;
+import com.bmn.convertidores.ArtistaCVR;
 import com.bmn.dto.ArtistaDTO;
-import com.bmn.dto.UsuarioDTO;
 import com.bmn.dto.constantes.GeneroDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerArtistasFavoritosBO;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,24 +24,40 @@ import com.bmn.interfaces.IObtenerArtistasFavoritosBO;
 public class ObtenerArtistasFavoritosBO implements IObtenerArtistasFavoritosBO {
 
     private IFavoritoDAO favoritoDAO;
+    private ArtistaCVR artistaCVR;
 
-    public ObtenerArtistasFavoritosBO(IFavoritoDAO favoritoDAO) {
+    public ObtenerArtistasFavoritosBO(IFavoritoDAO favoritoDAO, ArtistaCVR artistaCVR) {
         this.favoritoDAO = favoritoDAO;
+        this.artistaCVR = artistaCVR;
     }
     
     @Override
-    public ArtistaDTO buscarPorFiltro(String nombre, GeneroDTO genero, UsuarioDTO Usuario) throws BOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<ArtistaDTO> obtenerArtistasFavoritos(GeneroDTO genero, LocalDate fecha, String idUsuario) throws BOException {
+        return procesar(genero, fecha, idUsuario);
     }
     
-    private void verificarCampos(String nombre, GeneroDTO genero, 
-            UsuarioDTO Usuario) throws BOException {
-        
-    }
-    
-    private ArtistaDTO procesar(String nombre, GeneroDTO genero, 
-            UsuarioDTO Usuario) throws BOException{
-        return null;
+    private List<ArtistaDTO> procesar(GeneroDTO generoDTO, LocalDate fecha, String idUsuario) throws BOException{
+        try{
+            
+            Genero genero = Genero.valueOf(generoDTO.name());
+            
+            List<Artista> artistas = favoritoDAO.obtenerArtistasFavoritos(genero, fecha, idUsuario);
+            List<ArtistaDTO> artistasDTO = new ArrayList<>();
+            
+            for (Artista artista : artistas) {
+                artistasDTO.add(artistaCVR.toDTO(artista));
+            }
+            
+            for (ArtistaDTO artistaDTO : artistasDTO) {
+                artistaDTO.setFavorito(true);
+            }
+            
+            return artistasDTO;
+            
+        }
+        catch(DAOException ex){
+            throw new BOException(ex.getMessage());
+        }
     }
     
 }

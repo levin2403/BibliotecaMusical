@@ -23,12 +23,12 @@ public interface IUsuarioDAO {
     
     public void actualizarUsuario(Usuario usuario) throws DAOException;
     
-    public void añadirRestringido(Genero genero, Usuario usuario) throws DAOException;
+    public void añadirRestringido(Genero genero, String idUsuario) throws DAOException;
     
-    public void eliminarRestringido(Genero genero, Usuario usuario) throws DAOException;
+    public void eliminarRestringido(Genero genero, String idUsuario) throws DAOException;
     
-    public List<String> obtenerRestringidos(Usuario usuario) throws DAOException;
+    public List<Genero> obtenerRestringidos(String idUsuario) throws DAOException;
     
-    public boolean verificarExistenciaRestringido(Genero genero, Usuario usuario);
+    public boolean verificarExistenciaRestringido(Genero genero, String idUsuario);
     
 }

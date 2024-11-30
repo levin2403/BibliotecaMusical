@@ -10,9 +10,9 @@ import com.bmd.daoInterfaces.IFavoritoDAO;
 import com.bmd.entities.Album;
 import com.bmd.entities.Artista;
 import com.bmd.entities.Favorito;
-import com.bmd.entities.Usuario;
 import com.bmd.enums.Genero;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -27,43 +27,48 @@ public class FavoritoDAO implements IFavoritoDAO {
     }
 
     @Override
-    public void agregarFavorito(Favorito favorito, Usuario usuario) throws DAOException {
+    public void agregarFavorito(Favorito favorito, String idUsuario) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean isFavorito(Favorito favorito, Usuario usuario) throws DAOException {
+    public boolean isFavorito(String idReferencia, String idUsuario) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean verificarExistenciaFavorito(Favorito favorito, Usuario usuario) throws DAOException {
+    public void eliminarFavorito(Favorito favorito, String idUsuario) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void eliminarFavorito(Favorito favorito, Usuario usuario) throws DAOException {
+    public void eliminarFavoritoPorGenero(Genero genero, String idUsuario) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void eliminarFavoritoPorGenero(Genero genero, Usuario usuario) throws DAOException {
+    public List<Artista> obtenerArtistasFavoritos(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Artista obtenerArtistasFavoritos(Genero genero, LocalDate fechaAgregacion) throws DAOException {
+    public List<String> obtenerCancionesFavoritas(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public String obtenerCancionesFavoritas(Genero genero, LocalDate fechaAgregacion) throws DAOException {
+    public List<Album> obtenerAlbumesFavoritos(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Album obtenerAlbumesFavoritos(Genero genero, LocalDate fechaAgregacion) throws DAOException {
+    public boolean verificarCancionFavorita(String nombreUsuario, String idReferencia, String idUsuario) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    public boolean verificarExistenciaFavorito(Favorito favorito, String idUsuario) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

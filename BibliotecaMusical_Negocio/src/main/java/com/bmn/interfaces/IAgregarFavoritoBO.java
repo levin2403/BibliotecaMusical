@@ -5,6 +5,7 @@
 package com.bmn.interfaces;
 
 import com.bmn.dto.FavoritoDTO;
+import com.bmn.dto.UsuarioDTO;
 import com.bmn.excepciones.BOException;
 
 /**
@@ -13,6 +14,6 @@ import com.bmn.excepciones.BOException;
  */
 public interface IAgregarFavoritoBO {
     
-    public void agregarFavorito(FavoritoDTO favorito) throws BOException;
+    public boolean agregarFavorito(FavoritoDTO favorito, UsuarioDTO usuario) throws BOException;
     
 }

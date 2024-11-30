@@ -4,7 +4,7 @@
  */
 package com.bmn.interfaces;
 
-import com.bmn.dto.UsuarioDTO;
+import com.bmn.dto.constantes.GeneroDTO;
 import com.bmn.excepciones.BOException;
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IObtenerRestringidosBO {
     
-    public List<String> obtenerRestringidos(UsuarioDTO usuario) 
+    public List<GeneroDTO> obtenerRestringidos(String idUsuario) 
             throws BOException;
     
 }
