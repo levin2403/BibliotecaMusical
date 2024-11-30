@@ -32,7 +32,7 @@ public class ConexionMongo implements IConexionMongo {
      * Constructor privado para evitar la creación de nuevas instancias.
      * Conecta a la base de datos usando la URI proporcionada.
      */
-    private ConexionMongo() {
+    public ConexionMongo() {
         // Conecta a la base de datos usando la URI proporcionada
         mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
         // Selecciona la base de datos

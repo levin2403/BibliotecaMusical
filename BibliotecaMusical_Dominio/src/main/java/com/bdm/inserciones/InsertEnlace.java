@@ -2,7 +2,6 @@ package com.bdm.inserciones;
 
 import com.bmd.entities.Artista;
 import com.bmd.entities.Album;
-//import com.bmd.entities.Cancion;
 import com.bdm.conexion.ConexionMongo;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
@@ -12,81 +11,41 @@ import java.util.List;
 public class InsertEnlace {
 
     public static void main(String[] args) {
-        // Obtener la instancia de la conexión
-        ConexionMongo conexion = ConexionMongo.getInstance();
+        // Obtener la lista de artistas
+        List<Artista> artistas = InsertArtistas.getArtistas();
+        
+        // Crear una instancia de ConexionMongo
+        ConexionMongo conexionMongo = new ConexionMongo();
 
-//        try {
-//            // Obtener colecciones de MongoDB
-//            MongoCollection<Document> artistasCollection = conexion.getCollection("artistas");
-//            MongoCollection<Document> albumsCollection = conexion.getCollection("albums");
-//            MongoCollection<Document> cancionesCollection = conexion.getCollection("canciones");
-//
-//            // Obtener datos de las clases de inserción
-//            List<Artista> artistas = InsertArtistas.getArtistas();
-//            Artista artistaPrincipal = artistas.get(0);
-//
-//            // Insertar artistas
-//            for (Artista artista : artistas) {
-//                Document artistaDoc = artistaToDocument(artista);
-//                artistasCollection.insertOne(artistaDoc);
-//            }
-//
-//            // Obtener y asociar álbumes
-//            List<Album> albumes = InsertAlbums.getAlbums(artistaPrincipal);
-//            artistaPrincipal.setAlbums(albumes);
-//
-//            for (Album album : albumes) {
-//                Document albumDoc = albumToDocument(album);
-//                albumsCollection.insertOne(albumDoc);
-//
-//                // Asociar canciones al álbum
-//                List<Cancion> canciones = InsertCanciones.getCanciones();
-//                album.setCanciones(canciones);
-//
-//                for (Cancion cancion : canciones) {
-//                    Document cancionDoc = cancionToDocument(cancion);
-//                    cancionesCollection.insertOne(cancionDoc);
-//                }
-//            }
-//
-//            // Verificar las relaciones en consola
-//            imprimirRelaciones(artistaPrincipal);
-//
-//        } finally {
-//            // Cerrar la conexión
-//            conexion.closeConnection();
-//        }
-//    }
+        // Obtener las colecciones
+        MongoCollection<Document> artistasCollection = conexionMongo.getCollection("artistas");
+        MongoCollection<Document> albumsCollection = conexionMongo.getCollection("albums");
 
-//    private static void imprimirRelaciones(Artista artista) {
-//        System.out.println("Artista: " + artista.getNombre());
-//        for (Album album : artista.getAlbums()) {
-//            System.out.println("  Álbum: " + album.getNombre());
-//            for (Cancion cancion : album.getCanciones()) {
-//                System.out.println("    Canción: " + cancion.getTitulo());
-//            }
-//        }
-//    }
-//
-//    private static Document artistaToDocument(Artista artista) {
-//        return new Document("id", artista.getId())
-//                .append("nombre", artista.getNombre())
-//                .append("imagen", artista.getImagen())
-//                .append("genero", artista.getGenero().toString());
-//    }
+        // Recorrer la lista de artistas y asociar sus álbumes
+        for (Artista artista : artistas) {
+            // Insertar el artista en la colección de artistas
+            Document artistaDocument = new Document("id", artista.getId())
+                    .append("nombre", artista.getNombre())
+                    .append("imagen", artista.getImagen())
+                    .append("genero", artista.getGenero().toString());
+            artistasCollection.insertOne(artistaDocument);
 
-//    private static Document albumToDocument(Album album) {
-//        return new Document("id", album.getId())
-//                .append("nombre", album.getNombre())
-//                .append("imagenPortada", album.getImagenPortada())
-//                .append("fechaLanzamiento", album.getFechaLanzamiento().toString())
-//                .append("genero", album.getGenero().toString())
-//                .append("artistaId", album.getArtista().getId());
-//    }
+            // Obtener los álbumes de cada artista
+            List<Album> albums = InsertAlbums.getAlbums(artista); // Pasa un solo objeto Artista
 
-//    private static Document cancionToDocument(Cancion cancion) {
-//        return new Document("id", cancion.getId())
-//                .append("titulo", cancion.getTitulo())
-//                .append("duracion", cancion.getDuracion());
+            // Insertar los álbumes del artista en la colección de albums
+            for (Album album : albums) {
+                Document albumDocument = new Document("id", album.getId())
+                        .append("nombre", album.getNombre())
+                        .append("imagenPortada", album.getImagenPortada())
+                        .append("fechaLanzamiento", album.getFechaLanzamiento().toString())
+                        .append("genero", album.getGenero().toString())
+                        .append("canciones", album.getCanciones())
+                        .append("idArtista", artista.getId()); // Referencia al id del artista
+                albumsCollection.insertOne(albumDocument);
+            }
+        }
+
+        System.out.println("Datos insertados exitosamente.");
     }
 }

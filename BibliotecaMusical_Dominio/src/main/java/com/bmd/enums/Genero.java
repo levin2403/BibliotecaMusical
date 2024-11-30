@@ -39,5 +39,7 @@ public enum Genero {
     Instrumental,
     LO_FI,
     Noise,
-    Avant_Garde
+    Avant_Garde,
+    Vallenato,
+    Balada
 }
