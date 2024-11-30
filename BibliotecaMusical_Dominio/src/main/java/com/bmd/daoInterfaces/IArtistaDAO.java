@@ -16,7 +16,7 @@ import com.bmd.enums.Genero;
  */
 public interface IArtistaDAO {
     
-    public Artista buscarPorId() throws DAOException;
+    public Artista buscarPorId(String id) throws DAOException;
     
     public Artista buscarPorFiltro(String nombre, Genero genero, Usuario Usuario) 
             throws DAOException;

@@ -20,7 +20,9 @@ public interface IFavoritoDAO {
     
     public void agregarFavorito(Favorito favorito, Usuario usuario) throws DAOException;
     
-    public boolean isFavorito(String idElemento, Usuario usuario) throws DAOException;
+    public boolean isFavorito(Favorito favorito, Usuario usuario) throws DAOException;
+    
+    public boolean verificarExistenciaFavorito(Favorito favorito, Usuario usuario) throws DAOException;
     
     public void eliminarFavorito(Favorito favorito, Usuario usuario) throws DAOException;
     

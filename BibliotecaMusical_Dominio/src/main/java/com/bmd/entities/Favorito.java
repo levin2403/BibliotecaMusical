@@ -19,24 +19,12 @@ public class Favorito {
     private Tipo tipo;
     private LocalDate fechaAgregacion;
 
-    public Favorito() {
-    }
-
-    public Favorito(String idUsuario, String idReferencia, Tipo tipo, 
-            LocalDate fechaAgregacion) {
-        this.idUsuario = idUsuario;
-        this.idReferencia = idReferencia;
-        this.tipo = tipo;
-        this.fechaAgregacion = fechaAgregacion;
-    }
-
-    public Favorito(String id, String idUsuario, 
-            String idReferencia, Tipo tipo, LocalDate fechaAgregacion) {
-        this.id = id;
-        this.idUsuario = idUsuario;
-        this.idReferencia = idReferencia;
-        this.tipo = tipo;
-        this.fechaAgregacion = fechaAgregacion;
+    public Favorito(Builder builder) {
+        this.id = builder.id;
+        this.idUsuario = builder.idUsuario;
+        this.idReferencia = builder.idReferencia;
+        this.tipo = builder.tipo;
+        this.fechaAgregacion = builder.fechaAgregacion;
     }
 
     public String getId() {
@@ -64,6 +52,43 @@ public class Favorito {
         return "Favorito{" + "id=" + id + ", idUsuario=" + idUsuario + 
                 ", idReferencia=" + idReferencia + ", tipo=" + tipo + 
                 ", fechaAgregacion=" + fechaAgregacion + '}';
+    }
+    
+    public static class Builder{
+        String id;
+        String idUsuario;
+        String idReferencia;
+        Tipo tipo;
+        LocalDate fechaAgregacion;
+
+        public Builder setId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setIdUsuario(String idUsuario) {
+            this.idUsuario = idUsuario;
+            return this;
+        }
+
+        public Builder setIdReferencia(String idReferencia) {
+            this.idReferencia = idReferencia;
+            return this;
+        }
+
+        public Builder setTipo(Tipo tipo) {
+            this.tipo = tipo;
+            return this;
+        }
+
+        public Builder setFechaAgregacion(LocalDate fechaAgregacion) {
+            this.fechaAgregacion = fechaAgregacion;
+            return this;
+        }
+        
+        public Favorito build(){
+            return new Favorito(this);
+        }
     }
     
 }

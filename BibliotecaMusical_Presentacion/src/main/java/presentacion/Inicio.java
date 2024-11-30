@@ -35,8 +35,8 @@ public class Inicio extends javax.swing.JFrame {
         panelGlowingGradient2 = new javaswingdev.pggb.PanelGlowingGradient();
         jLabel5 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        panelRound3 = new controlador.PanelRound();
+        registroBtn = new javax.swing.JLabel();
+        InicioBtn = new controlador.PanelRound();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -111,46 +111,51 @@ public class Inicio extends javax.swing.JFrame {
 
         Fondo.add(panelGlowingGradient2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 450, 91));
 
-        jLabel4.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(159, 159, 159));
-        jLabel4.setText("Registrarse");
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        registroBtn.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        registroBtn.setForeground(new java.awt.Color(159, 159, 159));
+        registroBtn.setText("Registrarse");
+        registroBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        registroBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                registroBtnMouseClicked(evt);
             }
         });
-        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 600, -1, -1));
+        Fondo.add(registroBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 600, -1, -1));
 
-        panelRound3.setBackground(new java.awt.Color(81, 137, 161));
-        panelRound3.setCursorHandEnabled(true);
-        panelRound3.setRoundBottomLeft(50);
-        panelRound3.setRoundBottomRight(50);
-        panelRound3.setRoundTopLeft(50);
-        panelRound3.setRoundTopRight(50);
+        InicioBtn.setBackground(new java.awt.Color(81, 137, 161));
+        InicioBtn.setCursorHandEnabled(true);
+        InicioBtn.setRoundBottomLeft(50);
+        InicioBtn.setRoundBottomRight(50);
+        InicioBtn.setRoundTopLeft(50);
+        InicioBtn.setRoundTopRight(50);
+        InicioBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InicioBtnMouseClicked(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Iniciar sesion");
 
-        javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
-        panelRound3.setLayout(panelRound3Layout);
-        panelRound3Layout.setHorizontalGroup(
-            panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound3Layout.createSequentialGroup()
+        javax.swing.GroupLayout InicioBtnLayout = new javax.swing.GroupLayout(InicioBtn);
+        InicioBtn.setLayout(InicioBtnLayout);
+        InicioBtnLayout.setHorizontalGroup(
+            InicioBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioBtnLayout.createSequentialGroup()
                 .addContainerGap(51, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(49, 49, 49))
         );
-        panelRound3Layout.setVerticalGroup(
-            panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound3Layout.createSequentialGroup()
+        InicioBtnLayout.setVerticalGroup(
+            InicioBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioBtnLayout.createSequentialGroup()
                 .addContainerGap(11, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        Fondo.add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 530, 310, 60));
+        Fondo.add(InicioBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 530, 310, 60));
 
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 720));
 
@@ -158,27 +163,19 @@ public class Inicio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel4MouseClicked
+    private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
+        new Registro().setVisible(true);
+    }//GEN-LAST:event_registroBtnMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Inicio().setVisible(true);
-            }
-        });
-    }
+    private void InicioBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InicioBtnMouseClicked
+        new Entrar().setVisible(true);
+    }//GEN-LAST:event_InicioBtnMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
+    private controlador.PanelRound InicioBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPasswordField jPasswordField1;
@@ -186,6 +183,6 @@ public class Inicio extends javax.swing.JFrame {
     private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient2;
     private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient3;
     private controlador.PanelRound panelRound1;
-    private controlador.PanelRound panelRound3;
+    private javax.swing.JLabel registroBtn;
     // End of variables declaration//GEN-END:variables
 }

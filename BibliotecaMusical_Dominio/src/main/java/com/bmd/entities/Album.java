@@ -19,7 +19,7 @@ public class Album {
     private String imagenPortada;
     private LocalDate fechaLanzamiento;
     private Genero genero;
-    private Artista artista;
+    private Artista artista;    
     private List<String> canciones;
 
     private Album(Builder builder) {
