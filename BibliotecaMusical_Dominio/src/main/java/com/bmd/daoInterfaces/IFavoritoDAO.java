@@ -18,20 +18,31 @@ import java.util.List;
  */
 public interface IFavoritoDAO {
     
-    public void agregarFavorito(Favorito favorito, String idUsuario) throws DAOException;
+    public void agregarFavorito(Favorito favorito, String idUsuario) 
+            throws DAOException;
     
-    public boolean isFavorito(String idReferencia, String idUsuario) throws DAOException;
+    public boolean isFavorito(String idReferencia, String idUsuario) 
+            throws DAOException;
     
-    public boolean verificarExistenciaFavorito(Favorito favorito, String idUsuario) throws DAOException;
+    public boolean verificarExistenciaFavorito(Favorito favorito, 
+            String idUsuario) throws DAOException;
     
-    public void eliminarFavorito(Favorito favorito, String idUsuario) throws DAOException;
+    public boolean verificarCancionFavorita(String nombreCancion, 
+            String idReferencia, String idUsuario) throws DAOException;
     
-    public void eliminarFavoritoPorGenero(Genero genero, String idUsuario) throws DAOException;
+    public void eliminarFavorito(Favorito favorito, String idUsuario) 
+            throws DAOException;
     
-    public List<Artista> obtenerArtistasFavoritos(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException;
+    public void eliminarFavoritoPorGenero(Genero genero, String idUsuario) 
+            throws DAOException;
     
-    public List<String> obtenerCancionesFavoritas(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException;
+    public List<Artista> obtenerArtistasFavoritos(Genero genero, 
+            LocalDate fechaAgregacion, String idUsuario) throws DAOException;
     
-    public List<Album> obtenerAlbumesFavoritos(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException;
+    public List<String> obtenerCancionesFavoritas(Genero genero, 
+            LocalDate fechaAgregacion, String idUsuario) throws DAOException;
+    
+    public List<Album> obtenerAlbumesFavoritos(Genero genero, 
+            LocalDate fechaAgregacion, String idUsuario) throws DAOException;
     
 }

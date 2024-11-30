@@ -6,7 +6,6 @@ package com.bmd.daoInterfaces;
 
 import com.bdm.excepciones.DAOException;
 import com.bmd.entities.Album;
-import com.bmd.entities.Artista;
 import com.bmd.enums.Genero;
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +18,7 @@ public interface IAlbumDAO {
     
     public Album obtenerAlbum(String id, String idUsuario) throws DAOException;
     
-    public List<Artista>  BuscarPorFiltro(String nombre, LocalDate fecha, 
+    public List<Album>  BuscarPorFiltro(String nombre, LocalDate fecha, 
             Genero genero, String idUsuario) throws DAOException;
     
 }

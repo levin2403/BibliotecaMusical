@@ -8,7 +8,6 @@ import com.bdm.excepciones.DAOException;
 import com.bmd.conexionIntefaces.IConexionMongo;
 import com.bmd.daoInterfaces.IAlbumDAO;
 import com.bmd.entities.Album;
-import com.bmd.entities.Artista;
 import com.bmd.enums.Genero;
 import java.time.LocalDate;
 import java.util.List;
@@ -31,7 +30,7 @@ public class AlbumDAO implements IAlbumDAO {
     }
 
     @Override
-    public List<Artista> BuscarPorFiltro(String nombre, LocalDate fecha, 
+    public List<Album> BuscarPorFiltro(String nombre, LocalDate fecha, 
                                          Genero genero, String idUsuario) throws DAOException {
         return null;
     }

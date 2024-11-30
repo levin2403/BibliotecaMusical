@@ -24,9 +24,10 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
     private FavoritoDAO favoritoDAO;
     private ArtistaCVR artistaCVR;
 
-    public ObtenerArtistaBO(IArtistaDAO artistaDAO, FavoritoDAO favoritoDAO) {
+    public ObtenerArtistaBO(IArtistaDAO artistaDAO, FavoritoDAO favoritoDAO, ArtistaCVR artistaCVR) {
         this.artistaDAO = artistaDAO;
         this.favoritoDAO = favoritoDAO;
+        this.artistaCVR = artistaCVR;
     }
 
     @Override
