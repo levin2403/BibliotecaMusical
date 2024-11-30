@@ -8,12 +8,12 @@ package presentacion;
  *
  * @author Sebastian Murrieta Verduzco -233463
  */
-public class Registro extends javax.swing.JFrame {
+public class Usuario extends javax.swing.JFrame {
 
     /**
      * Creates new form Inicio
      */
-    public Registro() {
+    public Usuario() {
         initComponents();
     }
 
@@ -62,26 +62,26 @@ public class Registro extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("OCR A Extended", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("REGISTRO");
+        jLabel1.setText("USUARIO");
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(211, 211, 211))
+                .addGap(319, 319, 319)
+                .addComponent(jLabel1)
+                .addContainerGap(327, Short.MAX_VALUE))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(31, 31, 31))
+                .addGap(32, 32, 32))
         );
 
-        Fondo.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 32, 440, -1));
+        Fondo.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 32, 800, -1));
 
         panelGlowingGradient1.setBackground(new java.awt.Color(24, 40, 54));
         panelGlowingGradient1.setBackgroundLight(new java.awt.Color(24, 40, 54));
@@ -166,7 +166,7 @@ public class Registro extends javax.swing.JFrame {
                 jLabel4MouseClicked(evt);
             }
         });
-        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 600, -1, -1));
+        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 610, -1, -1));
 
         panelRound3.setBackground(new java.awt.Color(81, 137, 161));
         panelRound3.setCursorHandEnabled(true);
@@ -177,16 +177,16 @@ public class Registro extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Registrarse");
+        jLabel2.setText("ACEPTAR");
 
         javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
         panelRound3.setLayout(panelRound3Layout);
         panelRound3Layout.setHorizontalGroup(
             panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound3Layout.createSequentialGroup()
-                .addGap(72, 72, 72)
+                .addGap(102, 102, 102)
                 .addComponent(jLabel2)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
         panelRound3Layout.setVerticalGroup(
             panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +196,7 @@ public class Registro extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        Fondo.add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 530, 310, 60));
+        Fondo.add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 540, 310, 60));
 
         panelRound2.setBackground(new java.awt.Color(81, 137, 161));
         panelRound2.setMinimumSize(new java.awt.Dimension(300, 300));
@@ -275,21 +275,23 @@ public class Registro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Registro().setVisible(true);
+                new Usuario().setVisible(true);
             }
         });
     }
