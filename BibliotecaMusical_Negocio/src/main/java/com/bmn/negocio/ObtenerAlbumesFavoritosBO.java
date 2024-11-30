@@ -44,4 +44,8 @@ public class ObtenerAlbumesFavoritosBO implements IObtenerAlbumesFavoritosBO {
         
     }
     
+    private void verificarCancionFavorita() throws BOException {
+        
+    }
+    
 }

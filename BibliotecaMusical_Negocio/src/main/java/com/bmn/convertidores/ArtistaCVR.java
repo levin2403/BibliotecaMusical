@@ -11,6 +11,7 @@ import com.bmn.dto.AlbumDTO;
 import com.bmn.dto.ArtistaDTO;
 import com.bmn.dto.IntegranteDTO;
 import com.bmn.dto.constantes.GeneroDTO;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,17 +48,31 @@ public class ArtistaCVR {
     
     
     private List<IntegranteDTO> convertirIntegrantes(List<Integrante> integrantes){
-        for (Integrante integrante : integrantes) {
+        
+        List<IntegranteDTO> integrantesDTO = new ArrayList<>();
+        
+        for (int i = 0; i < integrantes.size(); i++) {
             
+            IntegranteDTO integranteDTO = integranteCVR.toIntegranteDTO(integrantes.get(i));
+            
+            integrantesDTO.add(integranteDTO);
         }
-        return null;
+        
+        return integrantesDTO;
     }
     
     private List<AlbumDTO> convertirAlbumes(List<Album> albumes){
-        for (Album albume : albumes) {
+
+        List<AlbumDTO> albumesDTO = new ArrayList<>();
+        
+        for (int i = 0; i < 10; i++) {
             
+            AlbumDTO albumDTO = albumCVR.toAlbumDTO(albumes.get(i));
+            
+            albumesDTO.add(albumDTO);
         }
-        return null;
+        
+        return albumesDTO;
     }
     
 }

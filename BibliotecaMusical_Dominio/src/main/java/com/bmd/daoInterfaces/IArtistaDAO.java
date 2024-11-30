@@ -6,8 +6,8 @@ package com.bmd.daoInterfaces;
 
 import com.bdm.excepciones.DAOException;
 import com.bmd.entities.Artista;
-import com.bmd.entities.Usuario;
 import com.bmd.enums.Genero;
+import java.util.List;
 
 
 /**
@@ -18,7 +18,7 @@ public interface IArtistaDAO {
     
     public Artista buscarPorId(String id) throws DAOException;
     
-    public Artista buscarPorFiltro(String nombre, Genero genero, Usuario Usuario) 
+    public List<Artista> buscarPorFiltro(String nombre, Genero genero, String idUsuario) 
             throws DAOException;
             
 }

@@ -23,7 +23,7 @@ public class AlbumCVR {
         this.artistaCVR = artistaCVR;
     }
     
-    private AlbumDTO toAlbumDTO(Album album){
+    public AlbumDTO toAlbumDTO(Album album){
         
         if (album == null) {
             return null;

@@ -13,12 +13,14 @@ public class UsuarioRegistrarDTO {
     private String nombre;
     private String correo;
     private String contrasena;
+    private String contrasenaConfirmar;
     private String imagenPerfil;
     
     private UsuarioRegistrarDTO (Builder builder) { 
         this.nombre = builder.nombre; 
         this.correo = builder.correo; 
         this.contrasena = builder.contrasena; 
+        this.contrasenaConfirmar = builder.contrasenaConfirmar;
         this.imagenPerfil = builder.imagenPerfil; 
     }
     
@@ -34,6 +36,14 @@ public class UsuarioRegistrarDTO {
         return contrasena;
     }
 
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getContrasenaConfirmar() {
+        return contrasenaConfirmar;
+    }
+
     public String getImagenPerfil() {
         return imagenPerfil;
     }
@@ -42,6 +52,7 @@ public class UsuarioRegistrarDTO {
         private String nombre;
         private String correo;
         private String contrasena;
+        private String contrasenaConfirmar;
         private String imagenPerfil;
         
          public UsuarioRegistrarDTO.Builder setNombre(String nombre) {
@@ -56,6 +67,11 @@ public class UsuarioRegistrarDTO {
 
         public UsuarioRegistrarDTO.Builder setContrasena(String contrasena) {
             this.contrasena = contrasena;
+            return this;
+        }
+
+        public Builder setContrasenaConfirmar(String contrasenaConfirmar) {
+            this.contrasenaConfirmar = contrasenaConfirmar;
             return this;
         }
 

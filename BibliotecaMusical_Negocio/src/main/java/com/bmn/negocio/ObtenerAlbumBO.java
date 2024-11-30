@@ -4,6 +4,7 @@
  */
 package com.bmn.negocio;
 
+import com.bmd.dao.FavoritoDAO;
 import com.bmd.daoInterfaces.IAlbumDAO;
 import com.bmn.dto.AlbumDTO;
 import com.bmn.dto.UsuarioDTO;
@@ -17,6 +18,7 @@ import com.bmn.interfaces.IObtenerAlbumBO;
 public class ObtenerAlbumBO implements IObtenerAlbumBO {
     
     private IAlbumDAO albumDAO;
+    private FavoritoDAO favorito;
 
     public ObtenerAlbumBO(IAlbumDAO albumDAO) {
         this.albumDAO = albumDAO;
@@ -39,4 +41,9 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
     private void verificarFavorito(AlbumDTO album) throws BOException{
         
     }
+    
+    private void verificarCancionFavorita() throws BOException {
+        
+    }
+    
 }

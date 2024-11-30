@@ -60,4 +60,5 @@ public class InicioSesionBO implements IInicioSesionBO {
             throw new BOException("La contaseña no puede estar vacia.");
         }
     }
+    
 }

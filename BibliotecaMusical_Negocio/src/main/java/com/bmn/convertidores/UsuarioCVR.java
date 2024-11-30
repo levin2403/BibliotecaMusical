@@ -17,7 +17,7 @@ public class UsuarioCVR {
     public UsuarioCVR() {
     }
     
-    private Usuario usuarioRegistrarToEntity(UsuarioRegistrarDTO usuarioDTO){
+    public Usuario usuarioRegistrarToEntity(UsuarioRegistrarDTO usuarioDTO){
         
         if (usuarioDTO == null) {
             return null;
@@ -35,7 +35,7 @@ public class UsuarioCVR {
         return usuario;
     }
     
-    private Usuario toUsuario(UsuarioDTO usuarioDTO) {
+    public Usuario toUsuario(UsuarioDTO usuarioDTO) {
         
         if (usuarioDTO == null) {
             return null;
@@ -53,7 +53,7 @@ public class UsuarioCVR {
         return usuario;
     }            
     
-    private UsuarioDTO toUsuarioDTO(Usuario usuario) {
+    public UsuarioDTO toUsuarioDTO(Usuario usuario) {
         
         if (usuario == null) {
             return null;

@@ -5,6 +5,7 @@
 package com.bmn.negocio;
 
 import com.bmd.daoInterfaces.IAlbumDAO;
+import com.bmn.dto.AlbumDTO;
 import com.bmn.dto.ArtistaDTO;
 import com.bmn.dto.UsuarioDTO;
 import com.bmn.dto.constantes.GeneroDTO;
@@ -42,5 +43,13 @@ public class ObtenerAlbumesFiltradosBO implements IObtenerAlbumesFiltradosBO {
     private List<ArtistaDTO> procesar(String nombre, LocalDate fecha, 
             GeneroDTO genero, UsuarioDTO usuario) throws BOException {
         return null;
+    }
+    
+    private void verificarFavorito(AlbumDTO album) throws BOException{
+        
+    }
+    
+    private void verificarCancionFavorita() throws BOException {
+        
     }
 }
