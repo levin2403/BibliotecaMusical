@@ -4,10 +4,30 @@
  */
 package com.bmn.convertidores;
 
+import com.bmd.entities.Favorito;
+import com.bmd.enums.Tipo;
+import com.bmn.dto.FavoritoDTO;
+
 /**
  *
  * @author skevi
  */
-public class FavoritoCVR {
+public class FavoritoCVR { 
+    
+    
+    public Favorito toFavorito(FavoritoDTO favoritoDTO){
+        if (favoritoDTO == null) {
+            return null;
+        }
+        
+        Favorito favorito = new Favorito.Builder().
+                setId(null).
+                setIdUsuario(favoritoDTO.getIdUsuario()).
+                setIdReferencia(favoritoDTO.getIdReferencia()).
+                setTipo(Tipo.valueOf(favoritoDTO.getTipo().name())).
+                setFechaAgregacion(favoritoDTO.getFechaAgregacion()).
+                build();
+        return favorito;
+    }
     
 }

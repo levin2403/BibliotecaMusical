@@ -15,12 +15,12 @@ import java.util.List;
 
 public class Artista {
     
-    private final String id;
-    private final TipoArtista tipoArtista;
-    private final String nombre;
-    private final String imagen;
-    private final Genero genero;
-    private final List<Integrante> integrantes;
+    private String id;
+    private TipoArtista tipoArtista;
+    private String nombre;
+    private String imagen;
+    private Genero genero;
+    private List<Integrante> integrantes;
     private List<Album> albums;
 
     private Artista(Builder builder) {

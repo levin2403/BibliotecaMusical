@@ -55,38 +55,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     
     @Override
     public Usuario buscaPorCorreo(String correo) throws DAOException {
-        try {
-            MongoCollection<Document> collection = conexion.getCollection("usuarios");
-            Document query = new Document("correo", correo);
-            Document result = collection.find(query).first();
-
-            if (result != null) {
-                List<Favorito> favoritos = result.getList("favoritos", Document.class).stream()
-                    .map(doc -> new Favorito(
-                            result.getString("_id"),  // idUsuario tomado del usuario
-                            doc.getString("id_referencia"), 
-                            Tipo.valueOf(doc.getString("tipo")), 
-                            LocalDate.parse(doc.getString("fecha_agregacion"))))
-                    .collect(Collectors.toList());
-
-                List<Genero> generosBaneados = result.getList("restringidos", String.class).stream()
-                    .map(Genero::valueOf)
-                    .collect(Collectors.toList());
-
-                return new Usuario.Builder()
-                    .setId(result.getString("_id"))
-                    .setNombre(result.getString("nombre"))
-                    .setCorreo(result.getString("correo"))
-                    .setContrasena(result.getString("contrasena"))
-                    .setImagenPerfil(result.getString("imagen_perfil"))
-                    .setFavoritos(favoritos)
-                    .setGenerosBaneados(generosBaneados)
-                    .build();
-            }
-            return null;
-        } catch (Exception e) {
-            throw new DAOException("Error al buscar el usuario por correo.", e);
-        }
+        return null;
     }
 
     @Override

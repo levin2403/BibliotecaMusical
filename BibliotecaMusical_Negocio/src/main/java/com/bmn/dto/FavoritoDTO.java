@@ -15,6 +15,7 @@ public class FavoritoDTO {
     
     private String idUsuario;
     private String idReferencia;
+    private String nombreCancion;
     private TipoDTO tipo;
     private LocalDate fechaAgregacion;
 
@@ -24,6 +25,7 @@ public class FavoritoDTO {
     public FavoritoDTO(Builder builder){
         this.idUsuario = builder.idUsuario;
         this.idReferencia = builder.idReferencia;
+        this.nombreCancion = builder.nombreCancion;
         this.tipo = builder.tipo;
         this.fechaAgregacion = builder.fechaAgregacion;
     }
@@ -56,6 +58,7 @@ public class FavoritoDTO {
     public static class Builder {
         private String idUsuario;
         private String idReferencia;
+        private String nombreCancion;
         private TipoDTO tipo;
         private LocalDate fechaAgregacion;
 
@@ -66,6 +69,11 @@ public class FavoritoDTO {
 
         public Builder setIdReferencia(String idReferencia) {
             this.idReferencia = idReferencia;
+            return this;
+        }
+
+        public Builder setNombreCancion(String nombreCancion) {
+            this.nombreCancion = nombreCancion;
             return this;
         }
 

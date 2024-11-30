@@ -9,5 +9,7 @@ package com.bmn.dto.constantes;
  * @author skevi
  */
 public enum TipoDTO {
-    
+    ARTISTA,
+    ALBUM,
+    CANCION
 }

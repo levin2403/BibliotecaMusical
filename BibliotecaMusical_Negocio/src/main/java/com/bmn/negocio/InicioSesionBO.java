@@ -4,7 +4,9 @@
  */
 package com.bmn.negocio;
 
+import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IUsuarioDAO;
+import com.bmd.entities.Usuario;
 import com.bmn.dto.UsuarioIniciarSesionDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IInicioSesionBO;
@@ -41,15 +43,15 @@ public class InicioSesionBO implements IInicioSesionBO {
     }
     
     public void buscarCorreo(UsuarioIniciarSesionDTO usuario) throws BOException {
-//        try{
-//            if (!usuarioDAO.verificarExistenciaCorreo(usuario.getCorreo())) {
-//                throw new BOException("El correo poroporcionado no existe"
-//                        + "porfavor intente de nuevo.");
-//            }
-//        }
-//        catch(DAOException ex){
-//            throw new BOException(ex.getMessage());
-//        }
+        try{
+            Usuario usuario1 = usuarioDAO.buscaPorCorreo(usuario.getCorreo());
+            
+            //le asignamos la contraseña obtenida al nuevo nuestro dto
+            usuario.setContrasenaObtenida(usuario.getContrasena());
+        }
+        catch(DAOException ex){
+            throw new BOException(ex.getMessage());
+        }
     }
     
     public void verificarContrasena(UsuarioIniciarSesionDTO usuario) throws BOException {
