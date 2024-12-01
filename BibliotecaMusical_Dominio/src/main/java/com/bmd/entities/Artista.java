@@ -6,21 +6,24 @@ package com.bmd.entities;
 
 import com.bmd.enums.Genero;
 import com.bmd.enums.TipoArtista;
+import java.util.List;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
 /**
  *
  * @author skevi
  */
-import java.util.List;
-
 public class Artista {
     
-    private String id;
-    private TipoArtista tipoArtista;
-    private String nombre;
-    private String imagen;
-    private Genero genero;
-    private List<Integrante> integrantes;
+    @BsonId 
+    private String id; 
+    @BsonProperty("tipo_artista") 
+    private TipoArtista tipoArtista; 
+    private String nombre; 
+    private String imagen; 
+    private Genero genero; 
+    private List<Integrante> integrantes; 
     private List<Album> albums;
 
     private Artista(Builder builder) {

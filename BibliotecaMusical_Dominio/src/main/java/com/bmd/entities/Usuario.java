@@ -1,12 +1,14 @@
-package com.bmd.entities;
-
-import com.bmd.enums.Genero;
-import java.util.List;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
+package com.bmd.entities;
+
+import com.bmd.enums.Genero;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+import java.util.List;
 
 /**
  *
@@ -14,12 +16,15 @@ import java.util.List;
  */
 public class Usuario {
     
+    @BsonId
     private String id;
     private String nombre;
     private String correo;
     private String contrasena;
+    @BsonProperty("imagen_perfil")
     private String imagenPerfil;
     private List<Favorito> favoritos;
+    @BsonProperty("restringidos")
     private List<Genero> generosBaneados;
     
     private Usuario(Builder builder) { 

@@ -5,17 +5,20 @@
 package com.bdm.conexion;
 
 import com.bmd.conexionIntefaces.IConexionMongo;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoCollection;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCollection;
 import org.bson.Document;
+import org.bson.codecs.configuration.CodecRegistries;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 
 /**
  * Clase ConexionMongo implementa la interfaz IConexionMongo.
  * Esta clase utiliza el patrón Singleton para manejar la conexión con MongoDB.
- *
- * @author skevi
  */
 public class ConexionMongo implements IConexionMongo {
 
@@ -28,13 +31,28 @@ public class ConexionMongo implements IConexionMongo {
     // Base de datos de MongoDB
     private MongoDatabase database;
     
+    // Registro de Codecs para manejar POJOs
+    private static CodecRegistry pojoCodecRegistry;
+
+    // Inicialización estática del CodecRegistry
+    static {
+        pojoCodecRegistry = CodecRegistries.fromRegistries(
+            MongoClientSettings.getDefaultCodecRegistry(),
+            CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
+        );
+    }
+    
     /**
      * Constructor privado para evitar la creación de nuevas instancias.
      * Conecta a la base de datos usando la URI proporcionada.
      */
     public ConexionMongo() {
         // Conecta a la base de datos usando la URI proporcionada
-        mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
+        MongoClientSettings settings = MongoClientSettings.builder()
+            .codecRegistry(pojoCodecRegistry)
+            .applyConnectionString(new ConnectionString("mongodb://localhost:27017"))
+            .build();
+        mongoClient = MongoClients.create(settings);
         // Selecciona la base de datos
         database = mongoClient.getDatabase("bibliotecaMusical#");
     }
@@ -75,5 +93,18 @@ public class ConexionMongo implements IConexionMongo {
         mongoClient.close();
     }
     
+    /**
+     * Obtiene una colección específica de la base de datos con soporte para POJOs.
+     *
+     * @param collectionName Nombre de la colección.
+     * @param clazz Clase del POJO.
+     * @param <T> Tipo del POJO.
+     * @return La colección de documentos de MongoDB con soporte para POJOs.
+     */
+    public <T> MongoCollection<T> getCollection(String collectionName, Class<T> clazz) {
+        return database.getCollection(collectionName, clazz);
+    }
 }
+
+
 

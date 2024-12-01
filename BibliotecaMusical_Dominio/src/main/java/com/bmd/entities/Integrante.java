@@ -5,17 +5,19 @@
 package com.bmd.entities;
 
 import com.bmd.enums.Rol;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import java.time.LocalDate;
 
-/**
- *
- * @author skevi
- */
 public class Integrante {
+    
+    @BsonProperty("nombre")
     private final String nombre;
+    @BsonProperty("fecha_ingreso")
     private final LocalDate fechaIngreso;
+    @BsonProperty("fecha_salida")
     private final LocalDate fechaSalida;
     private final Rol rol;
+    @BsonProperty("estado_actividad")
     private final boolean estadoActividad;
 
     private Integrante(Builder builder) {

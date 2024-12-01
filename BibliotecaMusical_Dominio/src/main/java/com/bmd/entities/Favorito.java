@@ -6,6 +6,8 @@ package com.bmd.entities;
 
 import com.bmd.enums.Tipo;
 import java.time.LocalDate;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
 /**
  *
@@ -13,10 +15,17 @@ import java.time.LocalDate;
  */
 public class Favorito {
     
-    private String id;
-    private String idUsuario;
-    private String idReferencia;
-    private Tipo tipo;
+    @BsonId 
+    private String id; 
+    @BsonProperty("id_usuario") 
+    private String idUsuario; 
+    @BsonProperty("id_referencia") 
+    private String idReferencia; 
+    private Tipo tipo; // Artista, Album, Cancion 
+    @BsonProperty("nombre_cancion")
+    // nombre de la canción, nulo si no es una canción la seleccionada como favorito 
+    private String Nombrecancion; 
+    @BsonProperty("fecha_agregacion") 
     private LocalDate fechaAgregacion;
 
     public Favorito(Builder builder) {
@@ -24,6 +33,7 @@ public class Favorito {
         this.idUsuario = builder.idUsuario;
         this.idReferencia = builder.idReferencia;
         this.tipo = builder.tipo;
+        this.Nombrecancion = builder.Nombrecancion;
         this.fechaAgregacion = builder.fechaAgregacion;
     }
 
@@ -59,6 +69,7 @@ public class Favorito {
         String idUsuario;
         String idReferencia;
         Tipo tipo;
+        String Nombrecancion;
         LocalDate fechaAgregacion;
 
         public Builder setId(String id) {
@@ -78,6 +89,11 @@ public class Favorito {
 
         public Builder setTipo(Tipo tipo) {
             this.tipo = tipo;
+            return this;
+        }
+
+        public Builder setNombrecancion(String Nombrecancion) {
+            this.Nombrecancion = Nombrecancion;
             return this;
         }
 

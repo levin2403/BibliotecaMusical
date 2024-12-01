@@ -5,7 +5,9 @@
 package com.bmd.entities;
 
 import com.bmd.enums.Genero;
-import java.time.LocalDate;
+import org.bson.codecs.pojo.annotations.BsonId; 
+import org.bson.codecs.pojo.annotations.BsonProperty; 
+import java.time.LocalDate; 
 import java.util.List;
 
 /**
@@ -14,12 +16,15 @@ import java.util.List;
  */
 public class Album {
 
-    private String id;
-    private String nombre;
-    private String imagenPortada;
-    private LocalDate fechaLanzamiento;
-    private Genero genero;
-    private Artista artista;    
+    @BsonId 
+    private String id; 
+    private String nombre; 
+    @BsonProperty("imagen_portada") 
+    private String imagenPortada; 
+    @BsonProperty("fecha_lanzamiento") 
+    private LocalDate fechaLanzamiento; 
+    private Genero genero; 
+    private Artista artista; 
     private List<String> canciones;
 
     private Album(Builder builder) {
