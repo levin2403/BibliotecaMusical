@@ -10,12 +10,22 @@ import com.bmd.daoInterfaces.IFavoritoDAO;
 import com.bmd.entities.Album;
 import com.bmd.entities.Artista;
 import com.bmd.entities.Favorito;
+import com.bmd.entities.Usuario;
 import com.bmd.enums.Genero;
+import com.bmd.enums.Tipo;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.elemMatch;
 import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.client.model.Projections;
+import static com.mongodb.client.model.Projections.fields;
+import static com.mongodb.client.model.Projections.include;
+import com.mongodb.client.model.Updates;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import org.bson.conversions.Bson;
 
 /**
  *
@@ -39,15 +49,18 @@ public class FavoritoDAO implements IFavoritoDAO {
      * @param favorito
      * @throws DAOException 
      */
-    @Override
+   @Override
     public void agregarFavorito(Favorito favorito) throws DAOException {
         try {
-            MongoCollection<Favorito> collection = conexion.getCollection("favoritos", Favorito.class);
-            collection.insertOne(favorito);
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+            collection.updateOne(eq("_id", favorito.getIdUsuario()), 
+                                 Updates.addToSet("favoritos", favorito));
         } catch (Exception e) {
             throw new DAOException("Error al agregar el favorito", e);
         }
     }
+
+
 
 
     /**
@@ -63,27 +76,38 @@ public class FavoritoDAO implements IFavoritoDAO {
     @Override
     public boolean isFavorito(String idReferencia, String idUsuario) throws DAOException {
         try {
-            MongoCollection<Favorito> collection = conexion.getCollection("favoritos", Favorito.class);
-            long count = collection.countDocuments(and(eq("idReferencia", idReferencia), eq("idUsuario", idUsuario)));
-            return count > 0;
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+            Usuario usuario = collection.find(and(eq("_id", idUsuario), 
+                                                  elemMatch("favoritos", eq("idReferencia", idReferencia))))
+                                        .first();
+            return usuario != null;
         } catch (Exception e) {
             throw new DAOException("Error al verificar si es favorito", e);
         }
     }
 
 
-    /**
-     * 
-     * @param favorito
-     * @param idUsuario
-     * @throws DAOException En caso de excepcion en la consulta.
-     */
+
+
     @Override
-    public void eliminarFavorito(Favorito favorito, String idUsuario) throws DAOException {
-        
+    public void eliminarFavorito(String idReferencia, String idUsuario) throws DAOException {
+        try {
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+            collection.updateOne(eq("_id", idUsuario), 
+                                 Updates.pull("favoritos", eq("idReferencia", idReferencia)));
+        } catch (Exception e) {
+            throw new DAOException("Error al eliminar el favorito", e);
+        }
     }
 
+
+
     /**
+     * Metodo encargado de eliminar los favoritos del usuario(cuyo id esta 
+     * especificado en el parametro).
+     * Verififica mediante el id de referencia si el album o artista(cuyo id 
+     * es el id de referencia) es del mismo genero que el especificado 
+     * si si lo es, se elimina.
      * 
      * @param genero
      * @param idUsuario
@@ -91,47 +115,161 @@ public class FavoritoDAO implements IFavoritoDAO {
      */
     @Override
     public void eliminarFavoritoPorGenero(Genero genero, String idUsuario) throws DAOException {
-        
+        try {
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+            Usuario usuario = collection.find(eq("_id", idUsuario)).first();
+            if (usuario == null) {
+                throw new DAOException("Usuario no encontrado");
+            }
+
+            List<Favorito> favoritosActualizados = new ArrayList<>();
+            for (Favorito favorito : usuario.getFavoritos()) {
+                if (!favorito.getGenero().equals(genero)) {
+                    favoritosActualizados.add(favorito);
+                }
+            }
+
+            collection.updateOne(eq("_id", idUsuario), Updates.set("favoritos", favoritosActualizados));
+        } catch (Exception e) {
+            throw new DAOException("Error al eliminar favoritos por género", e);
+        }
     }
 
     /**
+     * Metodo para obtener una lista de Artistas que se encuentren marcados
+     * como favoritos por parte del usuario(id especidicado en el parametro).
      * 
-     * @param genero
-     * @param fechaAgregacion
-     * @param idUsuario
-     * @return
+     * Las busquedas se realizan de manera filtrada, por lo que si alguno
+     * de los parametros es nulo no se incluye en la busqueda.
+     * 
+     * Para esta busqueda se obtene toda la informacion del artista menos 
+     * los integrantes y de los albumes unicamente se trae la informacion 
+     * necesaria como id, nombre y imagen.
+     * 
+     * @param genero Genero del Artista buscado
+     * @param fechaAgregacion Fecha en la que fue agregado a favoritos.
+     * @param idUsuario Id del usuario logeado.
+     * @return Lista de artistas Favoritos.
      * @throws DAOException En caso de excepcion en la consulta.
-     */
+     */ 
     @Override
     public List<Artista> obtenerArtistasFavoritos(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
-        return null;
+        try {
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+
+            Usuario usuario = collection.find(eq("_id", idUsuario)).first();
+            if (usuario == null) {
+                throw new DAOException("Usuario no encontrado");
+            }
+
+            List<Artista> artistasFavoritos = new ArrayList<>();
+            for (Favorito favorito : usuario.getFavoritos()) {
+                if (favorito.getTipo() == Tipo.ARTISTA && 
+                    (genero == null || favorito.getGenero() == genero) && 
+                    (fechaAgregacion == null || favorito.getFechaAgregacion().equals(fechaAgregacion))) {
+
+                    MongoCollection<Artista> artistaCollection = conexion.getCollection("artistas", Artista.class);
+                    Bson projection = fields(
+                        include("id", "tipoArtista", "nombre", "imagen", "genero", "estadoActividad"),
+                        Projections.computed("albums", fields(include("id", "nombre", "imagenPortada")))
+                    );
+                    Artista artista = artistaCollection.find(eq("_id", favorito.getIdReferencia()))
+                                                       .projection(projection)
+                                                       .first();
+                    if (artista != null) {
+                        artistasFavoritos.add(artista);
+                    }
+                }
+            }
+
+            return artistasFavoritos;
+        } catch (Exception e) {
+            throw new DAOException("Error al obtener los artistas favoritos", e);
+        }
     }
 
+
+
     /**
+     * Metodo para obtener una lista de canciones que se encuentren marcados
+     * como favoritos por parte del usuario(id especidicado en el parametro).
      * 
-     * @param genero
-     * @param fechaAgregacion
-     * @param idUsuario
-     * @return
+     * Si alguno de los filtros del parametro no esta vacio o nulo no se 
+     * incluira en los filtros.
+     * 
+     * @param genero Genero del album donde esta presente la cancion.
+     * @param fechaAgregacion Fecha en la que se agrego la cancion
+     * @param idUsuario Id del usuario logeado.
+     * @return Lista de canciones favoritas filtrada.
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
     public List<String> obtenerCancionesFavoritas(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
-        return null;
+        try {
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+
+            Usuario usuario = collection.find(eq("_id", idUsuario)).first();
+            if (usuario == null) {
+                throw new DAOException("Usuario no encontrado");
+            }
+
+            List<String> cancionesFavoritas = new ArrayList<>();
+            for (Favorito favorito : usuario.getFavoritos()) {
+                if (favorito.getTipo() == Tipo.CANCION && 
+                    (genero == null || favorito.getGenero() == genero) && 
+                    (fechaAgregacion == null || favorito.getFechaAgregacion().equals(fechaAgregacion))) {
+
+                    cancionesFavoritas.add(favorito.getNombreCancion());
+                }
+            }
+
+            return cancionesFavoritas;
+        } catch (Exception e) {
+            throw new DAOException("Error al obtener las canciones favoritas", e);
+        }
     }
+
+
+
 
     /**
      * 
-     * @param genero
-     * @param fechaAgregacion
-     * @param idUsuario
-     * @return
+     * @param genero Genero del album donde esta presente la cancion.
+     * @param fechaAgregacion Fecha en la que se agrego la cancion
+     * @param idUsuario Id del usuario logeado.
+     * @return Lista de canciones favoritas filtrada.
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
     public List<Album> obtenerAlbumesFavoritos(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
-        return null;
+        try {
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+
+            Usuario usuario = collection.find(eq("_id", idUsuario)).first();
+            if (usuario == null) {
+                throw new DAOException("Usuario no encontrado");
+            }
+
+            List<Album> albumesFavoritos = new ArrayList<>();
+            for (Favorito favorito : usuario.getFavoritos()) {
+                if (favorito.getTipo() == Tipo.ALBUM && 
+                    (genero == null || favorito.getGenero() == genero) && 
+                    (fechaAgregacion == null || favorito.getFechaAgregacion().equals(fechaAgregacion))) {
+
+                    MongoCollection<Album> albumCollection = conexion.getCollection("albumes", Album.class);
+                    Album album = albumCollection.find(eq("_id", favorito.getIdReferencia())).first();
+                    if (album != null) {
+                        albumesFavoritos.add(album);
+                    }
+                }
+            }
+
+            return albumesFavoritos;
+        } catch (Exception e) {
+            throw new DAOException("Error al obtener los álbumes favoritos", e);
+        }
     }
+
 
     /**
      * 
@@ -143,19 +281,29 @@ public class FavoritoDAO implements IFavoritoDAO {
      */
     @Override
     public boolean verificarCancionFavorita(String nombreCancion, String idReferencia, String idUsuario) throws DAOException {
-        return false;
+        try {
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+            Usuario usuario = collection.find(and(eq("_id", idUsuario), 
+                                                  elemMatch("favoritos", and(eq("idReferencia", idReferencia), eq("nombreCancion", nombreCancion)))))
+                                        .first();
+            return usuario != null;
+        } catch (Exception e) {
+            throw new DAOException("Error al verificar si la canción es favorita", e);
+        }
     }
 
-    /**
-     * 
-     * @param favorito
-     * @param idUsuario
-     * @return
-     * @throws DAOException En caso de excepcion en la consulta.
-     */
     @Override
-    public boolean verificarExistenciaFavorito(Favorito favorito, String idUsuario) throws DAOException {
-        return false;
+    public void eliminarCancionFavorita(String nombreCancion, String idUsuario) throws DAOException {
+        try {
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+
+            // Filtrar el usuario por su ID y buscar la canción específica en sus favoritos
+            collection.updateOne(eq("_id", idUsuario), 
+                                 Updates.pull("favoritos", Filters.and(eq("nombreCancion", nombreCancion), eq("tipo", Tipo.CANCION))));
+        } catch (Exception e) {
+            throw new DAOException("Error al eliminar la canción favorita", e);
+        }
     }
+
 
 }

@@ -4,9 +4,9 @@
  */
 package com.bmd.entities;
 
+import com.bmd.enums.Genero;
 import com.bmd.enums.Tipo;
 import java.time.LocalDate;
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
 /**
@@ -15,31 +15,26 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
  */
 public class Favorito {
     
-    @BsonId 
-    private String id; 
     @BsonProperty("id_usuario") 
     private String idUsuario; 
     @BsonProperty("id_referencia") 
     private String idReferencia; 
     private Tipo tipo; // Artista, Album, Cancion 
+    private Genero genero;
     @BsonProperty("nombre_cancion")
-    // nombre de la canción, nulo si no es una canción la seleccionada como favorito 
-    private String Nombrecancion; 
+    private String nombreCancion; 
     @BsonProperty("fecha_agregacion") 
     private LocalDate fechaAgregacion;
 
     public Favorito(Builder builder) {
-        this.id = builder.id;
         this.idUsuario = builder.idUsuario;
         this.idReferencia = builder.idReferencia;
         this.tipo = builder.tipo;
-        this.Nombrecancion = builder.Nombrecancion;
+        this.genero = builder.genero;
+        this.nombreCancion = builder.nombreCancion;
         this.fechaAgregacion = builder.fechaAgregacion;
     }
 
-    public String getId() {
-        return id;
-    }
 
     public String getIdUsuario() {
         return idUsuario;
@@ -53,29 +48,32 @@ public class Favorito {
         return tipo;
     }
 
+    public Genero getGenero() {
+        return genero;
+    }
+
+    public String getNombreCancion() {
+        return nombreCancion;
+    }
+
     public LocalDate getFechaAgregacion() {
         return fechaAgregacion;
     }
 
     @Override
     public String toString() {
-        return "Favorito{" + "id=" + id + ", idUsuario=" + idUsuario + 
+        return "Favorito{" + "idUsuario=" + idUsuario + 
                 ", idReferencia=" + idReferencia + ", tipo=" + tipo + 
                 ", fechaAgregacion=" + fechaAgregacion + '}';
     }
     
     public static class Builder{
-        String id;
         String idUsuario;
         String idReferencia;
         Tipo tipo;
-        String Nombrecancion;
+        Genero genero;
+        String nombreCancion;
         LocalDate fechaAgregacion;
-
-        public Builder setId(String id) {
-            this.id = id;
-            return this;
-        }
 
         public Builder setIdUsuario(String idUsuario) {
             this.idUsuario = idUsuario;
@@ -92,8 +90,13 @@ public class Favorito {
             return this;
         }
 
-        public Builder setNombrecancion(String Nombrecancion) {
-            this.Nombrecancion = Nombrecancion;
+        public Builder setGenero(Genero genero) {
+            this.genero = genero;
+            return this;
+        }
+
+        public Builder setNombreCancion(String nombreCancion) {
+            this.nombreCancion = nombreCancion;
             return this;
         }
 

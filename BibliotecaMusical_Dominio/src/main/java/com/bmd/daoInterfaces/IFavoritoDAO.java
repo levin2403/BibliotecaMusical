@@ -23,13 +23,10 @@ public interface IFavoritoDAO {
     public boolean isFavorito(String idReferencia, String idUsuario) 
             throws DAOException;
     
-    public boolean verificarExistenciaFavorito(Favorito favorito, 
-            String idUsuario) throws DAOException;
-    
     public boolean verificarCancionFavorita(String nombreCancion, 
             String idReferencia, String idUsuario) throws DAOException;
     
-    public void eliminarFavorito(Favorito favorito, String idUsuario) 
+    public void eliminarFavorito(String idReferencia, String idUsuario) 
             throws DAOException;
     
     public void eliminarFavoritoPorGenero(Genero genero, String idUsuario) 
@@ -43,5 +40,8 @@ public interface IFavoritoDAO {
     
     public List<Album> obtenerAlbumesFavoritos(Genero genero, 
             LocalDate fechaAgregacion, String idUsuario) throws DAOException;
+    
+    public void eliminarCancionFavorita(String nombreCancion, 
+            String idUsuario) throws DAOException;
     
 }

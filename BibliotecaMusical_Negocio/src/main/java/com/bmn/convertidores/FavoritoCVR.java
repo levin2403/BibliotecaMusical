@@ -21,7 +21,6 @@ public class FavoritoCVR {
         }
         
         Favorito favorito = new Favorito.Builder().
-                setId(null).
                 setIdUsuario(favoritoDTO.getIdUsuario()).
                 setIdReferencia(favoritoDTO.getIdReferencia()).
                 setTipo(Tipo.valueOf(favoritoDTO.getTipo().name())).
