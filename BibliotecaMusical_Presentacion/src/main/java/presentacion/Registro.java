@@ -251,19 +251,11 @@ public class Registro extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void atrasBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasBtnMouseClicked
         new Inicio().setVisible(true);
     }//GEN-LAST:event_atrasBtnMouseClicked
 
-<<<<<<< HEAD
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -272,6 +264,10 @@ public class Registro extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
+        new Entrar().setVisible(true);
+    }//GEN-LAST:event_registroBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -308,26 +304,13 @@ public class Registro extends javax.swing.JFrame {
             }
         });
     }
-=======
-    private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
-        new Entrar().setVisible(true);
-    }//GEN-LAST:event_registroBtnMouseClicked
->>>>>>> 0dd866b050e5616dfbbe6f321042031dc0890acc
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
-<<<<<<< Updated upstream
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-=======
-<<<<<<< HEAD
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-=======
     private javax.swing.JLabel atrasBtn;
->>>>>>> 0dd866b050e5616dfbbe6f321042031dc0890acc
->>>>>>> Stashed changes
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -343,14 +326,7 @@ public class Registro extends javax.swing.JFrame {
     private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient3;
     private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient4;
     private controlador.PanelRound panelRound1;
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
->>>>>>> Stashed changes
     private controlador.PanelRound panelRound2;
-    private controlador.PanelRound panelRound3;
-=======
     private controlador.PanelRound registroBtn;
->>>>>>> 0dd866b050e5616dfbbe6f321042031dc0890acc
     // End of variables declaration//GEN-END:variables
 }

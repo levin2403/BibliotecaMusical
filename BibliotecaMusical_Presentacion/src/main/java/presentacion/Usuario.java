@@ -47,6 +47,8 @@ public class Usuario extends javax.swing.JFrame {
         panelRound2 = new controlador.PanelRound();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        panelRound4 = new controlador.PanelRound();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -166,9 +168,9 @@ public class Usuario extends javax.swing.JFrame {
                 jLabel4MouseClicked(evt);
             }
         });
-        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 610, -1, -1));
+        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 670, -1, -1));
 
-        panelRound3.setBackground(new java.awt.Color(81, 137, 161));
+        panelRound3.setBackground(new java.awt.Color(42, 89, 109));
         panelRound3.setCursorHandEnabled(true);
         panelRound3.setRoundBottomLeft(50);
         panelRound3.setRoundBottomRight(50);
@@ -177,7 +179,7 @@ public class Usuario extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("ACEPTAR");
+        jLabel2.setText("BANEADO");
 
         javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
         panelRound3.setLayout(panelRound3Layout);
@@ -196,7 +198,7 @@ public class Usuario extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        Fondo.add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 540, 310, 60));
+        Fondo.add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 600, 310, 60));
 
         panelRound2.setBackground(new java.awt.Color(81, 137, 161));
         panelRound2.setMinimumSize(new java.awt.Dimension(300, 300));
@@ -239,6 +241,36 @@ public class Usuario extends javax.swing.JFrame {
             }
         });
         Fondo.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 470, 70, 30));
+
+        panelRound4.setBackground(new java.awt.Color(81, 137, 161));
+        panelRound4.setCursorHandEnabled(true);
+        panelRound4.setRoundBottomLeft(50);
+        panelRound4.setRoundBottomRight(50);
+        panelRound4.setRoundTopLeft(50);
+        panelRound4.setRoundTopRight(50);
+
+        jLabel8.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("ACEPTAR");
+
+        javax.swing.GroupLayout panelRound4Layout = new javax.swing.GroupLayout(panelRound4);
+        panelRound4.setLayout(panelRound4Layout);
+        panelRound4Layout.setHorizontalGroup(
+            panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound4Layout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(jLabel8)
+                .addContainerGap(103, Short.MAX_VALUE))
+        );
+        panelRound4Layout.setVerticalGroup(
+            panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound4Layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        Fondo.add(panelRound4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 520, 310, 60));
 
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 720));
 
@@ -307,6 +339,7 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JTextField jTextField1;
@@ -318,5 +351,6 @@ public class Usuario extends javax.swing.JFrame {
     private controlador.PanelRound panelRound1;
     private controlador.PanelRound panelRound2;
     private controlador.PanelRound panelRound3;
+    private controlador.PanelRound panelRound4;
     // End of variables declaration//GEN-END:variables
 }
