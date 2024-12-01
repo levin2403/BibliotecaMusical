@@ -18,8 +18,7 @@ import java.util.List;
  */
 public interface IFavoritoDAO {
     
-    public void agregarFavorito(Favorito favorito, String idUsuario) 
-            throws DAOException;
+    public void agregarFavorito(Favorito favorito) throws DAOException;
     
     public boolean isFavorito(String idReferencia, String idUsuario) 
             throws DAOException;

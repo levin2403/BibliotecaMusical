@@ -14,6 +14,7 @@ import org.bson.Document;
 public interface IConexionMongo {
     
     public MongoCollection<Document> getCollection(String collectionName);
+    public <T> MongoCollection<T> getCollection(String collectionName, Class<T> clazz);
     public void closeConnection();
     
 }
