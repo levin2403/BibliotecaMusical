@@ -19,6 +19,9 @@ public class Integrante {
     @BsonProperty("estado_actividad")
     private boolean estadoActividad;
 
+    public Integrante() {
+    }
+
     private Integrante(Builder builder) {
         this.nombre = builder.nombre;
         this.fechaIngreso = builder.fechaIngreso;

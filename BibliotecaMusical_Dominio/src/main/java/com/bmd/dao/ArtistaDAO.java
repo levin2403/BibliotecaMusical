@@ -9,7 +9,6 @@ import com.bmd.conexionIntefaces.IConexionMongo;
 import com.bmd.daoInterfaces.IArtistaDAO;
 import com.bmd.entities.Artista;
 import com.bmd.entities.Usuario;
-import com.bmd.enums.Genero;
 import com.mongodb.client.MongoCollection;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
@@ -68,24 +67,8 @@ public class ArtistaDAO implements IArtistaDAO {
     }
 
 
-    /**
-     * Busca Artistas de manera filtrada por los parametros dados en el metodo
-     * si algun parametro es nulo(vacio) no se considera para la busqueda.
-     * La informacion obtenida de este metodo unicamente incluya los campos
-     * necesarios, como: id, nombre he imagen.
-     * 
-     * El id del usuario que hay como parametro se usa para excluir de la
-     * busqueda aquellos albumes que sean del genero que el usuario tiene
-     * restringidos.
-     * 
-     * @param nombre Nombre del artista.
-     * @param genero Genero del artista.
-     * @param idUsuario Identificador del usuario.
-     * @return Retorna una lista de usuarios filtrada.
-     * @throws DAOException En caso de excepcion en la consulta.
-     */
     @Override
-    public List<Artista> buscarPorFiltro(String nombre, Genero genero, String idUsuario) throws DAOException {
+    public List<Artista> buscarPorFiltro(String nombre, String genero, String idUsuario) throws DAOException {
         try {
             MongoCollection<Artista> collection = conexion.getCollection("artistas", Artista.class);
 
@@ -95,7 +78,7 @@ public class ArtistaDAO implements IArtistaDAO {
             if (nombre != null && !nombre.isEmpty()) {
                 filtros.add(eq("nombre", nombre));
             }
-            if (genero != null) {
+            if (genero != null && !genero.isEmpty()) {
                 filtros.add(eq("genero", genero));
             }
             if (idUsuario != null && !idUsuario.isEmpty()) {
@@ -113,15 +96,26 @@ public class ArtistaDAO implements IArtistaDAO {
             );
 
             // Consulta con los filtros y la proyección
-            List<Artista> artistas = collection.find(and(filtros))
-                                               .projection(projection)
-                                               .into(new ArrayList<>());
+            List<Artista> artistas;
+            if (filtros.isEmpty()) {
+                // Si no hay filtros, hacer una consulta sin filtros
+                artistas = collection.find()
+                                     .projection(projection)
+                                     .into(new ArrayList<>());
+            } else {
+                // Consulta con filtros y proyección
+                artistas = collection.find(and(filtros))
+                                     .projection(projection)
+                                     .into(new ArrayList<>());
+            }
 
             return artistas;
         } catch (Exception e) {
             throw new DAOException("Error al buscar artistas por filtro", e);
         }
     }
+
+
 
     /**
      * 

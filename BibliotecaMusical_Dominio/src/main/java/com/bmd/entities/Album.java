@@ -26,6 +26,9 @@ public class Album {
     private Artista artista; 
     private List<String> canciones;
 
+    public Album() {
+    }
+
     private Album(Builder builder) {
         this.id = builder.id;
         this.nombre = builder.nombre;

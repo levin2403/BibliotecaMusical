@@ -9,7 +9,6 @@ import com.bmd.conexionIntefaces.IConexionMongo;
 import com.bmd.daoInterfaces.IAlbumDAO;
 import com.bmd.entities.Album;
 import com.bmd.entities.Usuario;
-import com.bmd.enums.Genero;
 import com.mongodb.client.MongoCollection;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
@@ -54,7 +53,7 @@ public class AlbumDAO implements IAlbumDAO {
             // Proyección para incluir solo los campos necesarios del Artista
             Bson projection = fields(
                 include("id", "nombre", "imagen_portada", "fecha_lanzamiento", "genero", "canciones"),
-                Projections.computed("artista", fields(include("id", "nombre", "imagen")))
+                Projections.computed("artista", fields(include("_id", "nombre")))
             );
 
             // Consulta del álbum por ID
@@ -89,7 +88,7 @@ public class AlbumDAO implements IAlbumDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
-    public List<Album> BuscarPorFiltro(String nombre, LocalDate fecha, Genero genero, String idUsuario) throws DAOException {
+    public List<Album> BuscarPorFiltro(String nombre, LocalDate fecha, String genero, String idUsuario) throws DAOException {
         try {
             MongoCollection<Album> collection = conexion.getCollection("albumes", Album.class);
 
@@ -102,7 +101,7 @@ public class AlbumDAO implements IAlbumDAO {
             if (fecha != null) {
                 filtros.add(eq("fecha_lanzamiento", fecha));
             }
-            if (genero != null) {
+            if (genero != null && !genero.isEmpty()) {
                 filtros.add(eq("genero", genero));
             }
             if (idUsuario != null && !idUsuario.isEmpty()) {
@@ -121,15 +120,25 @@ public class AlbumDAO implements IAlbumDAO {
             );
 
             // Consulta con los filtros y la proyección
-            List<Album> albumes = collection.find(and(filtros))
-                                            .projection(projection)
-                                            .into(new ArrayList<>());
+            List<Album> albumes;
+            if (filtros.isEmpty()) {
+                // Si no hay filtros, hacer una consulta sin filtros
+                albumes = collection.find()
+                                    .projection(projection)
+                                    .into(new ArrayList<>());
+            } else {
+                // Consulta con filtros y proyección
+                albumes = collection.find(and(filtros))
+                                    .projection(projection)
+                                    .into(new ArrayList<>());
+            }
 
             return albumes;
         } catch (Exception e) {
             throw new DAOException("Error al buscar álbumes por filtro", e);
         }
-}
+    }
+
 
     @Override
     public void añadirAlbum(Album album) throws DAOException {
