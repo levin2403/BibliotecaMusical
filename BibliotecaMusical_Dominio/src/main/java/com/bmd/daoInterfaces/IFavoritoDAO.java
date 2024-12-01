@@ -29,16 +29,16 @@ public interface IFavoritoDAO {
     public void eliminarFavorito(String idReferencia, String idUsuario) 
             throws DAOException;
     
-    public void eliminarFavoritoPorGenero(Genero genero, String idUsuario) 
+    public void eliminarFavoritoPorGenero(String genero, String idUsuario) 
             throws DAOException;
     
-    public List<Artista> obtenerArtistasFavoritos(Genero genero, 
+    public List<Artista> obtenerArtistasFavoritos(String genero, 
             LocalDate fechaAgregacion, String idUsuario) throws DAOException;
     
-    public List<String> obtenerCancionesFavoritas(Genero genero, 
+    public List<String> obtenerCancionesFavoritas(String genero, 
             LocalDate fechaAgregacion, String idUsuario) throws DAOException;
     
-    public List<Album> obtenerAlbumesFavoritos(Genero genero, 
+    public List<Album> obtenerAlbumesFavoritos(String genero, 
             LocalDate fechaAgregacion, String idUsuario) throws DAOException;
     
     public void eliminarCancionFavorita(String nombreCancion, 

@@ -25,7 +25,11 @@ public class Usuario {
     private String imagenPerfil;
     private List<Favorito> favoritos;
     @BsonProperty("restringidos")
-    private List<Genero> generosBaneados;
+    private List<String> generosRestringidos;
+
+    public Usuario() {
+      
+    }
     
     private Usuario(Builder builder) { 
         this.id = builder.id;
@@ -34,7 +38,7 @@ public class Usuario {
         this.contrasena = builder.contrasena; 
         this.imagenPerfil = builder.imagenPerfil; 
         this.favoritos = builder.favoritos; 
-        this.generosBaneados = builder.generosBaneados;
+        this.generosRestringidos = builder.generosRestringidos;
     }
 
     public String getId() {
@@ -61,8 +65,36 @@ public class Usuario {
         return favoritos;
     }
 
-    public List<Genero> getGenerosBaneados() {
-        return generosBaneados;
+    public List<String> getGenerosRestringidos() {
+        return generosRestringidos;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public void setImagenPerfil(String imagenPerfil) {
+        this.imagenPerfil = imagenPerfil;
+    }
+
+    public void setFavoritos(List<Favorito> favoritos) {
+        this.favoritos = favoritos;
+    }
+
+    public void setGenerosRestringidos(List<String> generosRestringidos) {
+        this.generosRestringidos = generosRestringidos;
     }
 
     @Override
@@ -70,7 +102,7 @@ public class Usuario {
         return "Usuario{" + "id=" + id + ", nombre=" + nombre + 
                 ", correo=" + correo + ", contrasena=" + contrasena + 
                 ", imagenPerfil=" + imagenPerfil + ", favoritos=" + 
-                favoritos + ", generosBaneados=" + generosBaneados + '}';
+                favoritos + ", generosBaneados=" + generosRestringidos + '}';
     }
     
     public static class Builder {
@@ -80,7 +112,7 @@ public class Usuario {
         private String contrasena;
         private String imagenPerfil;
         private List<Favorito> favoritos;
-        private List<Genero> generosBaneados;
+        private List<String> generosRestringidos;
 
         public Builder setId(String id) {
             this.id = id;
@@ -112,8 +144,8 @@ public class Usuario {
             return this;
         }
 
-        public Builder setGenerosBaneados(List<Genero> generosBaneados) {
-            this.generosBaneados = generosBaneados;
+        public Builder setGenerosRestringidos(List<String> generosRestringidos) {
+            this.generosRestringidos = generosRestringidos;
             return this;
         }
 

@@ -109,8 +109,8 @@ public class AlbumDAO implements IAlbumDAO {
                 // Filtro para excluir géneros restringidos por el usuario
                 MongoCollection<Usuario> usuarioCollection = conexion.getCollection("usuarios", Usuario.class);
                 Usuario usuario = usuarioCollection.find(eq("_id", idUsuario)).first();
-                if (usuario != null && usuario.getGenerosBaneados() != null && !usuario.getGenerosBaneados().isEmpty()) {
-                    filtros.add(nin("genero", usuario.getGenerosBaneados()));
+                if (usuario != null && usuario.getGenerosRestringidos() != null && !usuario.getGenerosRestringidos().isEmpty()) {
+                    filtros.add(nin("genero", usuario.getGenerosRestringidos()));
                 }
             }
 
@@ -130,6 +130,16 @@ public class AlbumDAO implements IAlbumDAO {
             throw new DAOException("Error al buscar álbumes por filtro", e);
         }
 }
+
+    @Override
+    public void añadirAlbum(Album album) throws DAOException {
+        try {
+            MongoCollection<Album> collection = conexion.getCollection("albumes", Album.class);
+            collection.insertOne(album);
+        } catch (Exception e) {
+            throw new DAOException("Error al añadir el álbum", e);
+        }
+    }
 
 
 }

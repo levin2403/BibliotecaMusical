@@ -4,8 +4,6 @@
  */
 package com.bmd.entities;
 
-import com.bmd.enums.Genero;
-import com.bmd.enums.Tipo;
 import java.time.LocalDate;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
@@ -19,8 +17,8 @@ public class Favorito {
     private String idUsuario; 
     @BsonProperty("id_referencia") 
     private String idReferencia; 
-    private Tipo tipo; // Artista, Album, Cancion 
-    private Genero genero;
+    private String tipo; // Artista, Album, Cancion 
+    private String genero;
     @BsonProperty("nombre_cancion")
     private String nombreCancion; 
     @BsonProperty("fecha_agregacion") 
@@ -44,11 +42,11 @@ public class Favorito {
         return idReferencia;
     }
 
-    public Tipo getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public Genero getGenero() {
+    public String getGenero() {
         return genero;
     }
 
@@ -58,6 +56,30 @@ public class Favorito {
 
     public LocalDate getFechaAgregacion() {
         return fechaAgregacion;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public void setIdReferencia(String idReferencia) {
+        this.idReferencia = idReferencia;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public void setNombreCancion(String nombreCancion) {
+        this.nombreCancion = nombreCancion;
+    }
+
+    public void setFechaAgregacion(LocalDate fechaAgregacion) {
+        this.fechaAgregacion = fechaAgregacion;
     }
 
     @Override
@@ -70,8 +92,8 @@ public class Favorito {
     public static class Builder{
         String idUsuario;
         String idReferencia;
-        Tipo tipo;
-        Genero genero;
+        String tipo;
+        String genero;
         String nombreCancion;
         LocalDate fechaAgregacion;
 
@@ -85,12 +107,12 @@ public class Favorito {
             return this;
         }
 
-        public Builder setTipo(Tipo tipo) {
+        public Builder setTipo(String tipo) {
             this.tipo = tipo;
             return this;
         }
 
-        public Builder setGenero(Genero genero) {
+        public Builder setGenero(String genero) {
             this.genero = genero;
             return this;
         }

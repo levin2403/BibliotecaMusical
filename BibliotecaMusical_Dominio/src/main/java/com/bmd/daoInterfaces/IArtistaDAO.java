@@ -16,6 +16,8 @@ import java.util.List;
  */
 public interface IArtistaDAO {
     
+    public void añadirArtista(Artista artista) throws DAOException;
+    
     public Artista buscarPorId(String id) throws DAOException;
     
     public List<Artista> buscarPorFiltro(String nombre, Genero genero, String idUsuario) 

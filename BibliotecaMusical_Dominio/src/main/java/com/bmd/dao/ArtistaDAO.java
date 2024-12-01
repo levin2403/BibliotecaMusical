@@ -52,8 +52,8 @@ public class ArtistaDAO implements IArtistaDAO {
 
             // Proyección para incluir solo los campos necesarios del Album
             Bson projection = fields(
-                include("id", "tipoArtista", "nombre", "imagen", "genero", "integrantes", "estadoActividad"),
-                Projections.computed("albums", fields(include("id", "nombre", "imagenPortada")))
+                include("id", "tipo_artista", "nombre", "imagen", "genero", "integrantes", "estado_actividad"),
+                Projections.computed("albums", fields(include("id", "nombre", "imagen_portada")))
             );
 
             // Consulta del artista por ID
@@ -102,8 +102,8 @@ public class ArtistaDAO implements IArtistaDAO {
                 // Filtro para excluir géneros restringidos por el usuario
                 MongoCollection<Usuario> usuarioCollection = conexion.getCollection("usuarios", Usuario.class);
                 Usuario usuario = usuarioCollection.find(eq("_id", idUsuario)).first();
-                if (usuario != null && usuario.getGenerosBaneados() != null && !usuario.getGenerosBaneados().isEmpty()) {
-                    filtros.add(nin("genero", usuario.getGenerosBaneados()));
+                if (usuario != null && usuario.getGenerosRestringidos() != null && !usuario.getGenerosRestringidos().isEmpty()) {
+                    filtros.add(nin("genero", usuario.getGenerosRestringidos()));
                 }
             }
 
@@ -120,6 +120,21 @@ public class ArtistaDAO implements IArtistaDAO {
             return artistas;
         } catch (Exception e) {
             throw new DAOException("Error al buscar artistas por filtro", e);
+        }
+    }
+
+    /**
+     * 
+     * @param artista
+     * @throws DAOException 
+     */
+    @Override
+    public void añadirArtista(Artista artista) throws DAOException {
+        try {
+            MongoCollection<Artista> collection = conexion.getCollection("artistas", Artista.class);
+            collection.insertOne(artista);
+        } catch (Exception e) {
+            throw new DAOException("Error al añadir el artista", e);
         }
     }
     

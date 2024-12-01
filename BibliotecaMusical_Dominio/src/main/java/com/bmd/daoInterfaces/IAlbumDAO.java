@@ -16,6 +16,8 @@ import java.util.List;
  */
 public interface IAlbumDAO {
     
+    public void añadirAlbum(Album album) throws DAOException;
+    
     public Album obtenerAlbum(String id) throws DAOException;
     
     public List<Album>  BuscarPorFiltro(String nombre, LocalDate fecha, 

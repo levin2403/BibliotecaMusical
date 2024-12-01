@@ -54,7 +54,7 @@ public class ConexionMongo implements IConexionMongo {
             .build();
         mongoClient = MongoClients.create(settings);
         // Selecciona la base de datos
-        database = mongoClient.getDatabase("bibliotecaMusical#");
+        database = mongoClient.getDatabase("bibliotecaMusical#4");
     }
 
     /**

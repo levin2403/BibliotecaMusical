@@ -60,9 +60,6 @@ public class FavoritoDAO implements IFavoritoDAO {
         }
     }
 
-
-
-
     /**
      * Metodo que verifica si ya hay algun registro en favorito con el id de 
      * referencia y id del usuario dados en el parametro, si si hay un registro
@@ -78,7 +75,7 @@ public class FavoritoDAO implements IFavoritoDAO {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
             Usuario usuario = collection.find(and(eq("_id", idUsuario), 
-                                                  elemMatch("favoritos", eq("idReferencia", idReferencia))))
+                                                  elemMatch("favoritos", eq("id_referencia", idReferencia))))
                                         .first();
             return usuario != null;
         } catch (Exception e) {
@@ -94,7 +91,7 @@ public class FavoritoDAO implements IFavoritoDAO {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
             collection.updateOne(eq("_id", idUsuario), 
-                                 Updates.pull("favoritos", eq("idReferencia", idReferencia)));
+                                 Updates.pull("favoritos", eq("id_referencia", idReferencia)));
         } catch (Exception e) {
             throw new DAOException("Error al eliminar el favorito", e);
         }
@@ -114,7 +111,7 @@ public class FavoritoDAO implements IFavoritoDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
-    public void eliminarFavoritoPorGenero(Genero genero, String idUsuario) throws DAOException {
+    public void eliminarFavoritoPorGenero(String genero, String idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
             Usuario usuario = collection.find(eq("_id", idUsuario)).first();
@@ -153,7 +150,7 @@ public class FavoritoDAO implements IFavoritoDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */ 
     @Override
-    public List<Artista> obtenerArtistasFavoritos(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
+    public List<Artista> obtenerArtistasFavoritos(String genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
 
@@ -164,14 +161,14 @@ public class FavoritoDAO implements IFavoritoDAO {
 
             List<Artista> artistasFavoritos = new ArrayList<>();
             for (Favorito favorito : usuario.getFavoritos()) {
-                if (favorito.getTipo() == Tipo.ARTISTA && 
+                if (favorito.getTipo() == "ARTISTA" && 
                     (genero == null || favorito.getGenero() == genero) && 
                     (fechaAgregacion == null || favorito.getFechaAgregacion().equals(fechaAgregacion))) {
 
                     MongoCollection<Artista> artistaCollection = conexion.getCollection("artistas", Artista.class);
                     Bson projection = fields(
-                        include("id", "tipoArtista", "nombre", "imagen", "genero", "estadoActividad"),
-                        Projections.computed("albums", fields(include("id", "nombre", "imagenPortada")))
+                        include("id", "tipoArtista", "nombre", "imagen", "genero", "estado_actividad"),
+                        Projections.computed("albums", fields(include("id", "nombre", "imagen_portada")))
                     );
                     Artista artista = artistaCollection.find(eq("_id", favorito.getIdReferencia()))
                                                        .projection(projection)
@@ -204,7 +201,7 @@ public class FavoritoDAO implements IFavoritoDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
-    public List<String> obtenerCancionesFavoritas(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
+    public List<String> obtenerCancionesFavoritas(String genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
 
@@ -215,7 +212,7 @@ public class FavoritoDAO implements IFavoritoDAO {
 
             List<String> cancionesFavoritas = new ArrayList<>();
             for (Favorito favorito : usuario.getFavoritos()) {
-                if (favorito.getTipo() == Tipo.CANCION && 
+                if (favorito.getTipo() == "CANCION" && 
                     (genero == null || favorito.getGenero() == genero) && 
                     (fechaAgregacion == null || favorito.getFechaAgregacion().equals(fechaAgregacion))) {
 
@@ -229,9 +226,6 @@ public class FavoritoDAO implements IFavoritoDAO {
         }
     }
 
-
-
-
     /**
      * 
      * @param genero Genero del album donde esta presente la cancion.
@@ -241,7 +235,7 @@ public class FavoritoDAO implements IFavoritoDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
-    public List<Album> obtenerAlbumesFavoritos(Genero genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
+    public List<Album> obtenerAlbumesFavoritos(String genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
 
@@ -252,7 +246,7 @@ public class FavoritoDAO implements IFavoritoDAO {
 
             List<Album> albumesFavoritos = new ArrayList<>();
             for (Favorito favorito : usuario.getFavoritos()) {
-                if (favorito.getTipo() == Tipo.ALBUM && 
+                if (favorito.getTipo() == "ALBUM" && 
                     (genero == null || favorito.getGenero() == genero) && 
                     (fechaAgregacion == null || favorito.getFechaAgregacion().equals(fechaAgregacion))) {
 
@@ -270,7 +264,6 @@ public class FavoritoDAO implements IFavoritoDAO {
         }
     }
 
-
     /**
      * 
      * @param nombreCancion
@@ -284,7 +277,7 @@ public class FavoritoDAO implements IFavoritoDAO {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
             Usuario usuario = collection.find(and(eq("_id", idUsuario), 
-                                                  elemMatch("favoritos", and(eq("idReferencia", idReferencia), eq("nombreCancion", nombreCancion)))))
+                                                  elemMatch("favoritos", and(eq("id_referencia", idReferencia), eq("nombre_cancion", nombreCancion)))))
                                         .first();
             return usuario != null;
         } catch (Exception e) {
@@ -299,7 +292,7 @@ public class FavoritoDAO implements IFavoritoDAO {
 
             // Filtrar el usuario por su ID y buscar la canción específica en sus favoritos
             collection.updateOne(eq("_id", idUsuario), 
-                                 Updates.pull("favoritos", Filters.and(eq("nombreCancion", nombreCancion), eq("tipo", Tipo.CANCION))));
+                                 Updates.pull("favoritos", Filters.and(eq("nombre_cancion", nombreCancion), eq("tipo", "CANCION"))));
         } catch (Exception e) {
             throw new DAOException("Error al eliminar la canción favorita", e);
         }

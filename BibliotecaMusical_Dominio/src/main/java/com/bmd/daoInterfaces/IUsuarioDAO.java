@@ -6,7 +6,6 @@ package com.bmd.daoInterfaces;
 
 import com.bdm.excepciones.DAOException;
 import com.bmd.entities.Usuario;
-import com.bmd.enums.Genero;
 import java.util.List;
 
 /**
@@ -23,12 +22,12 @@ public interface IUsuarioDAO {
     
     public void actualizarUsuario(Usuario usuario) throws DAOException;
     
-    public void añadirRestringido(Genero genero, String idUsuario) throws DAOException;
+    public void añadirRestringido(String genero, String idUsuario) throws DAOException;
     
-    public void eliminarRestringido(Genero genero, String idUsuario) throws DAOException;
+    public void eliminarRestringido(String genero, String idUsuario) throws DAOException;
     
-    public List<Genero> obtenerRestringidos(String idUsuario) throws DAOException;
+    public List<String> obtenerRestringidos(String idUsuario) throws DAOException;
     
-    public boolean verificarExistenciaRestringido(Genero genero, String idUsuario);
+    public boolean verificarExistenciaRestringido(String genero, String idUsuario) throws DAOException;
     
 }
