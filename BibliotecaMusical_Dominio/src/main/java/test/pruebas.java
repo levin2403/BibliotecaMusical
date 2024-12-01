@@ -13,7 +13,6 @@ import com.bmd.entities.Usuario;
 import com.mongodb.client.MongoCollection;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  *
@@ -63,6 +62,9 @@ public class pruebas {
             .setGenerosRestringidos(Arrays.asList("Afrobeat"))
             .build();
 
+        //todaas las de usuarios ya funcionan
+        
+        
 //        boolean existe = usuarioDAO.verificarExistenciaRestringido("Afrobeat", "user3_id");
 //        
 //         if (existe) {

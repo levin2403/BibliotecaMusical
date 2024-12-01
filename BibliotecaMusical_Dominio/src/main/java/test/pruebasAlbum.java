@@ -6,8 +6,8 @@ package test;
 
 import com.bdm.conexion.ConexionMongo;
 import com.bmd.conexionIntefaces.IConexionMongo;
-import com.bmd.dao.FavoritoDAO;
-import com.bmd.daoInterfaces.IFavoritoDAO;
+import com.bmd.dao.AlbumDAO;
+import com.bmd.daoInterfaces.IAlbumDAO;
 import com.bmd.entities.Usuario;
 import com.mongodb.client.MongoCollection;
 
@@ -15,7 +15,7 @@ import com.mongodb.client.MongoCollection;
  *
  * @author skevi
  */
-public class pruebasFavoritos {
+public class pruebasAlbum {
 
     /**
      * @param args the command line arguments
@@ -26,14 +26,14 @@ public class pruebasFavoritos {
         System.out.println("Conexión a MongoDB exitosa: " + (collection != null));
         
         IConexionMongo conexion = new ConexionMongo();
-        IFavoritoDAO favoritoDAO = new FavoritoDAO(conexion);  
+        IAlbumDAO albumDAO = new AlbumDAO(conexion);  
         
-        //ids de usuarios
+          //ids de usuarios
 //        "user1-id"
 //        "user2-id"
 //        "user3_id"
-        
-        
+
+
     }
     
 }

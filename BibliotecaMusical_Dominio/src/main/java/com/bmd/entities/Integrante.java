@@ -4,21 +4,20 @@
  */
 package com.bmd.entities;
 
-import com.bmd.enums.Rol;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import java.time.LocalDate;
 
 public class Integrante {
     
     @BsonProperty("nombre")
-    private final String nombre;
+    private String nombre;
     @BsonProperty("fecha_ingreso")
-    private final LocalDate fechaIngreso;
+    private LocalDate fechaIngreso;
     @BsonProperty("fecha_salida")
-    private final LocalDate fechaSalida;
-    private final Rol rol;
+    private LocalDate fechaSalida;
+    private String rol;
     @BsonProperty("estado_actividad")
-    private final boolean estadoActividad;
+    private boolean estadoActividad;
 
     private Integrante(Builder builder) {
         this.nombre = builder.nombre;
@@ -40,12 +39,32 @@ public class Integrante {
         return fechaSalida;
     }
 
-    public Rol getRol() {
+    public String getRol() {
         return rol;
     }
 
     public boolean isEstadoActividad() {
         return estadoActividad;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setFechaIngreso(LocalDate fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
+    public void setFechaSalida(LocalDate fechaSalida) {
+        this.fechaSalida = fechaSalida;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public void setEstadoActividad(boolean estadoActividad) {
+        this.estadoActividad = estadoActividad;
     }
     
     @Override
@@ -63,7 +82,7 @@ public class Integrante {
         private String nombre;
         private LocalDate fechaIngreso;
         private LocalDate fechaSalida;
-        private Rol rol;
+        private String rol;
         private boolean estadoActividad;
 
         public Builder setNombre(String nombre) {
@@ -81,7 +100,7 @@ public class Integrante {
             return this;
         }
 
-        public Builder setRol(Rol rol) {
+        public Builder setRol(String rol) {
             this.rol = rol;
             return this;
         }

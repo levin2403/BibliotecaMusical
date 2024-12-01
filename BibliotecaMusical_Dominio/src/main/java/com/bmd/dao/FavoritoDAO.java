@@ -11,8 +11,6 @@ import com.bmd.entities.Album;
 import com.bmd.entities.Artista;
 import com.bmd.entities.Favorito;
 import com.bmd.entities.Usuario;
-import com.bmd.enums.Genero;
-import com.bmd.enums.Tipo;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.and;

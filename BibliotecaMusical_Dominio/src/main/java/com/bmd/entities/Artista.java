@@ -4,8 +4,6 @@
  */
 package com.bmd.entities;
 
-import com.bmd.enums.Genero;
-import com.bmd.enums.TipoArtista;
 import java.util.List;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -19,12 +17,15 @@ public class Artista {
     @BsonId 
     private String id; 
     @BsonProperty("tipo_artista") 
-    private TipoArtista tipoArtista; 
+    private String tipoArtista; 
     private String nombre; 
     private String imagen; 
-    private Genero genero; 
+    private String genero; 
     private List<Integrante> integrantes; 
     private List<Album> albums;
+
+    public Artista() {
+    }
 
     private Artista(Builder builder) {
         this.id = builder.id;
@@ -40,7 +41,7 @@ public class Artista {
         return id;
     }
 
-    public TipoArtista getTipoArtista() {
+    public String getTipoArtista() {
         return tipoArtista;
     }
 
@@ -52,7 +53,7 @@ public class Artista {
         return imagen;
     }
 
-    public Genero getGenero() {
+    public String getGenero() {
         return genero;
     }
 
@@ -68,6 +69,30 @@ public class Artista {
         this.albums = albums;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTipoArtista(String tipoArtista) {
+        this.tipoArtista = tipoArtista;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public void setIntegrantes(List<Integrante> integrantes) {
+        this.integrantes = integrantes;
+    }
+
     @Override
     public String toString() {
         return "id: " + id + 
@@ -81,10 +106,10 @@ public class Artista {
     
     public static class Builder {
         private String id;
-        private TipoArtista tipoArtista;
+        private String tipoArtista;
         private String nombre;
         private String imagen;
-        private Genero genero;
+        private String genero;
         private List<Integrante> integrantes;
         private List<Album> albums;
 
@@ -93,7 +118,7 @@ public class Artista {
             return this;
         }
 
-        public Builder setTipoArtista(TipoArtista tipoArtista){
+        public Builder setTipoArtista(String tipoArtista){
             this.tipoArtista = tipoArtista;
             return this;
         }
@@ -108,7 +133,7 @@ public class Artista {
             return this;
         }
 
-        public Builder setGenero(Genero genero) {
+        public Builder setGenero(String genero) {
             this.genero = genero;
             return this;
         }

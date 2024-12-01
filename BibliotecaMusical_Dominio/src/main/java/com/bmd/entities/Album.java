@@ -4,7 +4,6 @@
  */
 package com.bmd.entities;
 
-import com.bmd.enums.Genero;
 import org.bson.codecs.pojo.annotations.BsonId; 
 import org.bson.codecs.pojo.annotations.BsonProperty; 
 import java.time.LocalDate; 
@@ -23,7 +22,7 @@ public class Album {
     private String imagenPortada; 
     @BsonProperty("fecha_lanzamiento") 
     private LocalDate fechaLanzamiento; 
-    private Genero genero; 
+    private String genero; 
     private Artista artista; 
     private List<String> canciones;
 
@@ -53,7 +52,7 @@ public class Album {
         return fechaLanzamiento;
     }
 
-    public Genero getGenero() {
+    public String getGenero() {
         return genero;
     }
 
@@ -67,6 +66,30 @@ public class Album {
 
     public void setCanciones(List<String> canciones) {
         this.canciones = canciones;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setImagenPortada(String imagenPortada) {
+        this.imagenPortada = imagenPortada;
+    }
+
+    public void setFechaLanzamiento(LocalDate fechaLanzamiento) {
+        this.fechaLanzamiento = fechaLanzamiento;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public void setArtista(Artista artista) {
+        this.artista = artista;
     }
 
     @Override
@@ -84,7 +107,7 @@ public class Album {
         private String nombre;
         private String imagenPortada;
         private LocalDate fechaLanzamiento;
-        private Genero genero;
+        private String genero;
         private Artista artista;
         private List<String> canciones;
 
@@ -108,7 +131,7 @@ public class Album {
             return this;
         }
 
-        public Builder setGenero(Genero genero) {
+        public Builder setGenero(String genero) {
             this.genero = genero;
             return this;
         }
