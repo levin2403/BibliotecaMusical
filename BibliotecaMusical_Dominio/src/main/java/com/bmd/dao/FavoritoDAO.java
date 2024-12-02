@@ -198,10 +198,12 @@ public class FavoritoDAO implements IFavoritoDAO {
                     (fechaAgregacion == null || fechaAgregacion.equals(favorito.getFechaAgregacion()))) {
 
                     MongoCollection<Artista> artistaCollection = conexion.getCollection("artistas", Artista.class);
+                    
                     Bson projection = fields(
-                        include("id", "tipoArtista", "nombre", "imagen", "genero", "estado_actividad"),
+                        include("id", "nombre", "imagen"),
                         Projections.computed("albums", fields(include("id", "nombre", "imagen_portada")))
                     );
+                    
                     Artista artista = artistaCollection.find(eq("_id", favorito.getIdReferencia()))
                                                        .projection(projection)
                                                        .first();
@@ -281,7 +283,14 @@ public class FavoritoDAO implements IFavoritoDAO {
                     (fechaAgregacion == null || fechaAgregacion.equals(favorito.getFechaAgregacion()))) {
 
                     MongoCollection<Album> albumCollection = conexion.getCollection("albumes", Album.class);
-                    Album album = albumCollection.find(eq("_id", favorito.getIdReferencia())).first();
+                    // Proyección para incluir solo los campos necesarios del Álbum y del Artista
+                    Bson projection = fields(
+                        include("id", "nombre", "imagen_portada"),
+                        Projections.computed("artista", fields(include("id", "nombre", "imagen")))
+                    );
+                    Album album = albumCollection.find(eq("_id", favorito.getIdReferencia()))
+                                                 .projection(projection)
+                                                 .first();
                     if (album != null) {
                         albumesFavoritos.add(album);
                     }
@@ -293,6 +302,7 @@ public class FavoritoDAO implements IFavoritoDAO {
             throw new DAOException("Error al obtener los álbumes favoritos", e);
         }
     }
+
 
 
     /**
