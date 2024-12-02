@@ -10,7 +10,7 @@ import com.bmd.entities.Artista;
 import com.bmd.enums.Genero;
 import com.bmn.convertidores.ArtistaCVR;
 import com.bmn.dto.ArtistaDTO;
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerArtistasFiltradosBO;
 import java.util.ArrayList;
@@ -39,12 +39,12 @@ public class ObtenerArtistasFiltradosBO implements IObtenerArtistasFiltradosBO {
      * @throws BOException 
      */
     @Override
-    public List<ArtistaDTO> obtenerArtistasFiltrados(String nombre, GeneroDTO genero, String idUsuario) throws BOException {
+    public List<ArtistaDTO> obtenerArtistasFiltrados(String nombre, Genero genero, String idUsuario) throws BOException {
         return procesar(nombre, genero, idUsuario);
     }
     
     
-    private List<ArtistaDTO> procesar(String nombre, GeneroDTO generoDTO, String idUsuario) throws BOException {
+    private List<ArtistaDTO> procesar(String nombre, Genero generoDTO, String idUsuario) throws BOException {
         try{
             
             Genero genero = Genero.valueOf(generoDTO.name());

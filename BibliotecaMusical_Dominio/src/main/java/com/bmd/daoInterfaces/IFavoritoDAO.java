@@ -8,7 +8,6 @@ import com.bdm.excepciones.DAOException;
 import com.bmd.entities.Album;
 import com.bmd.entities.Artista;
 import com.bmd.entities.Favorito;
-import com.bmd.enums.Genero;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public interface IFavoritoDAO {
     public boolean verificarCancionFavorita(String nombreCancion, 
             String idReferencia, String idUsuario) throws DAOException;
     
-    public void eliminarFavorito(String idReferencia, String idUsuario) 
+    public void eliminarFavorito(String idReferencia, String idUsuario, String tipo) 
             throws DAOException;
     
     public void eliminarFavoritoPorGenero(String genero, String idUsuario) 

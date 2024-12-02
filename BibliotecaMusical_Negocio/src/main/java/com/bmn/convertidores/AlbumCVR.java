@@ -7,7 +7,7 @@ package com.bmn.convertidores;
 import com.bmd.entities.Album;
 import com.bmn.dto.AlbumDTO;
 import com.bmn.dto.CancionDTO;
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class AlbumCVR {
                 setNombre(album.getNombre()).
                 setImagenPortada(album.getImagenPortada()).
                 setFechaLanzamiento(album.getFechaLanzamiento()).
-                setGenero(GeneroDTO.valueOf(album.getGenero().name())).
+                setGenero(Genero.valueOf(album.getGenero().name())).
                 setArtista(artistaCVR.toDTO(album.getArtista())).
                 setCanciones(listaCanciones(album.getCanciones())).
                 build();

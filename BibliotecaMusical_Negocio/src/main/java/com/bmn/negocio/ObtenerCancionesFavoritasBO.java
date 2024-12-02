@@ -8,7 +8,7 @@ import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IFavoritoDAO;
 import com.bmd.enums.Genero;
 import com.bmn.dto.CancionDTO;
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerCancionesFavoritasBO;
 import java.time.LocalDate;
@@ -28,11 +28,11 @@ public class ObtenerCancionesFavoritasBO implements IObtenerCancionesFavoritasBO
     }
     
     @Override
-    public List<CancionDTO> obtenerCancionesFavoritas(GeneroDTO genero, LocalDate fecha, String idUsuario) throws BOException {
+    public List<CancionDTO> obtenerCancionesFavoritas(Genero genero, LocalDate fecha, String idUsuario) throws BOException {
         return procesar(genero, fecha, idUsuario);
     }
     
-    private List<CancionDTO> procesar(GeneroDTO generoDTO, LocalDate fecha, String idUsuario) throws BOException {
+    private List<CancionDTO> procesar(Genero generoDTO, LocalDate fecha, String idUsuario) throws BOException {
         try{
             Genero genero = Genero.valueOf(generoDTO.name());
             

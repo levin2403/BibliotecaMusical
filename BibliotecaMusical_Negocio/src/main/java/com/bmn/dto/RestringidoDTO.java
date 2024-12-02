@@ -4,7 +4,7 @@
  */
 package com.bmn.dto;
 
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 
 /**
  *
@@ -12,22 +12,22 @@ import com.bmn.dto.constantes.GeneroDTO;
  */
 public class RestringidoDTO {
     
-    private GeneroDTO genero; 
+    private Genero genero; 
     private UsuarioDTO usuario;
 
     public RestringidoDTO() {
     }
 
-    public RestringidoDTO(GeneroDTO genero, UsuarioDTO usuario) {
+    public RestringidoDTO(Genero genero, UsuarioDTO usuario) {
         this.genero = genero;
         this.usuario = usuario;
     }
 
-    public GeneroDTO getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(GeneroDTO genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
 

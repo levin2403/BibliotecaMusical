@@ -4,7 +4,7 @@
  */
 package com.bmn.dto;
 
-import com.bmn.dto.constantes.TipoDTO;
+import com.bmn.dto.constantes.Tipo;
 import java.time.LocalDate;
 
 /**
@@ -16,7 +16,7 @@ public class FavoritoDTO {
     private String idUsuario;
     private String idReferencia;
     private String nombreCancion;
-    private TipoDTO tipo;
+    private Tipo tipo;
     private LocalDate fechaAgregacion;
 
     public FavoritoDTO() {
@@ -39,7 +39,11 @@ public class FavoritoDTO {
         return idReferencia;
     }
 
-    public TipoDTO getTipo() {
+    public String getNombreCancion() {
+        return nombreCancion;
+    }
+
+    public Tipo getTipo() {
         return tipo;
     }
 
@@ -59,7 +63,7 @@ public class FavoritoDTO {
         private String idUsuario;
         private String idReferencia;
         private String nombreCancion;
-        private TipoDTO tipo;
+        private Tipo tipo;
         private LocalDate fechaAgregacion;
 
         public Builder setIdUsuario(String idUsuario) {
@@ -77,7 +81,7 @@ public class FavoritoDTO {
             return this;
         }
 
-        public Builder setTipo(TipoDTO tipo) {
+        public Builder setTipo(Tipo tipo) {
             this.tipo = tipo;
             return this;
         }

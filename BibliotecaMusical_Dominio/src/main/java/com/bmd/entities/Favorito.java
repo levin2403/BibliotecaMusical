@@ -24,6 +24,9 @@ public class Favorito {
     @BsonProperty("fecha_agregacion") 
     private LocalDate fechaAgregacion;
 
+    public Favorito() {
+    }
+
     public Favorito(Builder builder) {
         this.idUsuario = builder.idUsuario;
         this.idReferencia = builder.idReferencia;

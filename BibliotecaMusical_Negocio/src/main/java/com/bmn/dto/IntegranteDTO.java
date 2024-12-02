@@ -4,6 +4,7 @@
  */
 package com.bmn.dto;
 
+import com.bmn.dto.constantes.Rol;
 import java.time.LocalDate;
 
 /**
@@ -15,7 +16,7 @@ public class IntegranteDTO {
     private final String nombre;
     private final LocalDate fechaIngreso;
     private final LocalDate fechaSalida;
-    private final String rol;
+    private final Rol rol;
     private final boolean estadoActividad;
 
     private IntegranteDTO(Builder builder) {
@@ -38,7 +39,7 @@ public class IntegranteDTO {
         return fechaSalida;
     }
 
-    public String getRol() {
+    public Rol getRol() {
         return rol;
     }
 
@@ -61,7 +62,7 @@ public class IntegranteDTO {
         private String nombre;
         private LocalDate fechaIngreso;
         private LocalDate fechaSalida;
-        private String rol;
+        private Rol rol;
         private boolean estadoActividad;
 
         public Builder setNombre(String nombre) {
@@ -79,7 +80,7 @@ public class IntegranteDTO {
             return this;
         }
 
-        public Builder setRol(String rol) {
+        public Builder setRol(Rol rol) {
             this.rol = rol;
             return this;
         }

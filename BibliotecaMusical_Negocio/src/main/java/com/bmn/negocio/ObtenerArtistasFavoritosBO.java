@@ -10,7 +10,7 @@ import com.bmd.entities.Artista;
 import com.bmd.enums.Genero;
 import com.bmn.convertidores.ArtistaCVR;
 import com.bmn.dto.ArtistaDTO;
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerArtistasFavoritosBO;
 import java.time.LocalDate;
@@ -32,11 +32,11 @@ public class ObtenerArtistasFavoritosBO implements IObtenerArtistasFavoritosBO {
     }
     
     @Override
-    public List<ArtistaDTO> obtenerArtistasFavoritos(GeneroDTO genero, LocalDate fecha, String idUsuario) throws BOException {
+    public List<ArtistaDTO> obtenerArtistasFavoritos(Genero genero, LocalDate fecha, String idUsuario) throws BOException {
         return procesar(genero, fecha, idUsuario);
     }
     
-    private List<ArtistaDTO> procesar(GeneroDTO generoDTO, LocalDate fecha, String idUsuario) throws BOException{
+    private List<ArtistaDTO> procesar(Genero generoDTO, LocalDate fecha, String idUsuario) throws BOException{
         try{
             
             Genero genero = Genero.valueOf(generoDTO.name());

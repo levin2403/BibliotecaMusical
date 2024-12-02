@@ -8,7 +8,7 @@ package com.bmn.dto.constantes;
  *
  * @author skevi
  */
-public enum GeneroDTO {
+public enum Genero {
     Rock,
     Pop,
     Hip_Hop,

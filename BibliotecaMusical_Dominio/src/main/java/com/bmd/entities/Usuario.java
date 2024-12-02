@@ -5,7 +5,6 @@
 
 package com.bmd.entities;
 
-import com.bmd.enums.Genero;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import java.util.List;

@@ -4,7 +4,7 @@
  */
 package com.bmn.dto;
 
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class AlbumDTO {
     private String nombre;
     private String imagenPortada;
     private LocalDate fechaLanzamiento;
-    private GeneroDTO genero;
+    private Genero genero;
     private ArtistaDTO artista;
     private List<CancionDTO> canciones;
     private boolean favorito;
@@ -49,7 +49,7 @@ public class AlbumDTO {
         return fechaLanzamiento;
     }
 
-    public GeneroDTO getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
@@ -84,7 +84,7 @@ public class AlbumDTO {
         private String nombre;
         private String imagenPortada;
         private LocalDate fechaLanzamiento;
-        private GeneroDTO genero;
+        private Genero genero;
         private ArtistaDTO artista;
         private List<CancionDTO> canciones;
 
@@ -108,7 +108,7 @@ public class AlbumDTO {
             return this;
         }
 
-        public Builder setGenero(GeneroDTO genero) {
+        public Builder setGenero(Genero genero) {
             this.genero = genero;
             return this;
         }

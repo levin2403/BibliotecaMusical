@@ -1,7 +1,6 @@
 package com.bdm.inserciones;
 
 import com.bmd.entities.Artista;
-import com.bmd.enums.Genero;
 import java.util.ArrayList;
 import java.util.List;
 

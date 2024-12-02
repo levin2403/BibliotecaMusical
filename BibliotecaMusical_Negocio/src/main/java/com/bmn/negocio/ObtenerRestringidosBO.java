@@ -7,7 +7,7 @@ package com.bmn.negocio;
 import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IUsuarioDAO;
 import com.bmd.enums.Genero;
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerRestringidosBO;
 import java.util.ArrayList;
@@ -26,18 +26,18 @@ public class ObtenerRestringidosBO implements IObtenerRestringidosBO {
     }
     
     @Override
-    public List<GeneroDTO> obtenerRestringidos(String idUsuario) throws BOException {
+    public List<Genero> obtenerRestringidos(String idUsuario) throws BOException {
         return procesar(idUsuario);
     }
     
-    private List<GeneroDTO> procesar(String idUsuario) throws BOException {
+    private List<Genero> procesar(String idUsuario) throws BOException {
         try{
             
             List<Genero> baneados = usuarioDAO.obtenerRestringidos(idUsuario);
-            List<GeneroDTO> baneadosDTO = new ArrayList<>();
+            List<Genero> baneadosDTO = new ArrayList<>();
             
             for (Genero genero : baneados) {
-                baneadosDTO.add(GeneroDTO.valueOf(genero.name()));
+                baneadosDTO.add(Genero.valueOf(genero.name()));
             }
             
             return baneadosDTO;

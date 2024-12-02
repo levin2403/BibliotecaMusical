@@ -10,7 +10,7 @@ import com.bmd.entities.Album;
 import com.bmd.enums.Genero;
 import com.bmn.convertidores.AlbumCVR;
 import com.bmn.dto.AlbumDTO;
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerAlbumesFavoritosBO;
 import com.bmn.singletonUsuario.UsuarioST;
@@ -34,12 +34,12 @@ public class ObtenerAlbumesFavoritosBO implements IObtenerAlbumesFavoritosBO {
     }
 
     @Override
-    public List<AlbumDTO> obtenerAlbumesFavoritos(GeneroDTO genero, LocalDate fechaAgregacion) throws BOException {
+    public List<AlbumDTO> obtenerAlbumesFavoritos(Genero genero, LocalDate fechaAgregacion) throws BOException {
         return procesar(genero, fechaAgregacion);
     }
     
     //aqui obtendras y convertiras los albumes
-    private List<AlbumDTO> procesar(GeneroDTO generoDTO, LocalDate fechaAgregacion) throws BOException {
+    private List<AlbumDTO> procesar(Genero generoDTO, LocalDate fechaAgregacion) throws BOException {
         try{
             //trasnformamos el genero
             Genero genero = Genero.valueOf(generoDTO.name());

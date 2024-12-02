@@ -98,7 +98,9 @@ public class pruebas {
 //        Usuario usuario = usuarioDAO.buscaPorCorreo("maria.lopez@gmail.com");
 //        System.out.println(usuario.toString());
 
-//        usuarioDAO.añadirUsuario(usuario3);
+//        usuarioDAO.añadirUsuario(usuario1);
+//        usuarioDAO.añadirUsuario(usuario2);
+        usuarioDAO.añadirUsuario(usuario3);
 
         
     }

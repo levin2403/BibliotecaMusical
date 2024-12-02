@@ -8,8 +8,11 @@ package com.bmn.dto.constantes;
  *
  * @author skevi
  */
-public enum TipoDTO {
-    ARTISTA,
-    ALBUM,
-    CANCION
+public enum Rol {
+    Vocalista,
+    Corista,
+    Guitarrista,
+    Bajista,
+    Baterista,
+    Pianista
 }

@@ -8,29 +8,24 @@ package com.bmn.dto;
  *
  * @author skevi
  */
-public class UsuarioDTO {
+public class UsuarioActualizarDTO {
     
     private String id;
     private String nombre;
     private String correo;
     private String contrasena;
+    private String contrasenaConfirmar;
     private String imagenPerfil;
-
-    public UsuarioDTO() {
-    }
     
-    private UsuarioDTO (Builder builder) { 
+    private UsuarioActualizarDTO (Builder builder) {
         this.id = builder.id;
         this.nombre = builder.nombre; 
         this.correo = builder.correo; 
         this.contrasena = builder.contrasena; 
+        this.contrasenaConfirmar = builder.contrasenaConfirmar;
         this.imagenPerfil = builder.imagenPerfil; 
     }
-
-    public String getId() {
-        return id;
-    }
-
+    
     public String getNombre() {
         return nombre;
     }
@@ -43,33 +38,27 @@ public class UsuarioDTO {
         return contrasena;
     }
 
-    public String getImagenPerfil() {
-        return imagenPerfil;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
 
-    
+    public String getContrasenaConfirmar() {
+        return contrasenaConfirmar;
+    }
+
+    public String getImagenPerfil() {
+        return imagenPerfil;
+    }
     
     public static class Builder {
-        private String id;
-        private String nombre;
-        private String correo;
-        private String contrasena;
-        private String imagenPerfil;
-
-        public Builder setId(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setNombre(String nombre) {
+        String id;
+        String nombre;
+        String correo;
+        String contrasena;
+        String contrasenaConfirmar;
+        String imagenPerfil;
+        
+         public Builder setNombre(String nombre) {
             this.nombre = nombre;
             return this;
         }
@@ -84,13 +73,18 @@ public class UsuarioDTO {
             return this;
         }
 
+        public Builder setContrasenaConfirmar(String contrasenaConfirmar) {
+            this.contrasenaConfirmar = contrasenaConfirmar;
+            return this;
+        }
+
         public Builder setImagenPerfil(String imagenPerfil) {
             this.imagenPerfil = imagenPerfil;
             return this;
         }
-
-        public UsuarioDTO build() {
-            return new UsuarioDTO (this);
+        
+        public UsuarioActualizarDTO build() {
+            return new UsuarioActualizarDTO (this);
         }
     }
     

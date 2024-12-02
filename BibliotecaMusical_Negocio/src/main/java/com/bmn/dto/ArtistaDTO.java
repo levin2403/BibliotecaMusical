@@ -5,7 +5,8 @@
  */
 package com.bmn.dto;
 
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
+import com.bmn.dto.constantes.TipoArtista;
 import java.util.List;
 
 /**
@@ -15,10 +16,10 @@ import java.util.List;
 public class ArtistaDTO {
     
     private String id;
-    private String tipoArtista;
+    private TipoArtista tipoArtista;
     private String nombre;
     private String imagen;
-    private GeneroDTO genero;
+    private Genero genero;
     private List<IntegranteDTO> integrantes;
     private List<AlbumDTO> albums;
     private boolean favorito;
@@ -35,7 +36,7 @@ public class ArtistaDTO {
         return id;
     }
 
-    public String getTipoArtista() {
+    public TipoArtista getTipoArtista() {
         return tipoArtista;
     }
 
@@ -47,7 +48,7 @@ public class ArtistaDTO {
         return imagen;
     }
 
-    public GeneroDTO getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
@@ -70,10 +71,10 @@ public class ArtistaDTO {
     
     public static class Builder {
         private String id;
-        private String tipoArtista;
+        private TipoArtista tipoArtista;
         private String nombre;
         private String imagen;
-        private GeneroDTO genero;
+        private Genero genero;
         private List<IntegranteDTO> integrantes;
         private List<AlbumDTO> albums;
         
@@ -82,7 +83,7 @@ public class ArtistaDTO {
             return this;
         }
 
-        public Builder setTipoArtista(String tipoArtista){
+        public Builder setTipoArtista(TipoArtista tipoArtista){
             this.tipoArtista = tipoArtista;
             return this;
         }
@@ -97,7 +98,7 @@ public class ArtistaDTO {
             return this;
         }
 
-        public Builder setGenero(GeneroDTO genero) {
+        public Builder setGenero(Genero genero) {
             this.genero = genero;
             return this;
         }

@@ -5,7 +5,7 @@
 package com.bmn.interfaces;
 
 import com.bmn.dto.ArtistaDTO;
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface IObtenerArtistasFavoritosBO {
     
-    public List<ArtistaDTO> obtenerArtistasFavoritos(GeneroDTO genero, LocalDate fecha, String idUsuario) throws BOException;
+    public List<ArtistaDTO> obtenerArtistasFavoritos(Genero genero, LocalDate fecha, String idUsuario) throws BOException;
     
 }

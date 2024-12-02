@@ -5,7 +5,7 @@
 package com.bmn.interfaces;
 
 import com.bmn.dto.AlbumDTO;
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,6 +17,6 @@ import java.util.List;
 public interface IObtenerAlbumesFiltradosBO {
     
     public List<AlbumDTO> BuscarPorFiltro(String nombre, LocalDate fecha, 
-            GeneroDTO genero) throws BOException; 
+            Genero genero) throws BOException; 
     
 }

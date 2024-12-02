@@ -12,7 +12,6 @@ import com.bmd.daoInterfaces.IArtistaDAO;
 import com.bmd.entities.Artista;
 import com.bmd.entities.Integrante;
 import com.bmd.entities.Usuario;
-import com.bmd.enums.Genero;
 import com.mongodb.client.MongoCollection;
 import java.time.LocalDate;
 import java.util.ArrayList;

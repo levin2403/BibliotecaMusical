@@ -11,7 +11,7 @@ import com.bmd.enums.Genero;
 import com.bmn.convertidores.AlbumCVR;
 import com.bmn.dto.AlbumDTO;
 import com.bmn.dto.UsuarioDTO;
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerAlbumesFiltradosBO;
 import com.bmn.singletonUsuario.UsuarioST;
@@ -35,14 +35,14 @@ public class ObtenerAlbumesFiltradosBO implements IObtenerAlbumesFiltradosBO {
     
     @Override
     public List<AlbumDTO> BuscarPorFiltro(String nombre, LocalDate fecha, 
-            GeneroDTO genero) throws BOException {
+            Genero genero) throws BOException {
         
         return procesar(nombre, fecha, genero);
         
     }
     
     private List<AlbumDTO> procesar(String nombre, LocalDate fecha, 
-            GeneroDTO generoDTO) throws BOException {
+            Genero generoDTO) throws BOException {
        try{
             //trasnformamos el genero
             Genero genero = Genero.valueOf(generoDTO.name());

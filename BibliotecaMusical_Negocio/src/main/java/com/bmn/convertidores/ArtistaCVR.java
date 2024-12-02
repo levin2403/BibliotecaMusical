@@ -10,7 +10,7 @@ import com.bmd.entities.Integrante;
 import com.bmn.dto.AlbumDTO;
 import com.bmn.dto.ArtistaDTO;
 import com.bmn.dto.IntegranteDTO;
-import com.bmn.dto.constantes.GeneroDTO;
+import com.bmn.dto.constantes.Genero;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class ArtistaCVR {
                 setTipoArtista(artista.getTipoArtista().name()).
                 setNombre(artista.getNombre()).
                 setImagen(artista.getImagen()).
-                setGenero(GeneroDTO.valueOf(artista.getGenero().name())).
+                setGenero(Genero.valueOf(artista.getGenero().name())).
                 setIntegrantes(convertirIntegrantes(artista.getIntegrantes())).
                 setAlbums(convertirAlbumes(artista.getAlbums())).
                 build();

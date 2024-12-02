@@ -15,7 +15,6 @@ import com.bmd.entities.Usuario;
 import com.mongodb.client.MongoCollection;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  *
@@ -44,6 +43,7 @@ public class pruebasAlbum {
 //         "banda2_id"
 //         "solista1_id"
 //         "solista2_id"
+
           //ids de albumes
 //         "album1_id"
 //         "album2_id"     
@@ -62,19 +62,22 @@ public class pruebasAlbum {
         album2.setNombre("Clásicos del Rock");
         album2.setImagenPortada("url_to_album2_cover.jpg");
         album2.setFechaLanzamiento(LocalDate.of(2018, 10, 5));
-        album2.setGenero("Rock");
+        album2.setGenero("Afrobeat");
         album2.setArtista(new Artista.Builder().setId("solista1_id").setNombre("the strokes").build()); 
         album2.setCanciones(Arrays.asList("Canción A", "Canción B", "Canción C"));
         
-        List<Album> albumes = albumDAO.BuscarPorFiltro(null, null, null, null);
         
-        for (Album album : albumes) {
-            System.out.println(album.toString());
-        }
-
+        // ya todos los metodos jalan
+//        
+//        List<Album> albumes = albumDAO.BuscarPorFiltro("", LocalDate.of(2018, 10, 5), "", "user3_id");
+//        
+//        for (Album album : albumes) {
+//            System.out.println(album.toString());
+//        }
+//
 //        albumDAO.añadirAlbum(album1);
 //        albumDAO.añadirAlbum(album2);
-
+//
 //        Album album = albumDAO.obtenerAlbum("album1_id");
 //        System.out.println(album.toString());
         
