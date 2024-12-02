@@ -30,6 +30,10 @@ public class UsuarioActualizarDTO {
         return nombre;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getCorreo() {
         return correo;
     }

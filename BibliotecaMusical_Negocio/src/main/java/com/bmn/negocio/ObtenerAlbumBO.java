@@ -8,7 +8,6 @@ import com.bdm.excepciones.DAOException;
 import com.bmd.dao.FavoritoDAO;
 import com.bmd.daoInterfaces.IAlbumDAO;
 import com.bmd.entities.Album;
-import com.bmn.convertidores.AlbumCVR;
 import com.bmn.dto.AlbumDTO;
 import com.bmn.dto.CancionDTO;
 import com.bmn.excepciones.BOException;
@@ -23,36 +22,31 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
     
     private IAlbumDAO albumDAO;
     private FavoritoDAO favoritoDAO;
-    private AlbumCVR albumCVR;
 
-    public ObtenerAlbumBO(IAlbumDAO albumDAO, FavoritoDAO favoritoDAO, AlbumCVR albumCVR) {
+    public ObtenerAlbumBO(IAlbumDAO albumDAO, FavoritoDAO favoritoDAO) {
         this.albumDAO = albumDAO;
         this.favoritoDAO = favoritoDAO;
-        this.albumCVR = albumCVR;
     }
 
     @Override
-    public AlbumDTO obtenerAlbum(String idAlbum, String idUsuario) throws BOException {
-        validarCampos(idAlbum, idUsuario);
-        return procesarObtenerAlbum(idAlbum, idUsuario);
+    public AlbumDTO obtenerAlbum(String idAlbum) throws BOException {
+        validarCampos(idAlbum);
+        return procesarObtenerAlbum(idAlbum);
     }
     
-    private void validarCampos(String id, String idUsuario) throws BOException {
+    private void validarCampos(String id) throws BOException {
         if (id == null) {
             throw new BOException("El id no puede ser nulo");
         }
-        if (idUsuario == null) {
-            throw new BOException("El id del usuario no puede ser nulo");
-        }
     }
     
-    private AlbumDTO procesarObtenerAlbum(String idAlbum, String idUsuario) throws BOException {
+    private AlbumDTO procesarObtenerAlbum(String idAlbum) throws BOException {
         try{
             //obtenemos el album
-            Album album = albumDAO.obtenerAlbum(idAlbum, idUsuario);
+            Album album = albumDAO.obtenerAlbum(idAlbum);
             
             //convertimos a dto
-            AlbumDTO albumDTO = albumCVR.toAlbumDTO(album);
+            AlbumDTO albumDTO = toDTO(album);
             
             //en caso de que no regrese nada regresamos nulo.
             if (albumDTO == null) {
@@ -117,6 +111,10 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
         }catch(DAOException ex){
             throw new BOException(ex.getMessage());
         }
+    }
+    
+    private AlbumDTO toDTO(Album album){
+        return null;
     }
     
 }

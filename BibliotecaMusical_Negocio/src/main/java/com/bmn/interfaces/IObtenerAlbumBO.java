@@ -13,6 +13,6 @@ import com.bmn.excepciones.BOException;
  */
 public interface IObtenerAlbumBO {
     
-    public AlbumDTO obtenerAlbum(String id, String idUsuario) throws BOException;
+    public AlbumDTO obtenerAlbum(String idAlbum) throws BOException;
     
 }

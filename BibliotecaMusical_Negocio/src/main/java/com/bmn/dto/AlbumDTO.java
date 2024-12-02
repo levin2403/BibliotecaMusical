@@ -19,7 +19,7 @@ public class AlbumDTO {
     private String imagenPortada;
     private LocalDate fechaLanzamiento;
     private Genero genero;
-    private ArtistaDTO artista;
+    private ArtistaMuestraDTO artista;
     private List<CancionDTO> canciones;
     private boolean favorito;
 
@@ -53,7 +53,7 @@ public class AlbumDTO {
         return genero;
     }
 
-    public ArtistaDTO getArtista() {
+    public ArtistaMuestraDTO getArtista() {
         return artista;
     }
 
@@ -85,7 +85,7 @@ public class AlbumDTO {
         private String imagenPortada;
         private LocalDate fechaLanzamiento;
         private Genero genero;
-        private ArtistaDTO artista;
+        private ArtistaMuestraDTO artista;
         private List<CancionDTO> canciones;
 
         public Builder setId(String id) {
@@ -113,7 +113,7 @@ public class AlbumDTO {
             return this;
         }
 
-        public Builder setArtista(ArtistaDTO artista) {
+        public Builder setArtista(ArtistaMuestraDTO artista) {
             this.artista = artista;
             return this;
         }
@@ -127,5 +127,37 @@ public class AlbumDTO {
             return new AlbumDTO(this);
         }
     }
+    
+    public class ArtistaMuestraDTO {
+    
+    private String id;
+    private String nombre;
+    private String imagen;
+
+    public ArtistaMuestraDTO(String id, String nombre, String imagen) {
+        this.id = id;
+        this.nombre = nombre;
+        this.imagen = imagen;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    @Override
+    public String toString() {
+        return "ArtistaMuestraDTO{" + "id=" + id + ", nombre=" + 
+                nombre + ", imagen=" + imagen + '}';
+    }
+     
+}
     
 }

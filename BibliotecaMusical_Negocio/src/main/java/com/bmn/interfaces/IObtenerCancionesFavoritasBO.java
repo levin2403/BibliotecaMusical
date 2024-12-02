@@ -17,6 +17,6 @@ import java.util.List;
 public interface IObtenerCancionesFavoritasBO {
     
     public List<CancionDTO> obtenerCancionesFavoritas(Genero genero, 
-            LocalDate fechaAgregacion, String idUsuario) throws BOException;
+            LocalDate fechaAgregacion) throws BOException;
     
 }

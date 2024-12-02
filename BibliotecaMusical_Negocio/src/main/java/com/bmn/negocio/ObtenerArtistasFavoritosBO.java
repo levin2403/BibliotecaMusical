@@ -7,12 +7,11 @@ package com.bmn.negocio;
 import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IFavoritoDAO;
 import com.bmd.entities.Artista;
-import com.bmd.enums.Genero;
-import com.bmn.convertidores.ArtistaCVR;
-import com.bmn.dto.ArtistaDTO;
+import com.bmn.dto.ArtistaVistaDTO;
 import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerArtistasFavoritosBO;
+import com.bmn.singletonUsuario.UsuarioST;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,40 +23,44 @@ import java.util.List;
 public class ObtenerArtistasFavoritosBO implements IObtenerArtistasFavoritosBO {
 
     private IFavoritoDAO favoritoDAO;
-    private ArtistaCVR artistaCVR;
 
-    public ObtenerArtistasFavoritosBO(IFavoritoDAO favoritoDAO, ArtistaCVR artistaCVR) {
+    public ObtenerArtistasFavoritosBO(IFavoritoDAO favoritoDAO) {
         this.favoritoDAO = favoritoDAO;
-        this.artistaCVR = artistaCVR;
     }
     
     @Override
-    public List<ArtistaDTO> obtenerArtistasFavoritos(Genero genero, LocalDate fecha, String idUsuario) throws BOException {
-        return procesar(genero, fecha, idUsuario);
+    public List<ArtistaVistaDTO> obtenerArtistasFavoritos(Genero genero, LocalDate fecha) throws BOException {
+        return procesar(genero, fecha);
     }
     
-    private List<ArtistaDTO> procesar(Genero generoDTO, LocalDate fecha, String idUsuario) throws BOException{
+    private List<ArtistaVistaDTO> procesar(Genero genero, LocalDate fecha) throws BOException{
         try{
             
-            Genero genero = Genero.valueOf(generoDTO.name());
+            String genero1 = genero.name();
             
-            List<Artista> artistas = favoritoDAO.obtenerArtistasFavoritos(genero, fecha, idUsuario);
-            List<ArtistaDTO> artistasDTO = new ArrayList<>();
+            String idUsuario = UsuarioST.getInstance().getId();
+            
+            List<Artista> artistas = favoritoDAO.obtenerArtistasFavoritos(genero1, fecha, idUsuario);
+            List<ArtistaVistaDTO> artistasVistaDTO = new ArrayList<>();
             
             for (Artista artista : artistas) {
-                artistasDTO.add(artistaCVR.toDTO(artista));
+                artistasVistaDTO.add(toArtistaVista(artista));
             }
             
-            for (ArtistaDTO artistaDTO : artistasDTO) {
-                artistaDTO.setFavorito(true);
+            for (ArtistaVistaDTO artistaDTO : artistasVistaDTO) {
+//                artistaDTO.setFavorito(true);
             }
             
-            return artistasDTO;
+            return artistasVistaDTO;
             
         }
         catch(DAOException ex){
             throw new BOException(ex.getMessage());
         }
+    }
+    
+    private ArtistaVistaDTO toArtistaVista(Artista artista){
+        return null;
     }
     
 }

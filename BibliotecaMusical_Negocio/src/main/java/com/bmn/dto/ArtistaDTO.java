@@ -21,7 +21,7 @@ public class ArtistaDTO {
     private String imagen;
     private Genero genero;
     private List<IntegranteDTO> integrantes;
-    private List<AlbumDTO> albums;
+    private List<AlbumMuestraDTO> albums;
     private boolean favorito;
 
     private ArtistaDTO(Builder builder) {
@@ -52,6 +52,14 @@ public class ArtistaDTO {
         return genero;
     }
 
+    public List<IntegranteDTO> getIntegrantes() {
+        return integrantes;
+    }
+
+    public List<AlbumMuestraDTO> getAlbums() {
+        return albums;
+    }
+
     public boolean isFavorito() {
         return favorito;
     }
@@ -75,7 +83,7 @@ public class ArtistaDTO {
         private String nombre;
         private String imagen;
         private Genero genero;
-        private List<IntegranteDTO> integrantes;
+        private List<AlbumMuestraDTO> integrantes;
         private List<AlbumDTO> albums;
         
         public Builder setId(String id) {
@@ -103,7 +111,7 @@ public class ArtistaDTO {
             return this;
         }
 
-        public Builder setIntegrantes(List<IntegranteDTO> integrantes) {
+        public Builder setIntegrantes(List<AlbumMuestraDTO> integrantes) {
             this.integrantes = integrantes;
             return this;
         }
@@ -118,4 +126,9 @@ public class ArtistaDTO {
         }
     }
 
+
+    public class AlbumMuestraDTO {
+        
+    }
+    
 }

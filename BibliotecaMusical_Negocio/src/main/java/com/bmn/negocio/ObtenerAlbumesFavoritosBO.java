@@ -7,9 +7,8 @@ package com.bmn.negocio;
 import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IFavoritoDAO;
 import com.bmd.entities.Album;
-import com.bmd.enums.Genero;
-import com.bmn.convertidores.AlbumCVR;
 import com.bmn.dto.AlbumDTO;
+import com.bmn.dto.AlbumVistaDTO;
 import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerAlbumesFavoritosBO;
@@ -25,34 +24,32 @@ import java.util.List;
 public class ObtenerAlbumesFavoritosBO implements IObtenerAlbumesFavoritosBO {
    
     private IFavoritoDAO favoritoDAO;
-    private AlbumCVR albumCVR;
 
-    public void setFavoritoDAO(IFavoritoDAO favoritoDAO, AlbumCVR albumCVR) {
+    public void setFavoritoDAO(IFavoritoDAO favoritoDAO) {
         this.favoritoDAO = favoritoDAO;
-        this.albumCVR = albumCVR;
         
     }
 
     @Override
-    public List<AlbumDTO> obtenerAlbumesFavoritos(Genero genero, LocalDate fechaAgregacion) throws BOException {
+    public List<AlbumVistaDTO> obtenerAlbumesFavoritos(Genero genero, LocalDate fechaAgregacion) throws BOException {
         return procesar(genero, fechaAgregacion);
     }
     
     //aqui obtendras y convertiras los albumes
-    private List<AlbumDTO> procesar(Genero generoDTO, LocalDate fechaAgregacion) throws BOException {
+    private List<AlbumVistaDTO> procesar(Genero genero, LocalDate fechaAgregacion) throws BOException {
         try{
             //trasnformamos el genero
-            Genero genero = Genero.valueOf(generoDTO.name());
+            String genero1 = genero.name();
             
             //obtenemos el id del usuario logeado
             String idUsuario = UsuarioST.getInstance().getId();
             
             //lista traida de la base de datos;
-            List<Album> albumes = favoritoDAO.obtenerAlbumesFavoritos(genero, fechaAgregacion, idUsuario);
-            List<AlbumDTO> albumesDTO = new ArrayList<>();
+            List<Album> albumes = favoritoDAO.obtenerAlbumesFavoritos(genero1, fechaAgregacion, idUsuario);
+            List<AlbumVistaDTO> albumesDTO = new ArrayList<>();
             
             for (Album album : albumes) {
-                albumesDTO.add(albumCVR.toAlbumDTO(album));
+                albumesDTO.add(toAlbumvistaDTO(album));
             }
             
             return albumesDTO;
@@ -60,6 +57,10 @@ public class ObtenerAlbumesFavoritosBO implements IObtenerAlbumesFavoritosBO {
         catch(DAOException ex){
             throw new BOException(ex.getMessage());
         }
+    }
+    
+    private AlbumVistaDTO toAlbumvistaDTO(Album album){
+        return null;
     }
     
 }

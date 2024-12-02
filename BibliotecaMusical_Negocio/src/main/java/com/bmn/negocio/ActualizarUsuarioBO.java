@@ -7,8 +7,7 @@ package com.bmn.negocio;
 import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IUsuarioDAO;
 import com.bmd.entities.Usuario;
-import com.bmn.convertidores.UsuarioCVR;
-import com.bmn.dto.UsuarioDTO;
+import com.bmn.dto.UsuarioActualizarDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IActualizarUsuarioBO;
 import com.bmn.singletonUsuario.UsuarioST;
@@ -22,12 +21,10 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
     
     private IUsuarioDAO usuarioDAO;
     private Hasher hasher;
-    private UsuarioCVR usuarioCVR;
 
-    public ActualizarUsuarioBO(IUsuarioDAO usuarioDAO, Hasher hasher, UsuarioCVR usuarioCVR) {
+    public ActualizarUsuarioBO(IUsuarioDAO usuarioDAO, Hasher hasher) {
         this.usuarioDAO = usuarioDAO;
         this.hasher = hasher;
-        this.usuarioCVR = usuarioCVR;
     }
 
     /**
@@ -38,8 +35,9 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
      * @throws BOException 
      */
     @Override
-    public void ActualizarUsuario(UsuarioDTO usuario) throws BOException {
+    public void ActualizarUsuario(UsuarioActualizarDTO usuario) throws BOException {
         verificarCamposVacios(usuario);
+        verificarCompatibilidadContraseña(usuario);
         verificarFormatoCorreo(usuario);
         verificarDisponibilidadCorreo(usuario);
         hashearContrasena(usuario);
@@ -47,7 +45,7 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
         procesarActualizarUsuario(usuario);
     }
     
-    private void verificarCamposVacios(UsuarioDTO usuario) throws BOException {
+    private void verificarCamposVacios(UsuarioActualizarDTO usuario) throws BOException {
         if (usuario.getNombre().isEmpty()) {
             throw new BOException("Porfavor rellene el campo de 'Nombre'");
         }
@@ -57,19 +55,28 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
         if (usuario.getContrasena().isBlank()) {
             throw new BOException("Porfavor rellene el campo de 'Correo'");
         }
+        if (true) {
+            
+        }
         if (usuario.getImagenPerfil().isEmpty()) {
             throw new BOException("Porfavor rellene el campo de 'Correo'");
         }
     }
     
-    private void verificarFormatoCorreo(UsuarioDTO usuario) throws BOException {
+    private void verificarCompatibilidadContraseña(UsuarioActualizarDTO usuario) throws BOException {
+        if (!usuario.getContrasena().equalsIgnoreCase(usuario.getContrasenaConfirmar())) {
+            throw new BOException("Las contraseñas no coinciden");
+        }
+    }
+    
+    private void verificarFormatoCorreo(UsuarioActualizarDTO usuario) throws BOException {
         if (!usuario.getCorreo().matches("^[\\w.%+-]+@gmail\\.com$")) {
             throw new BOException("Se debe de incluir @gmail al "
                     + "final del correo");
         }
     }
     
-    private void verificarDisponibilidadCorreo(UsuarioDTO usuario) throws BOException {
+    private void verificarDisponibilidadCorreo(UsuarioActualizarDTO usuario) throws BOException {
         try{
             if (!usuarioDAO.verificarExistenciaCorreo(usuario.getCorreo())) {
                 throw new BOException("El correo proporcionado ya se encuentra "
@@ -81,7 +88,7 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
         }
     }
     
-    private void hashearContrasena(UsuarioDTO usuario) throws BOException {
+    private void hashearContrasena(UsuarioActualizarDTO usuario) throws BOException {
         
         String contrasena = usuario.getContrasena();
         
@@ -89,16 +96,16 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
         
     }
     
-    private void agregarId (UsuarioDTO usuario) throws BOException {
+    private void agregarId (UsuarioActualizarDTO usuario) throws BOException {
         String id = UsuarioST.getInstance().getId();
         
         usuario.setId(id);
     }
     
-    private void procesarActualizarUsuario(UsuarioDTO usuarioDTO) throws BOException  {
+    private void procesarActualizarUsuario(UsuarioActualizarDTO usuarioDTO) throws BOException  {
         try{
             //convertimos de dto a entidad
-            Usuario usuario = usuarioCVR.toUsuario(usuarioDTO);
+            Usuario usuario = convertirDTO(usuarioDTO);
             
             //guardamos en la persistencia
             usuarioDAO.actualizarUsuario(usuario);
@@ -106,6 +113,10 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
         catch(DAOException ex){
             throw new BOException(ex.getMessage());
         }
+    }
+    
+    private Usuario convertirDTO(UsuarioActualizarDTO usuarioDTO){
+        return null;
     }
     
 }

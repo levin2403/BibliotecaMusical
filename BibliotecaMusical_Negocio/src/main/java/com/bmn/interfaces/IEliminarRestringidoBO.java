@@ -4,7 +4,7 @@
  */
 package com.bmn.interfaces;
 
-import com.bmn.dto.RestringidoDTO;
+import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 
 /**
@@ -13,6 +13,6 @@ import com.bmn.excepciones.BOException;
  */
 public interface IEliminarRestringidoBO {
     
-    public void eliminarRestringido(RestringidoDTO restringido) throws BOException;
+    public void eliminarRestringido(Genero genero) throws BOException;
     
 }

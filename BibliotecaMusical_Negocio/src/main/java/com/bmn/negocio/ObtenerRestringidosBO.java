@@ -6,7 +6,6 @@ package com.bmn.negocio;
 
 import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IUsuarioDAO;
-import com.bmd.enums.Genero;
 import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerRestringidosBO;
@@ -33,11 +32,11 @@ public class ObtenerRestringidosBO implements IObtenerRestringidosBO {
     private List<Genero> procesar(String idUsuario) throws BOException {
         try{
             
-            List<Genero> baneados = usuarioDAO.obtenerRestringidos(idUsuario);
+            List<String> baneados = usuarioDAO.obtenerRestringidos(idUsuario);
             List<Genero> baneadosDTO = new ArrayList<>();
             
-            for (Genero genero : baneados) {
-                baneadosDTO.add(Genero.valueOf(genero.name()));
+            for (String genero : baneados) {
+                baneadosDTO.add(Genero.valueOf(genero));
             }
             
             return baneadosDTO;

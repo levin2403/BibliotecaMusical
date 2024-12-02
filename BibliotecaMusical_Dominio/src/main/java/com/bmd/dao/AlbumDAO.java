@@ -53,7 +53,7 @@ public class AlbumDAO implements IAlbumDAO {
             // Proyección para incluir solo los campos necesarios del Artista
             Bson projection = fields(
                 include("id", "nombre", "imagen_portada", "fecha_lanzamiento", "genero", "canciones"),
-                Projections.computed("artista", fields(include("_id", "nombre")))
+                Projections.computed("artista", fields(include("_id", "nombre", "imagen")))
             );
 
             // Consulta del álbum por ID

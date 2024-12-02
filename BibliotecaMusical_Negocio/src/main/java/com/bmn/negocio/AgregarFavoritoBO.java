@@ -7,7 +7,6 @@ package com.bmn.negocio;
 import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IFavoritoDAO;
 import com.bmd.entities.Favorito;
-import com.bmn.convertidores.FavoritoCVR;
 import com.bmn.dto.FavoritoDTO;
 import com.bmn.dto.UsuarioDTO;
 import com.bmn.excepciones.BOException;
@@ -21,11 +20,9 @@ import com.bmn.singletonUsuario.UsuarioST;
 public class AgregarFavoritoBO implements IAgregarFavoritoBO {
     
     private IFavoritoDAO favoritoDAO;
-    private FavoritoCVR favoritoCVR;
 
-    public AgregarFavoritoBO(IFavoritoDAO favoritoDAO, FavoritoCVR favoritoCVR) {
+    public AgregarFavoritoBO(IFavoritoDAO favoritoDAO) {
         this.favoritoDAO = favoritoDAO;
-        this.favoritoCVR = favoritoCVR;
     }
 
     @Override
@@ -52,25 +49,33 @@ public class AgregarFavoritoBO implements IAgregarFavoritoBO {
     private boolean verificarFavorito(FavoritoDTO favoritoDTO, UsuarioDTO usuarioDTO) throws BOException {
         try{
             //transformo de dto a entidad.
-            Favorito favorito = favoritoCVR.toFavorito(favoritoDTO);
+            Favorito favorito = toFavorito(favoritoDTO);
+            
+            String idReferencia = favorito.getIdReferencia();
             
             //transformamos al dto a entidad al usuario.
             String idUsuario = UsuarioST.getInstance().getId();
             
             // si no existe dentro de los favoritos del usuario 
             // lo guardamos
-            if (favoritoDAO.verificarExistenciaFavorito(favorito, idUsuario)) { 
-                favoritoDAO.agregarFavorito(favorito, idUsuario); 
+            if (favoritoDAO.isFavorito(idReferencia, idUsuario)) { 
+                favoritoDAO.agregarFavorito(favorito); 
                 return true; //retornamos verdadero porque se agrego.
             }
             else{
                 //si no esta en los favoritos del usuario lo eliminamos.
-                favoritoDAO.eliminarFavorito(favorito, idUsuario); 
+                String tipo = favorito.getTipo();
+                
+                favoritoDAO.eliminarFavorito(idReferencia, idUsuario, tipo); 
                 return false;// retornamos falso porque se elimino.
             }
         }catch(DAOException ex){
             throw new BOException(ex.getMessage());
         }
+    }
+    
+    private Favorito toFavorito(FavoritoDTO favorito){
+        return null;
     }
     
 }

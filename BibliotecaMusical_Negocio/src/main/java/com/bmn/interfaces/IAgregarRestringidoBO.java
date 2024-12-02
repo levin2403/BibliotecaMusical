@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package com.bmn.interfaces;
-import com.bmn.dto.RestringidoDTO;
+import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 
 /**
@@ -12,6 +12,6 @@ import com.bmn.excepciones.BOException;
  */
 public interface IAgregarRestringidoBO {
     
-    public void agregarRestringido(RestringidoDTO restringido) throws BOException;
+    public void agregarRestringido(Genero genero) throws BOException;
     
 }

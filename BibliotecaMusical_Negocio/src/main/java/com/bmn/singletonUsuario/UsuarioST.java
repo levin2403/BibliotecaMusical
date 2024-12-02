@@ -4,7 +4,7 @@
  */
 package com.bmn.singletonUsuario;
 
-import com.bmn.dto.UsuarioDTO;
+import com.bmd.entities.Usuario;
 
 /**
  *
@@ -12,21 +12,21 @@ import com.bmn.dto.UsuarioDTO;
  */
 public class UsuarioST {
     
-    private static UsuarioDTO usuario;
+    private static Usuario usuario;
     
     private UsuarioST(){
     }
     
-    public static UsuarioDTO getInstance(){
+    public static Usuario getInstance(){
         if (usuario == null) {
-            return new UsuarioDTO();
+            return new Usuario();
         }
         else{
             return usuario;
         }
     }
 
-    public static void setUsuario(UsuarioDTO usuario) {
+    public static void setUsuario(Usuario usuario) {
         UsuarioST.usuario = usuario;
     }
     

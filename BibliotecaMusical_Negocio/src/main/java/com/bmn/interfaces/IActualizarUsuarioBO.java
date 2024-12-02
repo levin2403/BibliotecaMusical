@@ -4,7 +4,7 @@
  */
 package com.bmn.interfaces;
 
-import com.bmn.dto.UsuarioDTO;
+import com.bmn.dto.UsuarioActualizarDTO;
 import com.bmn.excepciones.BOException;
 
 /**
@@ -13,6 +13,6 @@ import com.bmn.excepciones.BOException;
  */
 public interface IActualizarUsuarioBO {
     
-    public void ActualizarUsuario(UsuarioDTO usuario) throws BOException;
+    public void ActualizarUsuario(UsuarioActualizarDTO usuario) throws BOException;
     
 }

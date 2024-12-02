@@ -7,7 +7,6 @@ package com.bmn.negocio;
 import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IUsuarioDAO;
 import com.bmd.entities.Usuario;
-import com.bmn.convertidores.UsuarioCVR;
 import com.bmn.dto.UsuarioRegistrarDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IRegistrarUsuarioBO;
@@ -20,12 +19,10 @@ import com.bmn.utilerias.Hasher;
 public class RegistrarUsuarioBO implements IRegistrarUsuarioBO{
 
     private IUsuarioDAO usuarioDAO;
-    private UsuarioCVR usuarioCVR;
     private Hasher hasher;
 
-    public RegistrarUsuarioBO(IUsuarioDAO usuarioDAO, UsuarioCVR usuarioCVR, Hasher hasher) {
+    public RegistrarUsuarioBO(IUsuarioDAO usuarioDAO, Hasher hasher) {
         this.usuarioDAO = usuarioDAO;
-        this.usuarioCVR = usuarioCVR;
         this.hasher = hasher;
     }
     
@@ -89,7 +86,7 @@ public class RegistrarUsuarioBO implements IRegistrarUsuarioBO{
     public void procesarRegistrarUsuario(UsuarioRegistrarDTO usuarioDTO) throws BOException {
         try{
             //convertimos a dto
-            Usuario usuario = usuarioCVR.usuarioRegistrarToEntity(usuarioDTO);
+            Usuario usuario = toUsuario(usuarioDTO);
             
             //añadimos al usuario
             usuarioDAO.añadirUsuario(usuario);
@@ -98,6 +95,10 @@ public class RegistrarUsuarioBO implements IRegistrarUsuarioBO{
         catch(DAOException ex){
             
         }
+    }
+    
+    private Usuario toUsuario(UsuarioRegistrarDTO usuario){
+        return null;
     }
     
 }

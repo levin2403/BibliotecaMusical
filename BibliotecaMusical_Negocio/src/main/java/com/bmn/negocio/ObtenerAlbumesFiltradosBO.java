@@ -7,10 +7,7 @@ package com.bmn.negocio;
 import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IAlbumDAO;
 import com.bmd.entities.Album;
-import com.bmd.enums.Genero;
-import com.bmn.convertidores.AlbumCVR;
-import com.bmn.dto.AlbumDTO;
-import com.bmn.dto.UsuarioDTO;
+import com.bmn.dto.AlbumVistaDTO;
 import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerAlbumesFiltradosBO;
@@ -26,36 +23,35 @@ import java.util.List;
 public class ObtenerAlbumesFiltradosBO implements IObtenerAlbumesFiltradosBO {
 
     private IAlbumDAO albumDAO;
-    private AlbumCVR albumCVR;
 
-    public ObtenerAlbumesFiltradosBO(IAlbumDAO albumDAO, AlbumCVR albumCVR) {
+    public ObtenerAlbumesFiltradosBO(IAlbumDAO albumDAO) {
         this.albumDAO = albumDAO;
-        this.albumCVR = albumCVR;
     }
     
     @Override
-    public List<AlbumDTO> BuscarPorFiltro(String nombre, LocalDate fecha, 
+    public List<AlbumVistaDTO> BuscarPorFiltro(String nombre, LocalDate fecha, 
             Genero genero) throws BOException {
         
         return procesar(nombre, fecha, genero);
         
     }
     
-    private List<AlbumDTO> procesar(String nombre, LocalDate fecha, 
-            Genero generoDTO) throws BOException {
+    private List<AlbumVistaDTO> procesar(String nombre, LocalDate fecha, 
+            Genero genero) throws BOException {
        try{
             //trasnformamos el genero
-            Genero genero = Genero.valueOf(generoDTO.name());
+            String genero1 = genero.name();
             
             //obtenemos el id del usuario logeado
             String idUsuario = UsuarioST.getInstance().getId();
             
             //lista traida de la base de datos;
-            List<Album> albumes = albumDAO.BuscarPorFiltro(nombre, fecha, genero, idUsuario);
-            List<AlbumDTO> albumesDTO = new ArrayList<>();
+            List<Album> albumes = albumDAO.BuscarPorFiltro(nombre, fecha, 
+                    genero1, idUsuario);
+            List<AlbumVistaDTO> albumesDTO = new ArrayList<>();
             
             for (Album album : albumes) {
-                albumesDTO.add(albumCVR.toAlbumDTO(album));
+                albumesDTO.add(toAlbumvistaDTO(album));
             }
             
             return albumesDTO;
@@ -65,4 +61,8 @@ public class ObtenerAlbumesFiltradosBO implements IObtenerAlbumesFiltradosBO {
         }
     }
 
+    private AlbumVistaDTO toAlbumvistaDTO(Album album){
+        return null;
+    }
+    
 }

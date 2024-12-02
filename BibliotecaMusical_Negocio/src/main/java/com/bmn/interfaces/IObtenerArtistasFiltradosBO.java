@@ -4,7 +4,7 @@
  */
 package com.bmn.interfaces;
 
-import com.bmn.dto.ArtistaDTO;
+import com.bmn.dto.ArtistaVistaDTO;
 import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import java.util.List;
@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface IObtenerArtistasFiltradosBO {
     
-    public List<ArtistaDTO> obtenerArtistasFiltrados(String nombre, Genero genero, String idUsuario) throws BOException;
+    public List<ArtistaVistaDTO> obtenerArtistasFiltrados(String nombre, Genero genero) throws BOException;
     
 }

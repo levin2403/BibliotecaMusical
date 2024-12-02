@@ -10,6 +10,7 @@ import com.bmd.entities.Usuario;
 import com.bmn.dto.UsuarioIniciarSesionDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IInicioSesionBO;
+import com.bmn.singletonUsuario.UsuarioST;
 import com.bmn.utilerias.Hasher;
 
 /**
@@ -42,12 +43,14 @@ public class InicioSesionBO implements IInicioSesionBO {
         }
     }
     
-    public void buscarCorreo(UsuarioIniciarSesionDTO usuario) throws BOException {
+    public void buscarCorreo(UsuarioIniciarSesionDTO usuarioDTO) throws BOException {
         try{
-            Usuario usuario1 = usuarioDAO.buscaPorCorreo(usuario.getCorreo());
+            Usuario usuario = usuarioDAO.buscaPorCorreo(usuarioDTO.getCorreo());
+            
+            UsuarioST.setUsuario(usuario);
             
             //le asignamos la contraseña obtenida al nuevo nuestro dto
-            usuario.setContrasenaObtenida(usuario.getContrasena());
+            usuarioDTO.setContrasenaObtenida(usuario.getContrasena());
         }
         catch(DAOException ex){
             throw new BOException(ex.getMessage());

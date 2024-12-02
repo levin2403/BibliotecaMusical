@@ -8,7 +8,6 @@ import com.bdm.excepciones.DAOException;
 import com.bmd.dao.FavoritoDAO;
 import com.bmd.daoInterfaces.IArtistaDAO;
 import com.bmd.entities.Artista;
-import com.bmn.convertidores.ArtistaCVR;
 import com.bmn.dto.ArtistaDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerArtistaBO;
@@ -22,12 +21,10 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
     
     private IArtistaDAO artistaDAO;
     private FavoritoDAO favoritoDAO;
-    private ArtistaCVR artistaCVR;
 
-    public ObtenerArtistaBO(IArtistaDAO artistaDAO, FavoritoDAO favoritoDAO, ArtistaCVR artistaCVR) {
+    public ObtenerArtistaBO(IArtistaDAO artistaDAO, FavoritoDAO favoritoDAO) {
         this.artistaDAO = artistaDAO;
         this.favoritoDAO = favoritoDAO;
-        this.artistaCVR = artistaCVR;
     }
 
     @Override
@@ -52,7 +49,7 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
             
             boolean favorito = verificarFavorito(idArtista, idUsuario);
             
-            ArtistaDTO artistaDTO = artistaCVR.toDTO(artista);
+            ArtistaDTO artistaDTO = toArtistaDTO(artista);
             artistaDTO.setFavorito(favorito);
             return artistaDTO;
             
@@ -74,6 +71,10 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
         catch(DAOException ex){
             throw new BOException(ex.getMessage());
         }
+    }
+    
+    private ArtistaDTO toArtistaDTO(Artista artista){
+        return null;
     }
     
 }
