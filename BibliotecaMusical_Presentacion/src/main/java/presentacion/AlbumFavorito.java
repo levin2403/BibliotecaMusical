@@ -272,7 +272,7 @@ public class AlbumFavorito extends javax.swing.JFrame {
         });
 
         buscarBtn.setBackground(new java.awt.Color(35, 58, 68));
-        buscarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/M/lupa.png"))); // NOI18N
+        buscarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/lupa.png"))); // NOI18N
         buscarBtn.setBorder(null);
         buscarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,7 +302,7 @@ public class AlbumFavorito extends javax.swing.JFrame {
         );
 
         menuBtn.setBackground(new java.awt.Color(58, 107, 128));
-        menuBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/M/menu.png"))); // NOI18N
+        menuBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/menu.png"))); // NOI18N
         menuBtn.setBorder(null);
         menuBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
