@@ -112,10 +112,10 @@ public class Artista extends javax.swing.JFrame {
         perfilLb = new javax.swing.JLabel();
         panelRound1 = new controlador.PanelRound();
         jLabel1 = new javax.swing.JLabel();
+        menuBtn = new javax.swing.JButton();
         panelRound3 = new controlador.PanelRound();
         busqueda = new javax.swing.JTextField();
         buscarBtn = new javax.swing.JButton();
-        menuBtn = new javax.swing.JButton();
         panelInformacionAlbum = new controlador.PanelRound();
         panelRound5 = new controlador.PanelRound();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -255,6 +255,15 @@ public class Artista extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Principal");
 
+        menuBtn.setBackground(new java.awt.Color(58, 107, 128));
+        menuBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/menu.png"))); // NOI18N
+        menuBtn.setBorder(null);
+        menuBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBtnActionPerformed(evt);
+            }
+        });
+
         panelRound3.setBackground(new java.awt.Color(35, 58, 68));
         panelRound3.setCursorHandEnabled(true);
         panelRound3.setRoundBottomLeft(50);
@@ -272,7 +281,7 @@ public class Artista extends javax.swing.JFrame {
         });
 
         buscarBtn.setBackground(new java.awt.Color(35, 58, 68));
-        buscarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/M/lupa.png"))); // NOI18N
+        buscarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/lupa.png"))); // NOI18N
         buscarBtn.setBorder(null);
         buscarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,15 +309,6 @@ public class Artista extends javax.swing.JFrame {
                     .addComponent(busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8))
         );
-
-        menuBtn.setBackground(new java.awt.Color(58, 107, 128));
-        menuBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/M/menu.png"))); // NOI18N
-        menuBtn.setBorder(null);
-        menuBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuBtnActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
