@@ -25,6 +25,10 @@ public class UsuarioActualizarDTO {
         this.contrasenaConfirmar = builder.contrasenaConfirmar;
         this.imagenPerfil = builder.imagenPerfil; 
     }
+
+    public String getId() {
+        return id;
+    }
     
     public String getNombre() {
         return nombre;

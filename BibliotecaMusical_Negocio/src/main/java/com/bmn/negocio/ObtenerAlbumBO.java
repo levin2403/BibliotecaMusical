@@ -8,11 +8,16 @@ import com.bdm.excepciones.DAOException;
 import com.bmd.dao.FavoritoDAO;
 import com.bmd.daoInterfaces.IAlbumDAO;
 import com.bmd.entities.Album;
+import com.bmd.entities.Artista;
 import com.bmn.dto.AlbumDTO;
+import com.bmn.dto.AlbumDTO.ArtistaMuestraDTO;
 import com.bmn.dto.CancionDTO;
+import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerAlbumBO;
 import com.bmn.singletonUsuario.UsuarioST;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -114,7 +119,34 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
     }
     
     private AlbumDTO toDTO(Album album){
-        return null;
+        AlbumDTO albumDTO = new AlbumDTO.Builder().
+                setId(album.getId()).
+                setNombre(album.getNombre()).
+                setImagenPortada(album.getImagenPortada()).
+                setFechaLanzamiento(album.getFechaLanzamiento()).
+                setGenero(Genero.valueOf(album.getGenero())).
+                setArtista(toArtistaMuestra(album.getArtista())).
+                setCanciones(toCancionDTO(album.getCanciones())).
+                build();
+        return albumDTO;
+    }
+    
+    private List<CancionDTO> toCancionDTO(List<String> canciones){
+        List<CancionDTO> cancionesDTO = new ArrayList<>();
+        
+        for (String cancion1 : canciones) {
+            cancionesDTO.add(new CancionDTO(cancion1));
+        }
+        
+        return cancionesDTO;
+    }
+    
+    private ArtistaMuestraDTO toArtistaMuestra(Artista artista){
+        return new AlbumDTO.ArtistaMuestraDTO(
+                artista.getId(), 
+                artista.getNombre(), 
+                artista.getImagen()
+        );
     }
     
 }

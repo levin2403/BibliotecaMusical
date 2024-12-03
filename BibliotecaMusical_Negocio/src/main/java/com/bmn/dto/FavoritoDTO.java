@@ -4,6 +4,7 @@
  */
 package com.bmn.dto;
 
+import com.bmn.dto.constantes.Genero;
 import com.bmn.dto.constantes.Tipo;
 import java.time.LocalDate;
 
@@ -15,8 +16,9 @@ public class FavoritoDTO {
     
     private String idUsuario;
     private String idReferencia;
-    private String nombreCancion;
     private Tipo tipo;
+    private Genero genero;
+    private String nombreCancion;
     private LocalDate fechaAgregacion;
 
     public FavoritoDTO() {
@@ -45,6 +47,10 @@ public class FavoritoDTO {
 
     public Tipo getTipo() {
         return tipo;
+    }
+
+    public Genero getGenero() {
+        return genero;
     }
 
     public LocalDate getFechaAgregacion() {

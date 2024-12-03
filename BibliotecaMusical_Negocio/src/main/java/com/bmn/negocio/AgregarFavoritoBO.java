@@ -74,8 +74,15 @@ public class AgregarFavoritoBO implements IAgregarFavoritoBO {
         }
     }
     
-    private Favorito toFavorito(FavoritoDTO favorito){
-        return null;
+    private Favorito toFavorito(FavoritoDTO favoritoDTO){
+        Favorito favorito = new Favorito.Builder().
+                setIdUsuario(favoritoDTO.getIdUsuario()).
+                setIdReferencia(favoritoDTO.getIdReferencia()).
+                setNombreCancion((favoritoDTO.getNombreCancion() == null) ? null : favoritoDTO.getNombreCancion()).
+                setTipo(favoritoDTO.getTipo().name()).
+                setFechaAgregacion(favoritoDTO.getFechaAgregacion()).
+                build();
+        return favorito;
     }
     
 }

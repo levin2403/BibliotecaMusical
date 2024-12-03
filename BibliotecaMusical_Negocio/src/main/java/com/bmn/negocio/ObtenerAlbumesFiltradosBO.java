@@ -8,6 +8,7 @@ import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IAlbumDAO;
 import com.bmd.entities.Album;
 import com.bmn.dto.AlbumVistaDTO;
+import com.bmn.dto.ArtistaVistaDTO;
 import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerAlbumesFiltradosBO;
@@ -62,7 +63,16 @@ public class ObtenerAlbumesFiltradosBO implements IObtenerAlbumesFiltradosBO {
     }
 
     private AlbumVistaDTO toAlbumvistaDTO(Album album){
-        return null;
+        return new AlbumVistaDTO(
+            album.getId(),
+            album.getNombre(),
+            album.getImagenPortada(),
+                new ArtistaVistaDTO(
+                    album.getArtista().getId(),
+                    album.getArtista().getNombre(),
+                    album.getArtista().getImagen()
+                )
+        );
     }
     
 }

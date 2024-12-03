@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -97,8 +97,14 @@ public class RegistrarUsuarioBO implements IRegistrarUsuarioBO{
         }
     }
     
-    private Usuario toUsuario(UsuarioRegistrarDTO usuario){
-        return null;
+    private Usuario toUsuario(UsuarioRegistrarDTO usuarioDTO){
+        Usuario usuario = new Usuario.Builder().
+                setNombre(usuarioDTO.getNombre()).
+                setCorreo(usuarioDTO.getCorreo()).
+                setContrasena(usuarioDTO.getContrasena()).
+                setImagenPerfil(usuarioDTO.getImagenPerfil()).
+                build();
+        return usuario;
     }
     
 }

@@ -7,8 +7,8 @@ package com.bmn.negocio;
 import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IFavoritoDAO;
 import com.bmd.entities.Album;
-import com.bmn.dto.AlbumDTO;
 import com.bmn.dto.AlbumVistaDTO;
+import com.bmn.dto.ArtistaVistaDTO;
 import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerAlbumesFavoritosBO;
@@ -60,7 +60,16 @@ public class ObtenerAlbumesFavoritosBO implements IObtenerAlbumesFavoritosBO {
     }
     
     private AlbumVistaDTO toAlbumvistaDTO(Album album){
-        return null;
+        return new AlbumVistaDTO(
+            album.getId(),
+            album.getNombre(),
+            album.getImagenPortada(),
+                new ArtistaVistaDTO(
+                    album.getArtista().getId(),
+                    album.getArtista().getNombre(),
+                    album.getArtista().getImagen()
+                )
+        );
     }
     
 }

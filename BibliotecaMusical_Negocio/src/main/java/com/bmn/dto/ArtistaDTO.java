@@ -83,8 +83,8 @@ public class ArtistaDTO {
         private String nombre;
         private String imagen;
         private Genero genero;
-        private List<AlbumMuestraDTO> integrantes;
-        private List<AlbumDTO> albums;
+        private List<IntegranteDTO> integrantes;
+        private List<AlbumMuestraDTO> albums;
         
         public Builder setId(String id) {
             this.id = id;
@@ -111,12 +111,12 @@ public class ArtistaDTO {
             return this;
         }
 
-        public Builder setIntegrantes(List<AlbumMuestraDTO> integrantes) {
+        public Builder setIntegrantes(List<IntegranteDTO> integrantes) {
             this.integrantes = integrantes;
             return this;
         }
 
-        public Builder setAlbums(List<AlbumDTO> albums) {
+        public Builder setAlbums(List<AlbumMuestraDTO> albums) {
             this.albums = albums;
             return this;
         }
@@ -127,8 +127,43 @@ public class ArtistaDTO {
     }
 
 
-    public class AlbumMuestraDTO {
+    public static class AlbumMuestraDTO {
+        
+        private String id;
+        private String nombre;
+        private String imagen_portada;
+
+        public AlbumMuestraDTO(String id, String nombre, String imagen_portada) {
+            this.id = id;
+            this.nombre = nombre;
+            this.imagen_portada = imagen_portada;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public String getImagen_portada() {
+            return imagen_portada;
+        }
+
+        public void setImagen_portada(String imagen_portada) {
+            this.imagen_portada = imagen_portada;
+        }
         
     }
+    
     
 }

@@ -7,11 +7,20 @@ package com.bmn.negocio;
 import com.bdm.excepciones.DAOException;
 import com.bmd.dao.FavoritoDAO;
 import com.bmd.daoInterfaces.IArtistaDAO;
+import com.bmd.entities.Album;
 import com.bmd.entities.Artista;
+import com.bmd.entities.Integrante;
 import com.bmn.dto.ArtistaDTO;
+import com.bmn.dto.ArtistaDTO.AlbumMuestraDTO;
+import com.bmn.dto.IntegranteDTO;
+import com.bmn.dto.constantes.Genero;
+import com.bmn.dto.constantes.Rol;
+import com.bmn.dto.constantes.TipoArtista;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerArtistaBO;
 import com.bmn.singletonUsuario.UsuarioST;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -74,7 +83,44 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
     }
     
     private ArtistaDTO toArtistaDTO(Artista artista){
-        return null;
+        ArtistaDTO artistaDTO = new ArtistaDTO.Builder().
+                setId(artista.getNombre()).
+                setTipoArtista(TipoArtista.valueOf(artista.getTipoArtista())).
+                setNombre(artista.getNombre()).
+                setImagen(artista.getImagen()).
+                setGenero(Genero.valueOf(artista.getGenero())).
+                setIntegrantes(toIntegranteDTO(artista.getIntegrantes())).
+                setAlbums(toAlbumMuestraDTO(artista.getAlbums())).
+                build();
+        return artistaDTO;
+    }
+    
+    private List<IntegranteDTO> toIntegranteDTO(List<Integrante> integrantes){
+        List<IntegranteDTO> integrantesDTO = new ArrayList<>();
+        
+        for (Integrante integrante1 : integrantes) {
+            IntegranteDTO integranteDTO = new IntegranteDTO.Builder().
+                    setNombre(integrante1.getNombre()).
+                    setFechaIngreso(integrante1.getFechaIngreso()).
+                    setFechaSalida(integrante1.getFechaSalida()).
+                    setRol(Rol.valueOf(integrante1.getRol())).
+                    setEstadoActividad(integrante1.isEstadoActividad()).
+                    build();
+            integrantesDTO.add(integranteDTO);
+        }
+        return integrantesDTO;
+    }
+    
+    private List<AlbumMuestraDTO> toAlbumMuestraDTO(List<Album> albums){
+        List<AlbumMuestraDTO> albumMuestaDTO = new ArrayList<>();
+        
+        for (Album album : albums) {
+            AlbumMuestraDTO albumMuestra = 
+                    new AlbumMuestraDTO(album.getId(), album.getId(), 
+                            album.getImagenPortada());
+            albumMuestaDTO.add(albumMuestra);
+        }
+        return albumMuestaDTO;
     }
     
 }

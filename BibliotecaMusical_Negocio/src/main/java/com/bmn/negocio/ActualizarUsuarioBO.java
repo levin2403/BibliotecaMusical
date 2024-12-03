@@ -116,7 +116,13 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
     }
     
     private Usuario convertirDTO(UsuarioActualizarDTO usuarioDTO){
-        return null;
+        Usuario usuario = new Usuario.Builder().
+                setId(usuarioDTO.getId()).
+                setNombre(usuarioDTO.getNombre()).
+                setContrasena(usuarioDTO.getContrasena()).
+                setImagenPerfil(usuarioDTO.getImagenPerfil()).
+                build();
+        return usuario;
     }
     
 }

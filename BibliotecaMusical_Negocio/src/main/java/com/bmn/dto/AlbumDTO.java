@@ -23,6 +23,9 @@ public class AlbumDTO {
     private List<CancionDTO> canciones;
     private boolean favorito;
 
+    public AlbumDTO() {
+    }
+
     private AlbumDTO(Builder builder) {
         this.id = builder.id;
         this.nombre = builder.nombre;
@@ -128,7 +131,7 @@ public class AlbumDTO {
         }
     }
     
-    public class ArtistaMuestraDTO {
+    public static class ArtistaMuestraDTO {
     
     private String id;
     private String nombre;

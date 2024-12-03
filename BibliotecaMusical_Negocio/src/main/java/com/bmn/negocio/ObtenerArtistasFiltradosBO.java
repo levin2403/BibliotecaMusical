@@ -54,10 +54,6 @@ public class ObtenerArtistasFiltradosBO implements IObtenerArtistasFiltradosBO {
                 artistasDTO.add(toArtistaVista(artista));
             }
             
-            for (ArtistaVistaDTO artistaDTO : artistasDTO) {
-//                artistaDTO.setFavorito(true);
-            }
-            
             return artistasDTO;
             
         }
@@ -67,7 +63,11 @@ public class ObtenerArtistasFiltradosBO implements IObtenerArtistasFiltradosBO {
     }
     
     private ArtistaVistaDTO toArtistaVista(Artista artista){
-        return null;
+        return new ArtistaVistaDTO(
+            artista.getId(),
+            artista.getNombre(),
+            artista.getImagen()
+        );
     }
     
 }
