@@ -13,14 +13,14 @@ import javax.swing.SwingConstants;
  *
  * @author Sebastian Murrieta Verduzco -233463
  */
-public class Principal extends javax.swing.JFrame {
+public class AlbumFavorito extends javax.swing.JFrame {
 
     private boolean isMenuVisible = true;
 
     /**
      * Creates new form Inicio
      */
-    public Principal() {
+    public AlbumFavorito() {
         initComponents();
         configurarTabla(); // Método para configurar la tabla
         // Mueve el panel fuera de la vista al iniciar el frame
@@ -474,7 +474,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new AlbumFavorito().setVisible(true);
             }
         });
     }

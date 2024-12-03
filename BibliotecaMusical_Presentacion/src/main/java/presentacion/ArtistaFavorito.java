@@ -13,14 +13,14 @@ import javax.swing.SwingConstants;
  *
  * @author Sebastian Murrieta Verduzco -233463
  */
-public class Principal extends javax.swing.JFrame {
+public class ArtistaFavorito extends javax.swing.JFrame {
 
     private boolean isMenuVisible = true;
 
     /**
      * Creates new form Inicio
      */
-    public Principal() {
+    public ArtistaFavorito() {
         initComponents();
         configurarTabla(); // Método para configurar la tabla
         // Mueve el panel fuera de la vista al iniciar el frame
@@ -319,9 +319,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(menuBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 514, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 515, Short.MAX_VALUE)
                 .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(127, 127, 127))
+                .addGap(126, 126, 126))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -474,7 +474,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new ArtistaFavorito().setVisible(true);
             }
         });
     }
