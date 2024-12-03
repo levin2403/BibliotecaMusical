@@ -36,7 +36,7 @@ public class RegistrarUsuarioBO implements IRegistrarUsuarioBO{
         procesarRegistrarUsuario(usuario);
     }
     
-    public void validarCamposVacios(UsuarioRegistrarDTO usuario) throws BOException {
+    private void validarCamposVacios(UsuarioRegistrarDTO usuario) throws BOException {
         if (usuario.getNombre().isEmpty()) {
             throw new BOException("Porfavor escriba un nombre antes de continuar");
         }
@@ -58,10 +58,10 @@ public class RegistrarUsuarioBO implements IRegistrarUsuarioBO{
         }
     }
     
-    public void validarExistenciaCorreo(UsuarioRegistrarDTO usuario) throws BOException {
+    private void validarExistenciaCorreo(UsuarioRegistrarDTO usuario) throws BOException {
         try{
-            if (!usuarioDAO.verificarExistenciaCorreo(usuario.getCorreo())) {
-                throw new BOException("La contraseña ya se encuentra ocupada intente con otra");
+            if (usuarioDAO.verificarExistenciaCorreo(usuario.getCorreo())) {
+                throw new BOException("La correo ya se encuentra ocupada intente con otra");
             }
         }
         catch(DAOException ex){
@@ -69,7 +69,7 @@ public class RegistrarUsuarioBO implements IRegistrarUsuarioBO{
         }
     }
     
-    public void validarContrasena(UsuarioRegistrarDTO usuario) throws BOException {
+    private void validarContrasena(UsuarioRegistrarDTO usuario) throws BOException {
         if (!usuario.getContrasena().equalsIgnoreCase(usuario.getContrasenaConfirmar())) {
             throw new BOException("Las contraseñas no coinciden");
         }
@@ -83,7 +83,7 @@ public class RegistrarUsuarioBO implements IRegistrarUsuarioBO{
         
     }
     
-    public void procesarRegistrarUsuario(UsuarioRegistrarDTO usuarioDTO) throws BOException {
+    private void procesarRegistrarUsuario(UsuarioRegistrarDTO usuarioDTO) throws BOException {
         try{
             //convertimos a dto
             Usuario usuario = toUsuario(usuarioDTO);
@@ -93,7 +93,7 @@ public class RegistrarUsuarioBO implements IRegistrarUsuarioBO{
             
         }
         catch(DAOException ex){
-            
+            throw new BOException(ex.getMessage());
         }
     }
     
