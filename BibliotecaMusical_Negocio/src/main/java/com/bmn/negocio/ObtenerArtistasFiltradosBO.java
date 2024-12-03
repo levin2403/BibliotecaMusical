@@ -14,6 +14,7 @@ import com.bmn.interfaces.IObtenerArtistasFiltradosBO;
 import com.bmn.singletonUsuario.UsuarioST;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -45,7 +46,7 @@ public class ObtenerArtistasFiltradosBO implements IObtenerArtistasFiltradosBO {
             
             String genero1 = genero.name();
             
-            String idUsuario = UsuarioST.getInstance().getId();
+            ObjectId idUsuario = UsuarioST.getInstance().getId();
             
             List<Artista> artistas = artistaDAO.buscarPorFiltro(nombre, genero1, idUsuario);
             List<ArtistaVistaDTO> artistasDTO = new ArrayList<>();
@@ -64,7 +65,7 @@ public class ObtenerArtistasFiltradosBO implements IObtenerArtistasFiltradosBO {
     
     private ArtistaVistaDTO toArtistaVista(Artista artista){
         return new ArtistaVistaDTO(
-            artista.getId(),
+            artista.getId().toString(),
             artista.getNombre(),
             artista.getImagen()
         );

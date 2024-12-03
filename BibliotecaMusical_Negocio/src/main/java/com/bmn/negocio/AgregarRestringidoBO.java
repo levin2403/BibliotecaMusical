@@ -5,22 +5,27 @@
 package com.bmn.negocio;
 
 import com.bdm.excepciones.DAOException;
+import com.bmd.daoInterfaces.IFavoritoDAO;
 import com.bmd.daoInterfaces.IUsuarioDAO;
 import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IAgregarRestringidoBO;
 import com.bmn.singletonUsuario.UsuarioST;
+import org.bson.types.ObjectId;
 
 /**
- *
- * @author skevi
+ * Clase para agregar géneros restringidos a un usuario.
+ * 
+ * @autor skevi
  */
 public class AgregarRestringidoBO implements IAgregarRestringidoBO {
 
     private IUsuarioDAO usuarioDAO;
+    private IFavoritoDAO favoritoDAO;
 
-    public AgregarRestringidoBO(IUsuarioDAO usuarioDAO) {
+    public AgregarRestringidoBO(IUsuarioDAO usuarioDAO, IFavoritoDAO favoritoDAO) {
         this.usuarioDAO = usuarioDAO;
+        this.favoritoDAO = favoritoDAO;
     }
     
     @Override
@@ -28,25 +33,24 @@ public class AgregarRestringidoBO implements IAgregarRestringidoBO {
         verificarRestringido(genero);
     }
     
-    private void verificarRestringido(Genero genero) throws BOException{
-        try{
-            //trensformamos a genero.
+    private void verificarRestringido(Genero genero) throws BOException {
+        try {
+            // Transformamos el género a su representación en cadena.
             String genero1 = genero.name();
             
-            //transformamos a usuario entidad.
-            String usuario = UsuarioST.getInstance().getId();
+            // Obtener el ID del usuario. Este valor debe ser dinámico según tu implementación.
+            ObjectId idUsuario = UsuarioST.getInstance().getId(); // Asegúrate de que este ID es correcto
             
-            //si el genero no se encuentra restringido lo añadimos
-            if (!usuarioDAO.verificarExistenciaRestringido(genero1, usuario)) { 
-                usuarioDAO.añadirRestringido(genero1, usuario);
+            // Si el género no se encuentra restringido, lo añadimos
+            if (!usuarioDAO.verificarExistenciaRestringido(genero1, idUsuario)) { 
+                usuarioDAO.añadirRestringido(genero1, idUsuario);
+                favoritoDAO.eliminarFavoritoPorGenero(genero1, idUsuario);
+            } else {
+                throw new BOException("El género ya se encuentra restringido");
             }
-            else{
-                throw new BOException("El genero ya se encuentra restringido");
-            }
-        }
-        catch(DAOException ex){
-            throw new BOException(ex.getMessage());
+        } catch (DAOException ex) {
+            throw new BOException(ex.getMessage(), ex);
         }
     }
-
 }
+

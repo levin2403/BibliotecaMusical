@@ -8,6 +8,7 @@ import com.bmn.dto.UsuarioRegistrarDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.factories.BOFactory;
 import com.bmn.negocio.RegistrarUsuarioBO;
+import com.bmn.singletonUsuario.UsuarioST;
 
 /**
  *
@@ -23,14 +24,17 @@ public class PruebaRegistrarUsuarios {
         RegistrarUsuarioBO registrar =  BOFactory.registrarUsuarioFactory();
         
         UsuarioRegistrarDTO usuario = new UsuarioRegistrarDTO.Builder()
-        .setNombre("Juan Pérez")
+        .setNombre("Kevin Sanchez")
         .setCorreo("kevin.sanchez@gmail.com")
         .setContrasena("password123")
-        .setContrasenaConfirmar("password143")
+        .setContrasenaConfirmar("password123")
         .setImagenPerfil("url_to_profile_image.jpg")
         .build();
 
         registrar.registrarUsuario(usuario);
+        
+            System.out.println(UsuarioST.getInstance().toString());
+        
         }
         catch(BOException ex){
             System.out.println(ex.getMessage());

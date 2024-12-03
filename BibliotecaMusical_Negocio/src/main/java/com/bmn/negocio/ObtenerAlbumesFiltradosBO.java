@@ -16,6 +16,7 @@ import com.bmn.singletonUsuario.UsuarioST;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -44,7 +45,7 @@ public class ObtenerAlbumesFiltradosBO implements IObtenerAlbumesFiltradosBO {
             String genero1 = genero.name();
             
             //obtenemos el id del usuario logeado
-            String idUsuario = UsuarioST.getInstance().getId();
+            ObjectId idUsuario = UsuarioST.getInstance().getId();
             
             //lista traida de la base de datos;
             List<Album> albumes = albumDAO.BuscarPorFiltro(nombre, fecha, 
@@ -64,11 +65,11 @@ public class ObtenerAlbumesFiltradosBO implements IObtenerAlbumesFiltradosBO {
 
     private AlbumVistaDTO toAlbumvistaDTO(Album album){
         return new AlbumVistaDTO(
-            album.getId(),
+            album.getId().toString(),
             album.getNombre(),
             album.getImagenPortada(),
                 new ArtistaVistaDTO(
-                    album.getArtista().getId(),
+                    album.getArtista().getId().toString(),
                     album.getArtista().getNombre(),
                     album.getArtista().getImagen()
                 )

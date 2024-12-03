@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -46,7 +47,7 @@ public class AlbumDAO implements IAlbumDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
-    public Album obtenerAlbum(String idAlbum) throws DAOException {
+    public Album obtenerAlbum(ObjectId idAlbum) throws DAOException {
         try {
             MongoCollection<Album> collection = conexion.getCollection("albumes", Album.class);
 
@@ -88,7 +89,7 @@ public class AlbumDAO implements IAlbumDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
-    public List<Album> BuscarPorFiltro(String nombre, LocalDate fecha, String genero, String idUsuario) throws DAOException {
+    public List<Album> BuscarPorFiltro(String nombre, LocalDate fecha, String genero, ObjectId idUsuario) throws DAOException {
         try {
             MongoCollection<Album> collection = conexion.getCollection("albumes", Album.class);
 
@@ -104,7 +105,7 @@ public class AlbumDAO implements IAlbumDAO {
             if (genero != null && !genero.isEmpty()) {
                 filtros.add(eq("genero", genero));
             }
-            if (idUsuario != null && !idUsuario.isEmpty()) {
+            if (idUsuario != null && idUsuario != null) {
                 // Filtro para excluir géneros restringidos por el usuario
                 MongoCollection<Usuario> usuarioCollection = conexion.getCollection("usuarios", Usuario.class);
                 Usuario usuario = usuarioCollection.find(eq("_id", idUsuario)).first();

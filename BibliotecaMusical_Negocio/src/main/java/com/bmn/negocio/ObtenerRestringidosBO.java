@@ -9,8 +9,10 @@ import com.bmd.daoInterfaces.IUsuarioDAO;
 import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IObtenerRestringidosBO;
+import com.bmn.singletonUsuario.UsuarioST;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -25,12 +27,14 @@ public class ObtenerRestringidosBO implements IObtenerRestringidosBO {
     }
     
     @Override
-    public List<Genero> obtenerRestringidos(String idUsuario) throws BOException {
-        return procesar(idUsuario);
+    public List<Genero> obtenerRestringidos() throws BOException {
+        return procesar();
     }
     
-    private List<Genero> procesar(String idUsuario) throws BOException {
+    private List<Genero> procesar() throws BOException {
         try{
+            
+            ObjectId idUsuario = UsuarioST.getInstance().getId();
             
             List<String> baneados = usuarioDAO.obtenerRestringidos(idUsuario);
             List<Genero> baneadosDTO = new ArrayList<>();

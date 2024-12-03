@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IObtenerRestringidosBO {
     
-    public List<Genero> obtenerRestringidos(String idUsuario) 
+    public List<Genero> obtenerRestringidos() 
             throws BOException;
     
 }

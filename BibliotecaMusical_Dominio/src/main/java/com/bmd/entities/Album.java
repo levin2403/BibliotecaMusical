@@ -8,6 +8,7 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty; 
 import java.time.LocalDate; 
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -16,7 +17,7 @@ import java.util.List;
 public class Album {
 
     @BsonId 
-    private String id; 
+    private ObjectId id; 
     private String nombre; 
     @BsonProperty("imagen_portada") 
     private String imagenPortada; 
@@ -39,7 +40,7 @@ public class Album {
         this.canciones = builder.canciones;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
@@ -71,7 +72,7 @@ public class Album {
         this.canciones = canciones;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -106,7 +107,7 @@ public class Album {
 
     public static class Builder {
 
-        private String id;
+        private ObjectId id;
         private String nombre;
         private String imagenPortada;
         private LocalDate fechaLanzamiento;
@@ -114,7 +115,7 @@ public class Album {
         private Artista artista;
         private List<String> canciones;
 
-        public Builder setId(String id) {
+        public Builder setId(ObjectId id) {
             this.id = id;
             return this;
         }

@@ -18,6 +18,7 @@ import com.bmn.interfaces.IObtenerAlbumBO;
 import com.bmn.singletonUsuario.UsuarioST;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -48,7 +49,7 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
     private AlbumDTO procesarObtenerAlbum(String idAlbum) throws BOException {
         try{
             //obtenemos el album
-            Album album = albumDAO.obtenerAlbum(idAlbum);
+            Album album = albumDAO.obtenerAlbum(new ObjectId(idAlbum));
             
             //convertimos a dto
             AlbumDTO albumDTO = toDTO(album);
@@ -59,7 +60,7 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
             }
             
             //obtenemos el id del usuario que se encuentra loggeado.
-            String usuarioId = UsuarioST.getInstance().getId();
+            String usuarioId = UsuarioST.getInstance().getId().toString();
             
             //verificamos si el album es favorito
             verificarFavorito(albumDTO, usuarioId);
@@ -83,7 +84,10 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
      */
     private void verificarFavorito(AlbumDTO album, String idUsuario) throws BOException{
         try{
-            if (favoritoDAO.isFavorito(album.getId(), idUsuario)) {
+            ObjectId idAlbum = new ObjectId(album.getId());
+            ObjectId idUser = new ObjectId(idUsuario);
+            
+            if (favoritoDAO.isFavorito(idAlbum, idUser)) {
                 album.setFavorito(true);
             }
             else{
@@ -103,9 +107,12 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
      */
     private void verificarCancionFavorita(AlbumDTO album, String idUsuario) throws BOException {
         try{
+            ObjectId idAlbum = new ObjectId(album.getId());
+            ObjectId idUser = new ObjectId(idUsuario);
+            
             
             for (CancionDTO cancion : album.getCanciones()) {
-                if (favoritoDAO.verificarCancionFavorita(cancion.getNombre(), album.getId(), idUsuario)) {
+                if (favoritoDAO.verificarCancionFavorita(cancion.getNombre(), idAlbum, idUser)) {
                     cancion.setFavorito(true);
                 }
                 else{
@@ -120,7 +127,7 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
     
     private AlbumDTO toDTO(Album album){
         AlbumDTO albumDTO = new AlbumDTO.Builder().
-                setId(album.getId()).
+                setId(album.getId().toString()).
                 setNombre(album.getNombre()).
                 setImagenPortada(album.getImagenPortada()).
                 setFechaLanzamiento(album.getFechaLanzamiento()).
@@ -143,7 +150,7 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
     
     private ArtistaMuestraDTO toArtistaMuestra(Artista artista){
         return new AlbumDTO.ArtistaMuestraDTO(
-                artista.getId(), 
+                artista.getId().toString(), 
                 artista.getNombre(), 
                 artista.getImagen()
         );

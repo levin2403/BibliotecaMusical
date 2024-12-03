@@ -10,6 +10,7 @@ import com.bmd.entities.Artista;
 import com.bmd.entities.Favorito;
 import java.time.LocalDate;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -19,28 +20,28 @@ public interface IFavoritoDAO {
     
     public void agregarFavorito(Favorito favorito) throws DAOException;
     
-    public boolean isFavorito(String idReferencia, String idUsuario) 
+    public boolean isFavorito(ObjectId idReferencia, ObjectId idUsuario) 
             throws DAOException;
     
     public boolean verificarCancionFavorita(String nombreCancion, 
-            String idReferencia, String idUsuario) throws DAOException;
+            ObjectId idReferencia, ObjectId idUsuario) throws DAOException;
     
-    public void eliminarFavorito(String idReferencia, String idUsuario, String tipo) 
+    public void eliminarFavorito(ObjectId idReferencia, ObjectId idUsuario, String tipo) 
             throws DAOException;
     
-    public void eliminarFavoritoPorGenero(String genero, String idUsuario) 
+    public void eliminarFavoritoPorGenero(String genero, ObjectId idUsuario) 
             throws DAOException;
     
     public List<Artista> obtenerArtistasFavoritos(String genero, 
-            LocalDate fechaAgregacion, String idUsuario) throws DAOException;
+            LocalDate fechaAgregacion, ObjectId idUsuario) throws DAOException;
     
     public List<String> obtenerCancionesFavoritas(String genero, 
-            LocalDate fechaAgregacion, String idUsuario) throws DAOException;
+            LocalDate fechaAgregacion, ObjectId idUsuario) throws DAOException;
     
     public List<Album> obtenerAlbumesFavoritos(String genero, 
-            LocalDate fechaAgregacion, String idUsuario) throws DAOException;
+            LocalDate fechaAgregacion, ObjectId idUsuario) throws DAOException;
     
     public void eliminarCancionFavorita(String nombreCancion, 
-            String idUsuario) throws DAOException;
+            ObjectId idUsuario) throws DAOException;
     
 }

@@ -6,6 +6,7 @@ package com.bmd.entities;
 
 import java.time.LocalDate;
 import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -14,7 +15,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 public class Favorito {
     
     @BsonProperty("id_usuario") 
-    private String idUsuario; 
+    private ObjectId idUsuario; 
     @BsonProperty("id_referencia") 
     private String idReferencia; 
     private String tipo; // Artista, Album, Cancion 
@@ -37,7 +38,7 @@ public class Favorito {
     }
 
 
-    public String getIdUsuario() {
+    public ObjectId getIdUsuario() {
         return idUsuario;
     }
 
@@ -61,7 +62,7 @@ public class Favorito {
         return fechaAgregacion;
     }
 
-    public void setIdUsuario(String idUsuario) {
+    public void setIdUsuario(ObjectId idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -93,14 +94,15 @@ public class Favorito {
     }
     
     public static class Builder{
-        String idUsuario;
+        
+        ObjectId idUsuario;
         String idReferencia;
         String tipo;
         String genero;
         String nombreCancion;
         LocalDate fechaAgregacion;
 
-        public Builder setIdUsuario(String idUsuario) {
+        public Builder setIdUsuario(ObjectId idUsuario) {
             this.idUsuario = idUsuario;
             return this;
         }

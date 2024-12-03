@@ -12,6 +12,7 @@ import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IActualizarUsuarioBO;
 import com.bmn.singletonUsuario.UsuarioST;
 import com.bmn.utilerias.Hasher;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -55,8 +56,9 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
         if (usuario.getContrasena().isBlank()) {
             throw new BOException("Porfavor rellene el campo de 'Correo'");
         }
-        if (true) {
-            
+        if (usuario.getContrasenaConfirmar().isEmpty()) {
+            throw new BOException("Porfavor rellene el campo de confirmacion "
+                    + "del correo");
         }
         if (usuario.getImagenPerfil().isEmpty()) {
             throw new BOException("Porfavor rellene el campo de 'Correo'");
@@ -78,9 +80,11 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
     
     private void verificarDisponibilidadCorreo(UsuarioActualizarDTO usuario) throws BOException {
         try{
-            if (!usuarioDAO.verificarExistenciaCorreo(usuario.getCorreo())) {
-                throw new BOException("El correo proporcionado ya se encuentra "
-                        + "ocupado por otro usuario");
+            if (!usuario.getCorreo().equalsIgnoreCase(UsuarioST.getInstance().getCorreo())) {
+                if (usuarioDAO.verificarExistenciaCorreo(usuario.getCorreo())) {
+                    throw new BOException("El correo proporcionado ya se encuentra "
+                            + "ocupado por otro usuario");
+                }
             }
         }
         catch(DAOException ex){
@@ -97,9 +101,9 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
     }
     
     private void agregarId (UsuarioActualizarDTO usuario) throws BOException {
-        String id = UsuarioST.getInstance().getId();
+        ObjectId id = UsuarioST.getInstance().getId();
         
-        usuario.setId(id);
+        usuario.setId(id.toString());
     }
     
     private void procesarActualizarUsuario(UsuarioActualizarDTO usuarioDTO) throws BOException  {
@@ -109,6 +113,9 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
             
             //guardamos en la persistencia
             usuarioDAO.actualizarUsuario(usuario);
+            
+            reasignarUsuarioSingletone(usuario);
+            
         }
         catch(DAOException ex){
             throw new BOException(ex.getMessage());
@@ -117,12 +124,17 @@ public class ActualizarUsuarioBO implements IActualizarUsuarioBO{
     
     private Usuario convertirDTO(UsuarioActualizarDTO usuarioDTO){
         Usuario usuario = new Usuario.Builder().
-                setId(usuarioDTO.getId()).
+                setId(new ObjectId(usuarioDTO.getId())).
                 setNombre(usuarioDTO.getNombre()).
+                setCorreo(usuarioDTO.getCorreo()).
                 setContrasena(usuarioDTO.getContrasena()).
                 setImagenPerfil(usuarioDTO.getImagenPerfil()).
                 build();
         return usuario;
+    }
+    
+    public void reasignarUsuarioSingletone(Usuario usuario){
+        UsuarioST.setUsuario(usuario);
     }
     
 }

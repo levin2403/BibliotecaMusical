@@ -15,6 +15,7 @@ import com.bmn.singletonUsuario.UsuarioST;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -38,7 +39,7 @@ public class ObtenerArtistasFavoritosBO implements IObtenerArtistasFavoritosBO {
             
             String genero1 = genero.name();
             
-            String idUsuario = UsuarioST.getInstance().getId();
+            ObjectId idUsuario = UsuarioST.getInstance().getId();
             
             List<Artista> artistas = favoritoDAO.obtenerArtistasFavoritos(genero1, fecha, idUsuario);
             List<ArtistaVistaDTO> artistasVistaDTO = new ArrayList<>();
@@ -57,7 +58,7 @@ public class ObtenerArtistasFavoritosBO implements IObtenerArtistasFavoritosBO {
     
     private ArtistaVistaDTO toArtistaVista(Artista artista){
         return new ArtistaVistaDTO(
-            artista.getId(),
+            artista.getId().toString(),
             artista.getNombre(),
             artista.getImagen()
         );
