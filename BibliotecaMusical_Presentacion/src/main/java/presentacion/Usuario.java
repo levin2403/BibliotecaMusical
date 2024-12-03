@@ -8,12 +8,12 @@ package presentacion;
  *
  * @author Sebastian Murrieta Verduzco -233463
  */
-public class Registro extends javax.swing.JFrame {
+public class Usuario extends javax.swing.JFrame {
 
     /**
      * Creates new form Inicio
      */
-    public Registro() {
+    public Usuario() {
         initComponents();
     }
 
@@ -41,12 +41,14 @@ public class Registro extends javax.swing.JFrame {
         panelGlowingGradient2 = new javaswingdev.pggb.PanelGlowingGradient();
         jLabel5 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        atrasBtn = new javax.swing.JLabel();
-        registroBtn = new controlador.PanelRound();
+        jLabel4 = new javax.swing.JLabel();
+        panelRound3 = new controlador.PanelRound();
         jLabel2 = new javax.swing.JLabel();
         panelRound2 = new controlador.PanelRound();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        panelRound4 = new controlador.PanelRound();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -62,26 +64,26 @@ public class Registro extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("OCR A Extended", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("REGISTRO");
+        jLabel1.setText("USUARIO");
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(211, 211, 211))
+                .addGap(319, 319, 319)
+                .addComponent(jLabel1)
+                .addContainerGap(327, Short.MAX_VALUE))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(31, 31, 31))
+                .addGap(32, 32, 32))
         );
 
-        Fondo.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 32, 440, -1));
+        Fondo.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 32, 800, -1));
 
         panelGlowingGradient1.setBackground(new java.awt.Color(24, 40, 54));
         panelGlowingGradient1.setBackgroundLight(new java.awt.Color(24, 40, 54));
@@ -157,51 +159,46 @@ public class Registro extends javax.swing.JFrame {
 
         Fondo.add(panelGlowingGradient2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 450, 70));
 
-        atrasBtn.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
-        atrasBtn.setForeground(new java.awt.Color(159, 159, 159));
-        atrasBtn.setText("Regresar");
-        atrasBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        atrasBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel4.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(159, 159, 159));
+        jLabel4.setText("Regresar");
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                atrasBtnMouseClicked(evt);
+                jLabel4MouseClicked(evt);
             }
         });
-        Fondo.add(atrasBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 600, -1, -1));
+        Fondo.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 670, -1, -1));
 
-        registroBtn.setBackground(new java.awt.Color(81, 137, 161));
-        registroBtn.setCursorHandEnabled(true);
-        registroBtn.setRoundBottomLeft(50);
-        registroBtn.setRoundBottomRight(50);
-        registroBtn.setRoundTopLeft(50);
-        registroBtn.setRoundTopRight(50);
-        registroBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registroBtnMouseClicked(evt);
-            }
-        });
+        panelRound3.setBackground(new java.awt.Color(42, 89, 109));
+        panelRound3.setCursorHandEnabled(true);
+        panelRound3.setRoundBottomLeft(50);
+        panelRound3.setRoundBottomRight(50);
+        panelRound3.setRoundTopLeft(50);
+        panelRound3.setRoundTopRight(50);
 
         jLabel2.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Registrarse");
+        jLabel2.setText("BANEADO");
 
-        javax.swing.GroupLayout registroBtnLayout = new javax.swing.GroupLayout(registroBtn);
-        registroBtn.setLayout(registroBtnLayout);
-        registroBtnLayout.setHorizontalGroup(
-            registroBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(registroBtnLayout.createSequentialGroup()
-                .addGap(72, 72, 72)
+        javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
+        panelRound3.setLayout(panelRound3Layout);
+        panelRound3Layout.setHorizontalGroup(
+            panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound3Layout.createSequentialGroup()
+                .addGap(102, 102, 102)
                 .addComponent(jLabel2)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
-        registroBtnLayout.setVerticalGroup(
-            registroBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, registroBtnLayout.createSequentialGroup()
+        panelRound3Layout.setVerticalGroup(
+            panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound3Layout.createSequentialGroup()
                 .addContainerGap(11, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        Fondo.add(registroBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 530, 310, 60));
+        Fondo.add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 600, 310, 60));
 
         panelRound2.setBackground(new java.awt.Color(81, 137, 161));
         panelRound2.setMinimumSize(new java.awt.Dimension(300, 300));
@@ -245,17 +242,45 @@ public class Registro extends javax.swing.JFrame {
         });
         Fondo.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 470, 70, 30));
 
+        panelRound4.setBackground(new java.awt.Color(81, 137, 161));
+        panelRound4.setCursorHandEnabled(true);
+        panelRound4.setRoundBottomLeft(50);
+        panelRound4.setRoundBottomRight(50);
+        panelRound4.setRoundTopLeft(50);
+        panelRound4.setRoundTopRight(50);
+
+        jLabel8.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("ACEPTAR");
+
+        javax.swing.GroupLayout panelRound4Layout = new javax.swing.GroupLayout(panelRound4);
+        panelRound4.setLayout(panelRound4Layout);
+        panelRound4Layout.setHorizontalGroup(
+            panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound4Layout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(jLabel8)
+                .addContainerGap(103, Short.MAX_VALUE))
+        );
+        panelRound4Layout.setVerticalGroup(
+            panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound4Layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        Fondo.add(panelRound4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 520, 310, 60));
+
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 720));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-
-    private void atrasBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasBtnMouseClicked
-        new Inicio().setVisible(true);
-    }//GEN-LAST:event_atrasBtnMouseClicked
-
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -264,10 +289,6 @@ public class Registro extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
-        new Entrar().setVisible(true);
-    }//GEN-LAST:event_registroBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -286,37 +307,39 @@ public class Registro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Registro().setVisible(true);
+                new Usuario().setVisible(true);
             }
         });
     }
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
-    private javax.swing.JLabel atrasBtn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JTextField jTextField1;
@@ -327,6 +350,7 @@ public class Registro extends javax.swing.JFrame {
     private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient4;
     private controlador.PanelRound panelRound1;
     private controlador.PanelRound panelRound2;
-    private controlador.PanelRound registroBtn;
+    private controlador.PanelRound panelRound3;
+    private controlador.PanelRound panelRound4;
     // End of variables declaration//GEN-END:variables
 }

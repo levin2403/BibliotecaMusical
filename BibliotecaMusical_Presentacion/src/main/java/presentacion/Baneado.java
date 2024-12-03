@@ -1,97 +1,316 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
 import controlador.RenderCeldas;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author Sebastian Murrieta Verduzco -233463
  */
-public class Principal extends javax.swing.JFrame {
+public class Baneado extends javax.swing.JFrame {
 
-    private boolean isMenuVisible = true;
+// Constantes
+private static final Color COLOR_FONDO = new Color(24, 40, 54);
+private static final Color COLOR_PANELES = new Color(35, 58, 68);
+private static final Color COLOR_ACENTOS = new Color(58, 107, 128);
 
-    /**
-     * Creates new form Inicio
-     */
-    public Principal() {
-        initComponents();
-        configurarTabla(); // Método para configurar la tabla
-        // Mueve el panel fuera de la vista al iniciar el frame
+// Variables de instancia
+private boolean isMenuVisible = false;
+private DefaultTableModel modeloTabla;
+private TableRowSorter<DefaultTableModel> sorter;
+private javax.swing.JPanel glassPanel;
+
+public Baneado() {
+    initComponents();
+    initializeUI();
+}
+
+private void initializeUI() {
+    configurarTabla();
+    initGlassPanel();
+    configurarEventos();
+    configurarEstilos();
+    initializeMenu();
+}
+
+private void initializeMenu() {
+    // Inicializar la posición del menú
     menuDesplegablePanel.setLocation(-menuDesplegablePanel.getWidth(), menuDesplegablePanel.getY());
+}
+
+
+private void configurarEstilos() {
+    // Establecer colores de fondo
+    Fondo.setBackground(COLOR_FONDO);
+    menuDesplegablePanel.setBackground(COLOR_ACENTOS);
+
+    // Configurar botones
+    configurarBoton(buscarBtn, COLOR_PANELES);
+    configurarBoton(menuBtn, COLOR_ACENTOS);
+
+    // Configurar campo de búsqueda
+    configurarCampoBusqueda();
+}
+
+private void configurarCampoBusqueda() {
+    busqueda.setCaretColor(Color.WHITE);
+    busqueda.putClientProperty("JTextField.placeholderText", "Buscar género...");
+}
+
+private void configurarBoton(javax.swing.JButton boton, Color color) {
+    boton.setBackground(color);
+    boton.setFocusPainted(false);
+    boton.setBorderPainted(false);
+    boton.setContentAreaFilled(false);
+    boton.setOpaque(true);
+}
+
+private void configurarTabla() {
+    initializeTableModel();
+    configureTableAppearance();
+    configureTableSorter();
+    configureTableRenderer();
+    configureScrollPane();
+    adjustTableColumns();
+}
+
+private void initializeTableModel() {
+    String[] columnNames = {"Género", "Fecha de baneo", "Razón"};
+    Object[][] datos = {
+        {"Rock", "2024-01-15", "Contenido inapropiado"},
+        {"Pop", "2024-02-01", "Violación de términos"},
+        {"Jazz", "2024-02-15", "Spam repetitivo"},
+        {"Hip Hop", "2024-03-01", "Contenido ofensivo"}
+    };
+
+    modeloTabla = new DefaultTableModel(datos, columnNames) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    tablaBaneado.setModel(modeloTabla);
+}
+
+private void configureTableAppearance() {
+    tablaBaneado.setBackground(COLOR_PANELES);
+    tablaBaneado.setForeground(Color.WHITE);
+    tablaBaneado.setRowHeight(50);
+    tablaBaneado.setSelectionBackground(COLOR_ACENTOS);
+    tablaBaneado.setSelectionForeground(Color.WHITE);
+    tablaBaneado.setShowHorizontalLines(true);
+    tablaBaneado.setShowVerticalLines(false);
+    tablaBaneado.setGridColor(new Color(255, 255, 255, 50));
+
+    // Configurar encabezado
+    tablaBaneado.getTableHeader().setBackground(COLOR_PANELES);
+    tablaBaneado.getTableHeader().setForeground(Color.WHITE);
+}
+
+private void configureTableSorter() {
+    sorter = new TableRowSorter<>(modeloTabla);
+    tablaBaneado.setRowSorter(sorter);
+}
+
+private void configureTableRenderer() {
+    RenderCeldas render = new RenderCeldas(tablaBaneado);
+    render.setColumnAlignment(0, SwingConstants.CENTER);
+    render.setColumnAlignment(1, SwingConstants.CENTER);
+    render.setColumnAlignment(2, SwingConstants.LEFT);
+}
+
+private void configureScrollPane() {
+    jScrollPane1.setBorder(null);
+    jScrollPane1.getViewport().setBackground(COLOR_PANELES);
+    jScrollPane1.setBounds(
+            menuDesplegablePanel.getWidth(),
+            jScrollPane1.getY(),
+            getWidth() - menuDesplegablePanel.getWidth(),
+            jScrollPane1.getHeight()
+    );
+}
+
+private void adjustTableColumns() {
+    tablaBaneado.getColumnModel().getColumn(0).setPreferredWidth(150);
+    tablaBaneado.getColumnModel().getColumn(1).setPreferredWidth(120);
+    tablaBaneado.getColumnModel().getColumn(2).setPreferredWidth(200);
+}
+
+private void configurarEventos() {
+    configurarEventoBusqueda();
+    configurarEventosMenu();
+}
+
+private void configurarEventoBusqueda() {
+    busqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+        @Override
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+            filtrarTabla(busqueda.getText());
+        }
+    });
+}
+
+private void filtrarTabla(String texto) {
+    if (texto.trim().isEmpty()) {
+        sorter.setRowFilter(null);
+    } else {
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto));
+    }
+}
+
+private void configurarEventosMenu() {
+    configurarEventoMenuItem(albumLb, "Navegando a Álbumes");
+    configurarEventoMenuItem(albumFavLb, "Navegando a Álbumes Favoritos");
+    configurarEventoMenuItem(artistaLb, "Navegando a Artistas");
+    configurarEventoMenuItem(artistasFavLb, "Navegando a Artistas Favoritos");
+    configurarEventoMenuItem(perfilLb, "Navegando a Mi Perfil");
+    configurarEventoSalir();
+}
+
+private void configurarEventoMenuItem(javax.swing.JLabel menuItem, String mensaje) {
+    menuItem.addMouseListener(new MenuItemListener(()
+            -> JOptionPane.showMessageDialog(this, mensaje)
+    ));
+}
+
+private void configurarEventoSalir() {
+    salir.addMouseListener(new MenuItemListener(() -> {
+        int option = JOptionPane.showConfirmDialog(this,
+                "¿Estás seguro que deseas salir?",
+                "Confirmar salida",
+                JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }));
+}
+
+private class MenuItemListener extends MouseAdapter {
+
+    private final Runnable action;
+
+    public MenuItemListener(Runnable action) {
+        this.action = action;
     }
 
-    private void configurarTabla() {
-        // Crear datos de ejemplo para la tabla
-        Object[][] datos = {
-            {"imagen1.jpg", "Dark Side of the Moon", "Pink Floyd"},
-            {"imagen2.jpg", "Thriller", "Michael Jackson"},
-            {"imagen3.jpg", "Back in Black", "AC/DC"},
-            {"imagen4.jpg", "The Wall", "Pink Floyd"},
-            {"imagen5.jpg", "Abbey Road", "The Beatles"},
-            {"imagen6.jpg", "Nevermind", "Nirvana"},
-            {"imagen7.jpg", "Rumours", "Fleetwood Mac"},
-            {"imagen8.jpg", "Purple Rain", "Prince"},
-            {"imagen9.jpg", "Born to Run", "Bruce Springsteen"}
-        };
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        action.run();
+    }
 
-        // Configurar el modelo de la tabla con las columnas y datos
-        DefaultTableModel modelo = new DefaultTableModel(datos, new String[]{"IMAGEN", "NOMBRE DEL ALBUM", "ARTISTA"}) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Hacer la tabla no editable
-            }
-        };
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        ((javax.swing.JLabel) e.getComponent()).setForeground(new Color(200, 200, 200));
+    }
 
-        tablaAlbum.setModel(modelo);
+    @Override
+    public void mouseExited(MouseEvent e) {
+        ((javax.swing.JLabel) e.getComponent()).setForeground(Color.WHITE);
+    }
+}
 
-        // Evitar que las columnas se reordenen
-        tablaAlbum.getTableHeader().setReorderingAllowed(false);
+private void initGlassPanel() {
+    glassPanel = new javax.swing.JPanel();
+    glassPanel.setOpaque(false);
+    glassPanel.setBackground(new Color(0, 0, 0, 50));
+    glassPanel.setVisible(false);
 
-        // Deshabilitar la modificación del tamaño de las columnas
-        for (int i = 0; i < tablaAlbum.getColumnModel().getColumnCount(); i++) {
-            tablaAlbum.getColumnModel().getColumn(i).setResizable(false);
+    glassPanel.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            e.consume();
         }
 
-        // Configurar alineaciones específicas para cada columna
-        RenderCeldas render = new RenderCeldas(tablaAlbum);
-        render.setColumnAlignment(0, SwingConstants.CENTER); // Imagen centrada
-        render.setColumnAlignment(1, SwingConstants.CENTER); // Nombre centrado
-        render.setColumnAlignment(2, SwingConstants.LEFT);   // Artista a la izquierda
+        @Override
+        public void mousePressed(MouseEvent e) {
+            e.consume();
+        }
 
-        // Configurar colores y apariencia de la tabla
-        tablaAlbum.setBackground(new Color(35, 58, 68)); // Fondo oscuro
-        tablaAlbum.setForeground(Color.WHITE);           // Texto blanco
-        tablaAlbum.setRowHeight(50);                     // Altura de las filas
-        tablaAlbum.setSelectionBackground(new Color(58, 107, 128)); // Fondo de selección
-        tablaAlbum.setSelectionForeground(Color.WHITE);             // Texto de selección
-        tablaAlbum.setShowHorizontalLines(true);        // Mostrar líneas horizontales
-        tablaAlbum.setShowVerticalLines(false);         // Ocultar líneas verticales
-        tablaAlbum.setGridColor(new Color(255, 255, 255, 50)); // Color de las líneas de cuadrícula
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            e.consume();
+        }
+    });
 
-        // Configurar el header de la tabla con el color específico y centrado
-        tablaAlbum.getTableHeader().setBackground(new Color(35, 58, 68));
-        tablaAlbum.getTableHeader().setForeground(Color.WHITE);
+    setGlassPane(glassPanel);
+}
 
-        // Configurar el scroll pane
-        jScrollPane1.setBorder(null);
-        jScrollPane1.getViewport().setBackground(new Color(35, 58, 68));
+private void toggleMenu() {
+    int panelWidth = menuDesplegablePanel.getWidth();
+    int targetX = isMenuVisible ? -panelWidth : 0; // Posición final del panel
+    isMenuVisible = !isMenuVisible; // Alterna el estado del menú
 
-        // Ajustar las posiciones para evitar la superposición
-        jScrollPane1.setBounds(menuDesplegablePanel.getWidth(), jScrollPane1.getY(),
-                getWidth() - menuDesplegablePanel.getWidth(), jScrollPane1.getHeight());
+    // Desactivar elementos interactivos (como la tabla) cuando el menú está visible
+    tablaBaneado.setEnabled(!isMenuVisible);
 
-        // Ajustar el ancho de las columnas
-        tablaAlbum.getColumnModel().getColumn(0).setPreferredWidth(200); // Imagen
-        tablaAlbum.getColumnModel().getColumn(1).setPreferredWidth(150); // Nombre
-        tablaAlbum.getColumnModel().getColumn(2).setPreferredWidth(100); // Artista
+    // Inicia el temporizador para animar el panel
+    javax.swing.Timer timer = new javax.swing.Timer(10, new java.awt.event.ActionListener() {
+        int currentX = menuDesplegablePanel.getX(); // Posición actual del panel
+        int step = (targetX - currentX) / 15; // Tamaño del paso de movimiento
+
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            // Movimiento gradual hacia la posición final
+            if ((step > 0 && currentX < targetX) || (step < 0 && currentX > targetX)) {
+                currentX += step;
+                menuDesplegablePanel.setLocation(currentX, menuDesplegablePanel.getY());
+            } else {
+                // Asegura que el panel alcance exactamente su posición final
+                menuDesplegablePanel.setLocation(targetX, menuDesplegablePanel.getY());
+                ((javax.swing.Timer) e.getSource()).stop(); // Detiene la animación
+            }
+        }
+    });
+
+    timer.start(); // Comienza la animación
+}
+
+
+private void updateUIForMenuToggle(boolean opening) {
+    if (opening) {
+        glassPanel.setVisible(true);
+        // Asegúrate de que `menuDesplegablePanel` sea hijo directo de `Fondo`
+        if (Fondo.isAncestorOf(menuDesplegablePanel)) {
+            Fondo.setComponentZOrder(menuDesplegablePanel, 0);
+        }
+        tablaBaneado.clearSelection();
+        tablaBaneado.setEnabled(false);
+    } else {
+        tablaBaneado.setEnabled(true);
     }
+}
+
+
+private void animateMenu(int targetX) {
+    javax.swing.Timer timer = new javax.swing.Timer(10, new java.awt.event.ActionListener() {
+        int currentX = menuDesplegablePanel.getX();
+        int step = (targetX - currentX) / 15;
+
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            if ((step > 0 && currentX < targetX) || (step < 0 && currentX > targetX)) {
+                currentX += step;
+                menuDesplegablePanel.setLocation(currentX, menuDesplegablePanel.getY());
+            } else {
+                menuDesplegablePanel.setLocation(targetX, menuDesplegablePanel.getY());
+                ((javax.swing.Timer) e.getSource()).stop();
+
+                if (targetX < 0) {
+                    glassPanel.setVisible(false);
+                }
+            }
+        }
+    });
+
+    timer.start();
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -119,7 +338,7 @@ public class Principal extends javax.swing.JFrame {
         panelInformacionAlbum = new controlador.PanelRound();
         panelRound5 = new controlador.PanelRound();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaAlbum = new javax.swing.JTable();
+        tablaBaneado = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -253,7 +472,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("OCR A Extended", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Principal");
+        jLabel1.setText("Baneados");
 
         panelRound3.setBackground(new java.awt.Color(35, 58, 68));
         panelRound3.setCursorHandEnabled(true);
@@ -364,8 +583,8 @@ public class Principal extends javax.swing.JFrame {
         panelRound5.setRoundTopLeft(30);
         panelRound5.setRoundTopRight(30);
 
-        tablaAlbum.setBackground(new java.awt.Color(35, 58, 68));
-        tablaAlbum.setModel(new javax.swing.table.DefaultTableModel(
+        tablaBaneado.setBackground(new java.awt.Color(35, 58, 68));
+        tablaBaneado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -373,15 +592,15 @@ public class Principal extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Imagen", "Nombre", "Artista"
+                "Genero", "Fecha de baneo", "Razon"
             }
         ));
-        tablaAlbum.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tablaAlbum.setGridColor(new java.awt.Color(35, 58, 68));
-        tablaAlbum.setSelectionBackground(new java.awt.Color(35, 58, 68));
-        jScrollPane1.setViewportView(tablaAlbum);
-        if (tablaAlbum.getColumnModel().getColumnCount() > 0) {
-            tablaAlbum.getColumnModel().getColumn(0).setPreferredWidth(200);
+        tablaBaneado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tablaBaneado.setGridColor(new java.awt.Color(35, 58, 68));
+        tablaBaneado.setSelectionBackground(new java.awt.Color(35, 58, 68));
+        jScrollPane1.setViewportView(tablaBaneado);
+        if (tablaBaneado.getColumnModel().getColumnCount() > 0) {
+            tablaBaneado.getColumnModel().getColumn(0).setPreferredWidth(200);
         }
 
         javax.swing.GroupLayout panelRound5Layout = new javax.swing.GroupLayout(panelRound5);
@@ -426,29 +645,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_artistasFavLbMouseClicked
 
     private void menuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBtnActionPerformed
-        int panelWidth = menuDesplegablePanel.getWidth();
-        int targetX = isMenuVisible ? -panelWidth : 0; // Determina el objetivo según el estado
-        isMenuVisible = !isMenuVisible; // Alternar estado
-
-        // Desactivar tabla cuando el menú está visible
-        tablaAlbum.setEnabled(!isMenuVisible);
-
-        javax.swing.Timer timer = new javax.swing.Timer(15, new java.awt.event.ActionListener() {
-            int currentX = menuDesplegablePanel.getX();
-
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                if ((isMenuVisible && currentX < targetX) || (!isMenuVisible && currentX > targetX)) {
-                    currentX += isMenuVisible ? 15 : -15; // Mover según el estado
-                    menuDesplegablePanel.setLocation(currentX, menuDesplegablePanel.getY());
-                } else {
-                    ((javax.swing.Timer) e.getSource()).stop();
-                }
-            }
-        });
-
-        timer.start();
-
+        toggleMenu(); // Llama al método que realiza la animación
     }//GEN-LAST:event_menuBtnActionPerformed
 
     private void artistaLbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_artistaLbMouseClicked
@@ -471,12 +668,7 @@ public class Principal extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new Baneado().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -502,6 +694,6 @@ public class Principal extends javax.swing.JFrame {
     private controlador.PanelRound panelRound5;
     private javax.swing.JLabel perfilLb;
     private javax.swing.JLabel salir;
-    private javax.swing.JTable tablaAlbum;
+    private javax.swing.JTable tablaBaneado;
     // End of variables declaration//GEN-END:variables
 }

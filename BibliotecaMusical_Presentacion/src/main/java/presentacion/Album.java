@@ -13,14 +13,14 @@ import javax.swing.SwingConstants;
  *
  * @author Sebastian Murrieta Verduzco -233463
  */
-public class Principal extends javax.swing.JFrame {
+public class Album extends javax.swing.JFrame {
 
     private boolean isMenuVisible = true;
 
     /**
      * Creates new form Inicio
      */
-    public Principal() {
+    public Album() {
         initComponents();
         configurarTabla(); // Método para configurar la tabla
         // Mueve el panel fuera de la vista al iniciar el frame
@@ -253,7 +253,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("OCR A Extended", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Principal");
+        jLabel1.setText("Album");
 
         panelRound3.setBackground(new java.awt.Color(35, 58, 68));
         panelRound3.setCursorHandEnabled(true);
@@ -474,7 +474,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new Album().setVisible(true);
             }
         });
     }
