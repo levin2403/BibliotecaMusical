@@ -25,11 +25,11 @@ public class ObtenerAlbumesFavoritosBO implements IObtenerAlbumesFavoritosBO {
    
     private IFavoritoDAO favoritoDAO;
 
-    public void setFavoritoDAO(IFavoritoDAO favoritoDAO) {
+    public ObtenerAlbumesFavoritosBO(IFavoritoDAO favoritoDAO) {
         this.favoritoDAO = favoritoDAO;
-        
     }
 
+    
     @Override
     public List<AlbumVistaDTO> obtenerAlbumesFavoritos(Genero genero, LocalDate fechaAgregacion) throws BOException {
         return procesar(genero, fechaAgregacion);
