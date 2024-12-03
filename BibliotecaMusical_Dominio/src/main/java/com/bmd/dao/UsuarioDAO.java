@@ -142,7 +142,7 @@ public class UsuarioDAO implements IUsuarioDAO {
      * @throws DAOException 
      */
     @Override
-    public List<String> obtenerRestringidos(String idUsuario) throws DAOException {
+    public List<String> obtenerRestringidos(ObjectId idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
             Usuario usuario = collection.find(eq("_id", idUsuario)).first();
@@ -175,16 +175,17 @@ public class UsuarioDAO implements IUsuarioDAO {
 
             // Verificar si la lista de géneros restringidos no es nula
             List<String> generosRestringidos = usuario.getGenerosRestringidos();
-            if (generosRestringidos == null) {
-                // Si la lista es nula, retornamos true indicando que el género no existe en la lista
-                return true;
+            if (generosRestringidos == null || generosRestringidos.isEmpty()) {
+                // Si la lista es nula o está vacía, retornamos false indicando que el género no existe en la lista
+                return false;
             }
 
-            return !generosRestringidos.contains(genero);
+            return generosRestringidos.contains(genero);
         } catch (Exception e) {
             throw new DAOException("Error al verificar la existencia del género restringido", e);
         }
     }
+
 
 
 

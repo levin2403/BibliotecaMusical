@@ -21,6 +21,7 @@ import com.bmn.interfaces.IObtenerArtistaBO;
 import com.bmn.singletonUsuario.UsuarioST;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -51,12 +52,12 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
     private ArtistaDTO procesar(String idArtista) throws BOException {
         try{
             //obtenemos el artista 
-            Artista artista = artistaDAO.buscarPorId(idArtista);
+            Artista artista = artistaDAO.buscarPorId(new ObjectId(idArtista));
             
             //obtenemos el id del usuario registrado
-            String idUsuario = UsuarioST.getInstance().getId().toString();
+            ObjectId idUsuario = UsuarioST.getInstance().getId();
             
-            boolean favorito = verificarFavorito(idArtista, idUsuario);
+            boolean favorito = verificarFavorito(new ObjectId(idArtista), idUsuario);
             
             ArtistaDTO artistaDTO = toArtistaDTO(artista);
             artistaDTO.setFavorito(favorito);
@@ -68,7 +69,7 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
         }
     }
     
-    private boolean verificarFavorito(String idArtista, String idUsuario) throws BOException {
+    private boolean verificarFavorito(ObjectId idArtista, ObjectId idUsuario) throws BOException {
         try{
             if (favoritoDAO.isFavorito(idArtista, idUsuario)) {
                 return true;

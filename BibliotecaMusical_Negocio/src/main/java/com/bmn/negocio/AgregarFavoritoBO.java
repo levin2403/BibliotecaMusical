@@ -52,10 +52,10 @@ public class AgregarFavoritoBO implements IAgregarFavoritoBO {
             //transformo de dto a entidad.
             Favorito favorito = toFavorito(favoritoDTO);
             
-            String idReferencia = favorito.getIdReferencia();
+            ObjectId idReferencia = new ObjectId(favorito.getIdReferencia());
             
             //transformamos al dto a entidad al usuario.
-            String idUsuario = UsuarioST.getInstance().getId().toString();
+            ObjectId idUsuario = UsuarioST.getInstance().getId();
             
             // si no existe dentro de los favoritos del usuario 
             // lo guardamos

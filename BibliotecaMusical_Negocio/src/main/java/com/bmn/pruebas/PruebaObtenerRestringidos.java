@@ -4,6 +4,12 @@
  */
 package com.bmn.pruebas;
 
+import com.bmn.dto.constantes.Genero;
+import com.bmn.excepciones.BOException;
+import com.bmn.factories.BOFactory;
+import com.bmn.negocio.ObtenerRestringidosBO;
+import java.util.List;
+
 /**
  *
  * @author skevi
@@ -14,7 +20,20 @@ public class PruebaObtenerRestringidos {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        try{
+            ObtenerRestringidosBO restringidos = BOFactory.obtenerRestringidosFactory();
+
+            List<Genero> generos = restringidos.obtenerRestringidos();
+
+            for (Genero genero : generos) {
+                System.out.println(genero.name());
+            }
+        
+        }
+        catch(BOException ex){
+            System.out.println(ex.getMessage());
+        }
     }
     
 }

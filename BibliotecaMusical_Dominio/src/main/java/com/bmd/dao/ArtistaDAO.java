@@ -19,6 +19,7 @@ import static com.mongodb.client.model.Projections.include;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -45,7 +46,7 @@ public class ArtistaDAO implements IArtistaDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
-    public Artista buscarPorId(String idArtista) throws DAOException {
+    public Artista buscarPorId(ObjectId idArtista) throws DAOException {
         try {
             MongoCollection<Artista> collection = conexion.getCollection("artistas", Artista.class);
 
@@ -68,7 +69,7 @@ public class ArtistaDAO implements IArtistaDAO {
 
 
     @Override
-    public List<Artista> buscarPorFiltro(String nombre, String genero, String idUsuario) throws DAOException {
+    public List<Artista> buscarPorFiltro(String nombre, String genero, ObjectId idUsuario) throws DAOException {
         try {
             MongoCollection<Artista> collection = conexion.getCollection("artistas", Artista.class);
 
@@ -81,7 +82,7 @@ public class ArtistaDAO implements IArtistaDAO {
             if (genero != null && !genero.isEmpty()) {
                 filtros.add(eq("genero", genero));
             }
-            if (idUsuario != null && !idUsuario.isEmpty()) {
+            if (idUsuario != null && idUsuario != null) {
                 // Filtro para excluir géneros restringidos por el usuario
                 MongoCollection<Usuario> usuarioCollection = conexion.getCollection("usuarios", Usuario.class);
                 Usuario usuario = usuarioCollection.find(eq("_id", idUsuario)).first();

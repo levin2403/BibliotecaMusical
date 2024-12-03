@@ -22,7 +22,7 @@ public class PruebaAgregarRestringido {
         try{
         AgregarRestringidoBO restringido = BOFactory.agregarRestringidoFactory();
         
-        restringido.agregarRestringido(Genero.Afrobeat);
+//        restringido.agregarRestringido(Genero.Afrobeat);
         restringido.agregarRestringido(Genero.Hip_Hop);
         
         }

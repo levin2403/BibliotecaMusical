@@ -14,6 +14,7 @@ import com.bmn.singletonUsuario.UsuarioST;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -36,7 +37,7 @@ public class ObtenerCancionesFavoritasBO implements IObtenerCancionesFavoritasBO
         try{
             String genero1 = genero.name();
             
-            String idUsuario = UsuarioST.getInstance().getId().toString();
+            ObjectId idUsuario = UsuarioST.getInstance().getId();
             
             List<String> canciones = favoritoDAO.obtenerCancionesFavoritas(genero1, fecha, idUsuario);
             List<CancionDTO> cancionesDTO = new ArrayList<>();

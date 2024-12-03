@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -73,7 +74,7 @@ public class FavoritoDAO implements IFavoritoDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
-    public boolean isFavorito(String idReferencia, String idUsuario) 
+    public boolean isFavorito(ObjectId idReferencia, ObjectId idUsuario) 
             throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.
@@ -97,7 +98,7 @@ public class FavoritoDAO implements IFavoritoDAO {
      * @throws DAOException En caso de excepción en la consulta.
      */
     @Override
-    public void eliminarFavorito(String idReferencia, String idUsuario, 
+    public void eliminarFavorito(ObjectId idReferencia, ObjectId idUsuario, 
             String tipo) throws DAOException {
         try {
             // Obtener la colección de usuarios
@@ -140,7 +141,7 @@ public class FavoritoDAO implements IFavoritoDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
-    public void eliminarFavoritoPorGenero(String genero, String idUsuario) 
+    public void eliminarFavoritoPorGenero(String genero, ObjectId idUsuario) 
             throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.
@@ -182,7 +183,7 @@ public class FavoritoDAO implements IFavoritoDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */ 
     @Override
-    public List<Artista> obtenerArtistasFavoritos(String genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
+    public List<Artista> obtenerArtistasFavoritos(String genero, LocalDate fechaAgregacion, ObjectId idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
 
@@ -234,7 +235,7 @@ public class FavoritoDAO implements IFavoritoDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
-    public List<String> obtenerCancionesFavoritas(String genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
+    public List<String> obtenerCancionesFavoritas(String genero, LocalDate fechaAgregacion, ObjectId idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
 
@@ -267,7 +268,7 @@ public class FavoritoDAO implements IFavoritoDAO {
      * @throws DAOException En caso de excepcion en la consulta.
      */
     @Override
-    public List<Album> obtenerAlbumesFavoritos(String genero, LocalDate fechaAgregacion, String idUsuario) throws DAOException {
+    public List<Album> obtenerAlbumesFavoritos(String genero, LocalDate fechaAgregacion, ObjectId idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
 
@@ -315,7 +316,7 @@ public class FavoritoDAO implements IFavoritoDAO {
      */
     @Override
     public boolean verificarCancionFavorita(String nombreCancion, 
-            String idReferencia, String idUsuario) throws DAOException {
+            ObjectId idReferencia, ObjectId idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.
                     getCollection("usuarios", Usuario.class);
@@ -331,7 +332,7 @@ public class FavoritoDAO implements IFavoritoDAO {
     }
 
     @Override
-    public void eliminarCancionFavorita(String nombreCancion, String idUsuario) 
+    public void eliminarCancionFavorita(String nombreCancion, ObjectId idUsuario) 
             throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.

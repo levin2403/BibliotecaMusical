@@ -27,7 +27,7 @@ public interface IUsuarioDAO {
     
     public void eliminarRestringido(String genero, ObjectId idUsuario) throws DAOException;
     
-    public List<String> obtenerRestringidos(String ObjectId) throws DAOException;
+    public List<String> obtenerRestringidos(ObjectId idUsuario) throws DAOException;
     
     public boolean verificarExistenciaRestringido(String genero, ObjectId idUsuario) throws DAOException;
     
