@@ -42,7 +42,7 @@ public class ObtenerAlbumesFavoritosBO implements IObtenerAlbumesFavoritosBO {
             String genero1 = genero.name();
             
             //obtenemos el id del usuario logeado
-            String idUsuario = UsuarioST.getInstance().getId();
+            String idUsuario = UsuarioST.getInstance().getId().toString();
             
             //lista traida de la base de datos;
             List<Album> albumes = favoritoDAO.obtenerAlbumesFavoritos(genero1, fechaAgregacion, idUsuario);
@@ -61,11 +61,11 @@ public class ObtenerAlbumesFavoritosBO implements IObtenerAlbumesFavoritosBO {
     
     private AlbumVistaDTO toAlbumvistaDTO(Album album){
         return new AlbumVistaDTO(
-            album.getId(),
+            album.getId().toString(),
             album.getNombre(),
             album.getImagenPortada(),
                 new ArtistaVistaDTO(
-                    album.getArtista().getId(),
+                    album.getArtista().getId().toString(),
                     album.getArtista().getNombre(),
                     album.getArtista().getImagen()
                 )

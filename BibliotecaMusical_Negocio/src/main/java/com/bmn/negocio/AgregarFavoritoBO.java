@@ -12,6 +12,7 @@ import com.bmn.dto.UsuarioDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IAgregarFavoritoBO;
 import com.bmn.singletonUsuario.UsuarioST;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -54,7 +55,7 @@ public class AgregarFavoritoBO implements IAgregarFavoritoBO {
             String idReferencia = favorito.getIdReferencia();
             
             //transformamos al dto a entidad al usuario.
-            String idUsuario = UsuarioST.getInstance().getId();
+            String idUsuario = UsuarioST.getInstance().getId().toString();
             
             // si no existe dentro de los favoritos del usuario 
             // lo guardamos
@@ -76,7 +77,7 @@ public class AgregarFavoritoBO implements IAgregarFavoritoBO {
     
     private Favorito toFavorito(FavoritoDTO favoritoDTO){
         Favorito favorito = new Favorito.Builder().
-                setIdUsuario(favoritoDTO.getIdUsuario()).
+                setIdUsuario(new ObjectId(favoritoDTO.getIdUsuario())).
                 setIdReferencia(favoritoDTO.getIdReferencia()).
                 setNombreCancion((favoritoDTO.getNombreCancion() == null) ? null : favoritoDTO.getNombreCancion()).
                 setTipo(favoritoDTO.getTipo().name()).

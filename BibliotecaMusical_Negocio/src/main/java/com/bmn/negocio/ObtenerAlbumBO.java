@@ -59,7 +59,7 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
             }
             
             //obtenemos el id del usuario que se encuentra loggeado.
-            String usuarioId = UsuarioST.getInstance().getId();
+            String usuarioId = UsuarioST.getInstance().getId().toString();
             
             //verificamos si el album es favorito
             verificarFavorito(albumDTO, usuarioId);
@@ -120,7 +120,7 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
     
     private AlbumDTO toDTO(Album album){
         AlbumDTO albumDTO = new AlbumDTO.Builder().
-                setId(album.getId()).
+                setId(album.getId().toString()).
                 setNombre(album.getNombre()).
                 setImagenPortada(album.getImagenPortada()).
                 setFechaLanzamiento(album.getFechaLanzamiento()).
@@ -143,7 +143,7 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
     
     private ArtistaMuestraDTO toArtistaMuestra(Artista artista){
         return new AlbumDTO.ArtistaMuestraDTO(
-                artista.getId(), 
+                artista.getId().toString(), 
                 artista.getNombre(), 
                 artista.getImagen()
         );

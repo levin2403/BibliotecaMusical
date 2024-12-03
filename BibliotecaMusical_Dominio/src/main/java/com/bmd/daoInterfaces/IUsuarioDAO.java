@@ -7,6 +7,7 @@ package com.bmd.daoInterfaces;
 import com.bdm.excepciones.DAOException;
 import com.bmd.entities.Usuario;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -22,12 +23,12 @@ public interface IUsuarioDAO {
     
     public void actualizarUsuario(Usuario usuario) throws DAOException;
     
-    public void añadirRestringido(String genero, String idUsuario) throws DAOException;
+    public void añadirRestringido(String genero, ObjectId idUsuario) throws DAOException;
     
-    public void eliminarRestringido(String genero, String idUsuario) throws DAOException;
+    public void eliminarRestringido(String genero, ObjectId idUsuario) throws DAOException;
     
-    public List<String> obtenerRestringidos(String idUsuario) throws DAOException;
+    public List<String> obtenerRestringidos(String ObjectId) throws DAOException;
     
-    public boolean verificarExistenciaRestringido(String genero, String idUsuario) throws DAOException;
+    public boolean verificarExistenciaRestringido(String genero, ObjectId idUsuario) throws DAOException;
     
 }

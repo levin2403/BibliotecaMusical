@@ -7,6 +7,7 @@ package com.bmd.entities;
 import java.util.List;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -15,7 +16,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 public class Artista {
     
     @BsonId 
-    private String id; 
+    private ObjectId id; 
     @BsonProperty("tipo_artista") 
     private String tipoArtista; 
     private String nombre; 
@@ -37,7 +38,7 @@ public class Artista {
         this.albums = builder.albums;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
@@ -69,7 +70,7 @@ public class Artista {
         this.albums = albums;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -105,7 +106,8 @@ public class Artista {
     }
     
     public static class Builder {
-        private String id;
+        
+        private ObjectId id;
         private String tipoArtista;
         private String nombre;
         private String imagen;
@@ -113,7 +115,7 @@ public class Artista {
         private List<Integrante> integrantes;
         private List<Album> albums;
 
-        public Builder setId(String id) {
+        public Builder setId(ObjectId id) {
             this.id = id;
             return this;
         }

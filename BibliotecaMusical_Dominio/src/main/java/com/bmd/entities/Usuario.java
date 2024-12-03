@@ -8,6 +8,7 @@ package com.bmd.entities;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -16,7 +17,7 @@ import java.util.List;
 public class Usuario {
     
     @BsonId
-    private String id;
+    private ObjectId id;
     private String nombre;
     private String correo;
     private String contrasena;
@@ -40,7 +41,7 @@ public class Usuario {
         this.generosRestringidos = builder.generosRestringidos;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
@@ -68,7 +69,7 @@ public class Usuario {
         return generosRestringidos;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -105,7 +106,7 @@ public class Usuario {
     }
     
     public static class Builder {
-        private String id;
+        private ObjectId id;
         private String nombre;
         private String correo;
         private String contrasena;
@@ -113,7 +114,7 @@ public class Usuario {
         private List<Favorito> favoritos;
         private List<String> generosRestringidos;
 
-        public Builder setId(String id) {
+        public Builder setId(ObjectId id) {
             this.id = id;
             return this;
         }

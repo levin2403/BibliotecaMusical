@@ -10,6 +10,7 @@ import com.bmn.dto.constantes.Genero;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IEliminarRestringidoBO;
 import com.bmn.singletonUsuario.UsuarioST;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -34,11 +35,11 @@ public class EliminarRestringidoBO implements IEliminarRestringidoBO {
             String genero1 = genero.name();
             
             //transformamos a usuario entidad.
-            String usuario = UsuarioST.getInstance().getId();
+            ObjectId usuario = new ObjectId("674eb761ad364c7a812e45fe");
             
             //si el genero no se encuentra restringido lo añadimos
-            if (!usuarioDAO.verificarExistenciaRestringido(genero1, usuario)) { 
-                usuarioDAO.añadirRestringido(genero1, usuario);
+            if (usuarioDAO.verificarExistenciaRestringido(genero1, usuario)) { 
+                usuarioDAO.eliminarRestringido(genero1, usuario);
             }
             else{
                 throw new BOException("El genero ya se encuentra restringido");

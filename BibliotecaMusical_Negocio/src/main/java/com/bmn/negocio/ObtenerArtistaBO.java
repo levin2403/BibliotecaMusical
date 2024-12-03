@@ -54,7 +54,7 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
             Artista artista = artistaDAO.buscarPorId(idArtista);
             
             //obtenemos el id del usuario registrado
-            String idUsuario = UsuarioST.getInstance().getId();
+            String idUsuario = UsuarioST.getInstance().getId().toString();
             
             boolean favorito = verificarFavorito(idArtista, idUsuario);
             
@@ -116,7 +116,7 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
         
         for (Album album : albums) {
             AlbumMuestraDTO albumMuestra = 
-                    new AlbumMuestraDTO(album.getId(), album.getId(), 
+                    new AlbumMuestraDTO(album.getId().toString(), album.getNombre(), 
                             album.getImagenPortada());
             albumMuestaDTO.add(albumMuestra);
         }

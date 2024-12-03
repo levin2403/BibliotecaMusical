@@ -12,6 +12,7 @@ import com.mongodb.client.MongoCollection;
 import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.client.model.Updates;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -104,7 +105,7 @@ public class UsuarioDAO implements IUsuarioDAO {
      * @throws DAOException 
      */
     @Override
-    public void añadirRestringido(String genero, String idUsuario) throws DAOException {
+    public void añadirRestringido(String genero, ObjectId idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
             collection.updateOne(eq("_id", idUsuario), 
@@ -123,7 +124,7 @@ public class UsuarioDAO implements IUsuarioDAO {
      * @throws DAOException 
      */
     @Override
-    public void eliminarRestringido(String genero, String idUsuario) throws DAOException {
+    public void eliminarRestringido(String genero, ObjectId idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
             collection.updateOne(eq("_id", idUsuario), 
@@ -164,18 +165,28 @@ public class UsuarioDAO implements IUsuarioDAO {
      * @throws com.bdm.excepciones.DAOException 
      */
     @Override
-    public boolean verificarExistenciaRestringido(String genero, String idUsuario) throws DAOException {
+    public boolean verificarExistenciaRestringido(String genero, ObjectId idUsuario) throws DAOException {
         try {
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
             Usuario usuario = collection.find(eq("_id", idUsuario)).first();
             if (usuario == null) {
                 throw new DAOException("Usuario no encontrado");
             }
-            return usuario.getGenerosRestringidos().contains(genero);
+
+            // Verificar si la lista de géneros restringidos no es nula
+            List<String> generosRestringidos = usuario.getGenerosRestringidos();
+            if (generosRestringidos == null) {
+                // Si la lista es nula, retornamos true indicando que el género no existe en la lista
+                return true;
+            }
+
+            return !generosRestringidos.contains(genero);
         } catch (Exception e) {
             throw new DAOException("Error al verificar la existencia del género restringido", e);
         }
     }
+
+
 
     
 }

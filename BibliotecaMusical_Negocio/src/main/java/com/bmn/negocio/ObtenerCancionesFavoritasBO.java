@@ -36,7 +36,7 @@ public class ObtenerCancionesFavoritasBO implements IObtenerCancionesFavoritasBO
         try{
             String genero1 = genero.name();
             
-            String idUsuario = UsuarioST.getInstance().getId();
+            String idUsuario = UsuarioST.getInstance().getId().toString();
             
             List<String> canciones = favoritoDAO.obtenerCancionesFavoritas(genero1, fecha, idUsuario);
             List<CancionDTO> cancionesDTO = new ArrayList<>();

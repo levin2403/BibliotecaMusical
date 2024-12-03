@@ -4,6 +4,11 @@
  */
 package com.bmn.pruebas;
 
+import com.bmn.dto.constantes.Genero;
+import com.bmn.excepciones.BOException;
+import com.bmn.factories.BOFactory;
+import com.bmn.negocio.AgregarRestringidoBO;
+
 /**
  *
  * @author skevi
@@ -14,7 +19,16 @@ public class PruebaAgregarRestringido {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        try{
+        AgregarRestringidoBO restringido = BOFactory.agregarRestringidoFactory();
+        
+        restringido.agregarRestringido(Genero.Afrobeat);
+        restringido.agregarRestringido(Genero.Hip_Hop);
+        
+        }
+        catch(BOException ex){
+            System.out.println(ex.getMessage());
+        }
     }
     
 }

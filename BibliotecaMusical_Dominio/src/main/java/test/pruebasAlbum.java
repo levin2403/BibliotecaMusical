@@ -15,6 +15,7 @@ import com.bmd.entities.Usuario;
 import com.mongodb.client.MongoCollection;
 import java.time.LocalDate;
 import java.util.Arrays;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -33,53 +34,31 @@ public class pruebasAlbum {
         IConexionMongo conexion = new ConexionMongo();
         IAlbumDAO albumDAO = new AlbumDAO(conexion);  
         
-          //ids de usuarios
-//        "user1-id"
-//        "user2-id"
-//        "user3_id"
-
-          //ids de artistas
-//         "banda1_id"
-//         "banda2_id"
-//         "solista1_id"
-//         "solista2_id"
-
-          //ids de albumes
-//         "album1_id"
-//         "album2_id"     
 
         Album album1 = new Album();
-        album1.setId("album1_id");
+        album1.setId(new ObjectId("604c77f2a1b5b7844c8b4571")); // ObjectId válido
         album1.setNombre("Éxitos de Cumbia");
         album1.setImagenPortada("url_to_album1_cover.jpg");
         album1.setFechaLanzamiento(LocalDate.of(2020, 1, 15));
         album1.setGenero("Cumbia");
-        album1.setArtista(new Artista.Builder().setId("banda2_id").setNombre("the killa").build());
+        album1.setArtista(new Artista.Builder().setId(new ObjectId("604c77f2a1b5b7844c8b4572")).
+                setNombre("the killa").build()); // ObjectId válido
         album1.setCanciones(Arrays.asList("Canción 1", "Canción 2", "Canción 3"));
 
         Album album2 = new Album();
-        album2.setId("album2_id");
+        album2.setId(new ObjectId("604c77f2a1b5b7844c8b4573")); // ObjectId válido
         album2.setNombre("Clásicos del Rock");
         album2.setImagenPortada("url_to_album2_cover.jpg");
         album2.setFechaLanzamiento(LocalDate.of(2018, 10, 5));
         album2.setGenero("Afrobeat");
-        album2.setArtista(new Artista.Builder().setId("solista1_id").setNombre("the strokes").build()); 
+        album2.setArtista(new Artista.Builder().setId(new ObjectId("604c77f2a1b5b7844c8b4574")).
+                setNombre("the strokes").build()); // ObjectId válido
         album2.setCanciones(Arrays.asList("Canción A", "Canción B", "Canción C"));
+
         
-        
-        // ya todos los metodos jalan
-//        
-//        List<Album> albumes = albumDAO.BuscarPorFiltro("", LocalDate.of(2018, 10, 5), "", "user3_id");
-//        
-//        for (Album album : albumes) {
-//            System.out.println(album.toString());
-//        }
-//
-//        albumDAO.añadirAlbum(album1);
-//        albumDAO.añadirAlbum(album2);
-//
-//        Album album = albumDAO.obtenerAlbum("album1_id");
-//        System.out.println(album.toString());
+        albumDAO.añadirAlbum(album1);
+        albumDAO.añadirAlbum(album2);
+
         
     }
     
