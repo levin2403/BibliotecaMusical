@@ -182,9 +182,9 @@ public class Registro extends javax.swing.JFrame {
     private void initImagenes() {
         imagenesRegistro = new ArrayList<>();
         String[] imagePaths = {
-            "/Registro/Registro1.png",
-            "/Registro/Registro2.png",
-            "/Registro/Registro3.png"
+            "/usuario/usuario1.png",
+            "/usuario/usuario2.png",
+            "/usuario/usuario3.png"
         };
 
         boolean loadedAny = false;
@@ -200,7 +200,7 @@ public class Registro extends javax.swing.JFrame {
 
         if (!loadedAny) {
             // Add a default placeholder image or show error
-            mostrarError("No se pudieron cargar las imágenes de Registro. Verificar la ubicación de los recursos.");
+            mostrarError("No se pudieron cargar las imágenes de usuario. Verificar la ubicación de los recursos.");
         }
 
         imagenActual = 0;
@@ -509,7 +509,7 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_anteriorImagenBtnActionPerformed
 
     private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
-        new Entrar().setVisible(true);
+        
     }//GEN-LAST:event_registroBtnMouseClicked
 
     /**
