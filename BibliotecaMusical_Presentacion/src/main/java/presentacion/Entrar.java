@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package presentacion;
+import com.bmn.negocio.InsertEnlace; 
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -69,7 +72,7 @@ public class Entrar extends javax.swing.JFrame {
         entrarBtnLayout.setHorizontalGroup(
             entrarBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, entrarBtnLayout.createSequentialGroup()
-                .addContainerGap(116, Short.MAX_VALUE)
+                .addContainerGap(140, Short.MAX_VALUE)
                 .addComponent(entrar)
                 .addGap(104, 104, 104))
         );
@@ -90,7 +93,12 @@ public class Entrar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void insertarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insertarBtnMouseClicked
-        // TODO add your handling code here:
+       try {
+            InsertEnlace.main(null);
+            JOptionPane.showMessageDialog(this, "Inserción masiva completada exitosamente.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en la inserción masiva: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_insertarBtnMouseClicked
 
     private void entrarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entrarBtnMouseClicked
