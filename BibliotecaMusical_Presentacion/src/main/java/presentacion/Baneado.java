@@ -30,6 +30,7 @@ private javax.swing.JPanel glassPanel;
 public Baneado() {
     initComponents();
     initializeUI();
+    configurarCampoBusqueda();
 }
 
 private void initializeUI() {
@@ -475,7 +476,6 @@ private void animateMenu(int targetX) {
         jLabel1.setText("Baneados");
 
         panelRound3.setBackground(new java.awt.Color(35, 58, 68));
-        panelRound3.setCursorHandEnabled(true);
         panelRound3.setRoundBottomLeft(50);
         panelRound3.setRoundBottomRight(50);
         panelRound3.setRoundTopLeft(50);

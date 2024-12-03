@@ -4,10 +4,16 @@
  */
 package presentacion;
 
+import com.bdm.conexion.ConexionMongo;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import controlador.RenderCeldas;
+import org.bson.Document;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Color;
-import javax.swing.SwingConstants;
+import java.awt.*;
+import java.util.ArrayList;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -17,38 +23,42 @@ public class Principal extends javax.swing.JFrame {
 
     private boolean isMenuVisible = true;
 
-    /**
-     * Creates new form Inicio
-     */
     public Principal() {
         initComponents();
         configurarTabla(); // Método para configurar la tabla
         // Mueve el panel fuera de la vista al iniciar el frame
-    menuDesplegablePanel.setLocation(-menuDesplegablePanel.getWidth(), menuDesplegablePanel.getY());
+        menuDesplegablePanel.setLocation(-menuDesplegablePanel.getWidth(), menuDesplegablePanel.getY());
     }
 
-    private void configurarTabla() {
-        // Crear datos de ejemplo para la tabla
-        Object[][] datos = {
-            {"imagen1.jpg", "Dark Side of the Moon", "Pink Floyd"},
-            {"imagen2.jpg", "Thriller", "Michael Jackson"},
-            {"imagen3.jpg", "Back in Black", "AC/DC"},
-            {"imagen4.jpg", "The Wall", "Pink Floyd"},
-            {"imagen5.jpg", "Abbey Road", "The Beatles"},
-            {"imagen6.jpg", "Nevermind", "Nirvana"},
-            {"imagen7.jpg", "Rumours", "Fleetwood Mac"},
-            {"imagen8.jpg", "Purple Rain", "Prince"},
-            {"imagen9.jpg", "Born to Run", "Bruce Springsteen"}
-        };
+    /**
+     * Filtra las filas de la tabla de acuerdo con el término de búsqueda.
+     *
+     * @param searchTerm El término de búsqueda para filtrar los datos.
+     */
+    private void filterTable(String searchTerm) {
+        DefaultTableModel model = (DefaultTableModel) tablaAlbum.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        tablaAlbum.setRowSorter(sorter);
 
-        // Configurar el modelo de la tabla con las columnas y datos
-        DefaultTableModel modelo = new DefaultTableModel(datos, new String[]{"IMAGEN", "NOMBRE DEL ALBUM", "ARTISTA"}) {
+        RowFilter<DefaultTableModel, Object> filter = RowFilter.regexFilter(
+                "(?i)" + searchTerm, 1, 2
+        ); // Buscar en las columnas de nombre del álbum y artista
+        sorter.setRowFilter(filter);
+    }
+
+    /**
+     * Configura la tabla de la aplicación. Define el modelo de la tabla y la
+     * apariencia visual. Agrega las columnas y configura la tabla para que no
+     * se puedan editar las celdas.
+     */
+    private void configurarTabla() {
+        /// Configurar el modelo de la tabla sin datos precargados
+        DefaultTableModel modelo = new DefaultTableModel(new String[]{"IMAGEN", "NOMBRE DEL ALBUM", "ARTISTA"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // Hacer la tabla no editable
             }
         };
-
         tablaAlbum.setModel(modelo);
 
         // Evitar que las columnas se reordenen
@@ -83,14 +93,39 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1.setBorder(null);
         jScrollPane1.getViewport().setBackground(new Color(35, 58, 68));
 
-        // Ajustar las posiciones para evitar la superposición
-        jScrollPane1.setBounds(menuDesplegablePanel.getWidth(), jScrollPane1.getY(),
-                getWidth() - menuDesplegablePanel.getWidth(), jScrollPane1.getHeight());
-
         // Ajustar el ancho de las columnas
         tablaAlbum.getColumnModel().getColumn(0).setPreferredWidth(200); // Imagen
         tablaAlbum.getColumnModel().getColumn(1).setPreferredWidth(150); // Nombre
         tablaAlbum.getColumnModel().getColumn(2).setPreferredWidth(100); // Artista
+
+        // Llenar la tabla con los datos de la base de datos
+        cargarDatosDeLaBaseDeDatos(modelo);
+    }
+
+    /**
+     * Carga los datos de la base de datos y los agrega a la tabla.
+     *
+     * @param modelo El modelo de la tabla al que se agregarán los datos.
+     */
+    private void cargarDatosDeLaBaseDeDatos(DefaultTableModel modelo) {
+        // Obtener la instancia de la conexión a MongoDB
+        ConexionMongo conexionMongo = ConexionMongo.getInstance();
+        MongoCollection<Document> coleccion = conexionMongo.getCollection("albums"); // Cambia el nombre de la colección si es necesario
+
+        try (MongoCursor<Document> cursor = coleccion.find().iterator()) {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                String imagen = doc.getString("imagen"); // Cambia el nombre de los campos si es necesario
+                String nombreAlbum = doc.getString("nombre_album");
+                String artista = doc.getString("artista");
+
+                // Agregar los datos a la tabla
+                modelo.addRow(new Object[]{imagen, nombreAlbum, artista});
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los datos de MongoDB: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -410,11 +445,15 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaActionPerformed
-        // TODO add your handling code here:
+        String searchTerm = busqueda.getText().trim();
+        if (!searchTerm.isEmpty()) {
+            filterTable(searchTerm);
+        } else {
+        }
     }//GEN-LAST:event_busquedaActionPerformed
 
     private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
-        // TODO add your handling code here:
+        busquedaActionPerformed(evt);
     }//GEN-LAST:event_buscarBtnActionPerformed
 
     private void perfilLbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_perfilLbMouseClicked
@@ -460,11 +499,21 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_albumFavLbMouseClicked
 
     private void albumLbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_albumLbMouseClicked
-        // TODO add your handling code here:
+        new Album().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_albumLbMouseClicked
 
     private void salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirMouseClicked
-        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro que desea salir?",
+                "Confirmar Salida",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_salirMouseClicked
 
     /**
@@ -504,4 +553,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel salir;
     private javax.swing.JTable tablaAlbum;
     // End of variables declaration//GEN-END:variables
+
 }

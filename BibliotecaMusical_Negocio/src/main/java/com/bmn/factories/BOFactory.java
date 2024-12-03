@@ -30,103 +30,104 @@ import com.bmn.utilerias.Hasher;
  * @author skevi
  */
 public class BOFactory {
-    
+
     /**
      * Es privado para evitar instancias externas
      */
-    private BOFactory(){
-        
+    private BOFactory() {
+
     }
-    
+
     //de aqui en adelante se crean fabricas por caso de uso.
-    public static ActualizarUsuarioBO actualizarUsuarioFactory(){
+    public static ActualizarUsuarioBO actualizarUsuarioFactory() {
         ConexionMongo conexion = new ConexionMongo();
         UsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
         Hasher hasher = new Hasher();
         return new ActualizarUsuarioBO(usuarioDAO, hasher);
     }
-    
-    public static AgregarFavoritoBO agregarFavoritoFactory(){
+
+    public static AgregarFavoritoBO agregarFavoritoFactory() {
         ConexionMongo conexion = new ConexionMongo();
         FavoritoDAO favoritoDAO = new FavoritoDAO(conexion);
         return new AgregarFavoritoBO(favoritoDAO);
     }
-    
-    public static AgregarRestringidoBO agregarRestringidoFactory(){
+
+    public static AgregarRestringidoBO agregarRestringidoFactory() {
         ConexionMongo conexion = new ConexionMongo();
         UsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
-        return new AgregarRestringidoBO(usuarioDAO);
+        FavoritoDAO favoritoDAO = new FavoritoDAO(conexion);
+        return new AgregarRestringidoBO(usuarioDAO, favoritoDAO);
     }
-    
-    public static EliminarRestringidoBO eliminarRestringidoFactory(){
+
+    public static EliminarRestringidoBO eliminarRestringidoFactory() {
         ConexionMongo conexion = new ConexionMongo();
         UsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
         return new EliminarRestringidoBO(usuarioDAO);
     }
-    
-    public static InicioSesionBO inicioSesionFactory(){
+
+    public static InicioSesionBO inicioSesionFactory() {
         ConexionMongo conexion = new ConexionMongo();
         UsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
         Hasher hasher = new Hasher();
         return new InicioSesionBO(usuarioDAO, hasher);
     }
-    
-    public static ObtenerAlbumBO obtenerAlbumFactory(){
+
+    public static ObtenerAlbumBO obtenerAlbumFactory() {
         ConexionMongo conexion = new ConexionMongo();
         AlbumDAO albumDAO = new AlbumDAO(conexion);
         FavoritoDAO favoritoDAO = new FavoritoDAO(conexion);
         return new ObtenerAlbumBO(albumDAO, favoritoDAO);
     }
-    
-    public static ObtenerAlbumesFavoritosBO obtenerAlbumesFavoritosFactory(){
+
+    public static ObtenerAlbumesFavoritosBO obtenerAlbumesFavoritosFactory() {
         ConexionMongo conexion = new ConexionMongo();
         FavoritoDAO favoritoDAO = new FavoritoDAO(conexion);
         return new ObtenerAlbumesFavoritosBO(favoritoDAO);
     }
-    
-    public static ObtenerAlbumesFiltradosBO obtenerAlbumesFiltradosFactory(){
+
+    public static ObtenerAlbumesFiltradosBO obtenerAlbumesFiltradosFactory() {
         ConexionMongo conexion = new ConexionMongo();
         AlbumDAO albumDAO = new AlbumDAO(conexion);
         return new ObtenerAlbumesFiltradosBO(albumDAO);
     }
-    
-    public static ObtenerArtistaBO obtenerArtistaFacory(){
+
+    public static ObtenerArtistaBO obtenerArtistaFacory() {
         ConexionMongo conexion = new ConexionMongo();
         ArtistaDAO artistaDAO = new ArtistaDAO(conexion);
         FavoritoDAO favoritoDAO = new FavoritoDAO(conexion);
         return new ObtenerArtistaBO(artistaDAO, favoritoDAO);
     }
-    
-    public static ObtenerArtistasFavoritosBO obtenerArtistasFavoritosFactory(){
+
+    public static ObtenerArtistasFavoritosBO obtenerArtistasFavoritosFactory() {
         ConexionMongo conexion = new ConexionMongo();
         ArtistaDAO artistaDAO = new ArtistaDAO(conexion);
         FavoritoDAO favoritoDAO = new FavoritoDAO(conexion);
         return new ObtenerArtistasFavoritosBO(favoritoDAO);
     }
-    
-    public static ObtenerArtistasFiltradosBO obtenerArtistasFiltradosFactory(){
+
+    public static ObtenerArtistasFiltradosBO obtenerArtistasFiltradosFactory() {
         ConexionMongo conexion = new ConexionMongo();
         ArtistaDAO artistaDAO = new ArtistaDAO(conexion);
         return new ObtenerArtistasFiltradosBO(artistaDAO);
     }
-    
-    public static ObtenerCancionesFavoritasBO obtenerCancionesFavoritosFactory(){
+
+    public static ObtenerCancionesFavoritasBO obtenerCancionesFavoritosFactory() {
         ConexionMongo conexion = new ConexionMongo();
         FavoritoDAO favoritoDAO = new FavoritoDAO(conexion);
         return new ObtenerCancionesFavoritasBO(favoritoDAO);
     }
-    
-    public static ObtenerRestringidosBO obtenerRestringidosFactory(){
+
+    public static ObtenerRestringidosBO obtenerRestringidosFactory() {
         ConexionMongo conexion = new ConexionMongo();
         UsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
         return new ObtenerRestringidosBO(usuarioDAO);
     }
-    
-    public static RegistrarUsuarioBO registrarUsuarioFactory(){
+
+    public static RegistrarUsuarioBO registrarUsuarioFactory() {
         ConexionMongo conexion = new ConexionMongo();
         UsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
         Hasher hasher = new Hasher();
         return new RegistrarUsuarioBO(usuarioDAO, hasher);
     }
-    
+
 }
