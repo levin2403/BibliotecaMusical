@@ -77,15 +77,50 @@ public class FavoritoDAO implements IFavoritoDAO {
     public boolean isFavorito(ObjectId idReferencia, ObjectId idUsuario) 
             throws DAOException {
         try {
-            MongoCollection<Usuario> collection = conexion.
-                    getCollection("usuarios", Usuario.class);
-            Usuario usuario = collection.find(and(eq("_id", idUsuario), 
-                    elemMatch("favoritos", eq("id_referencia", 
-                            idReferencia)))).first();
-            return usuario != null;
+            // Validación de Parámetros
+            if (idReferencia == null || idUsuario == null) {
+                throw new DAOException("Los parámetros no pueden ser nulos");
+            }
+
+            // Obtener la colección de usuarios
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+
+            // Construir la consulta para encontrar al usuario
+            Bson queryUsuario = Filters.eq("_id", idUsuario);
+
+            // Ejecutar la consulta y obtener el primer resultado
+            Usuario usuario = collection.find(queryUsuario).first();
+
+            // Imprimir el resultado de la consulta para depuración
+            System.out.println("Usuario encontrado: " + (usuario != null));
+
+            if (usuario == null) {
+                throw new DAOException("Usuario no encontrado");
+            }
+
+            // Obtener la lista de favoritos del usuario
+            List<Favorito> favoritos = usuario.getFavoritos();
+            if (favoritos == null) {
+                return false;  // Si la lista de favoritos es nula, retornamos false
+            }
+
+            for (Favorito favorito : favoritos) {
+                System.out.println(favorito.toString());
+            }
+
+            // Iterar sobre la lista de favoritos del usuario
+            for (Favorito favorito : favoritos) {
+                if (idReferencia.equals(favorito.getIdReferencia()) &&
+                    ("ARTISTA".equalsIgnoreCase(favorito.getTipo()) ||
+                     "ALBUM".equalsIgnoreCase(favorito.getTipo()))) {
+                    return true;
+                }
+            }
+
         } catch (Exception e) {
             throw new DAOException("Error al verificar si es favorito", e);
         }
+        return false;
     }
 
     /**
@@ -124,10 +159,6 @@ public class FavoritoDAO implements IFavoritoDAO {
             throw new DAOException("Error al eliminar el favorito", e);
         }
     }
-
-
-
-
 
     /**
      * Metodo encargado de eliminar los favoritos del usuario(cuyo id esta 
@@ -318,18 +349,47 @@ public class FavoritoDAO implements IFavoritoDAO {
     public boolean verificarCancionFavorita(String nombreCancion, 
             ObjectId idReferencia, ObjectId idUsuario) throws DAOException {
         try {
-            MongoCollection<Usuario> collection = conexion.
-                    getCollection("usuarios", Usuario.class);
-            Usuario usuario = collection.find(and(eq("_id", idUsuario), 
-                    elemMatch("favoritos", and(eq("id_referencia", 
-                            idReferencia), eq("nombre_cancion", 
-                                    nombreCancion))))).first();
-            return usuario != null;
+            // Validación de Parámetros
+            if (nombreCancion == null || idReferencia == null || idUsuario == null) {
+                throw new DAOException("Los parámetros no pueden ser nulos");
+            }
+
+            // Obtener la colección de usuarios
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+
+            // Construir la consulta para encontrar al usuario
+            Bson queryUsuario = Filters.eq("_id", idUsuario);
+
+            // Ejecutar la consulta y obtener el primer resultado
+            Usuario usuario = collection.find(queryUsuario).first();
+
+            // Imprimir el resultado de la consulta para depuración
+            System.out.println("Usuario encontrado: " + (usuario != null));
+
+            if (usuario == null) {
+                throw new DAOException("Usuario no encontrado");
+            }
+
+            // Obtener la lista de favoritos del usuario
+            List<Favorito> favoritos = usuario.getFavoritos();
+            if (favoritos == null) {
+                return false;  // Si la lista de favoritos es nula, retornamos false
+            }
+
+            // Verificar dentro de la lista de favoritos del usuario
+            for (Favorito favorito : favoritos) {
+                if (idReferencia.equals(favorito.getIdReferencia()) &&
+                    nombreCancion.equalsIgnoreCase(favorito.getNombreCancion())) {
+                    return true;
+                }
+            }
+
         } catch (Exception e) {
-            throw new DAOException("Error al verificar si la canción"
-                    + " es favorita", e);
+            throw new DAOException("Error al obtener los favoritos del usuario", e);
         }
+        return false;
     }
+
 
     @Override
     public void eliminarCancionFavorita(String nombreCancion, ObjectId idUsuario) 
