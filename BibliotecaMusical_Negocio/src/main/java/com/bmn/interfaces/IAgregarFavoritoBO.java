@@ -14,6 +14,6 @@ import com.bmn.excepciones.BOException;
  */
 public interface IAgregarFavoritoBO {
     
-    public boolean agregarFavorito(FavoritoDTO favorito, UsuarioDTO usuario) throws BOException;
+    public boolean agregarFavorito(FavoritoDTO favorito) throws BOException;
     
 }

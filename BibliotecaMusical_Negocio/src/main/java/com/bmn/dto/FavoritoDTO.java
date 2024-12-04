@@ -7,6 +7,7 @@ package com.bmn.dto;
 import com.bmn.dto.constantes.Genero;
 import com.bmn.dto.constantes.Tipo;
 import java.time.LocalDate;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.time.LocalDate;
  */
 public class FavoritoDTO {
     
-    private String idUsuario;
+    private ObjectId idUsuario;
     private String idReferencia;
     private Tipo tipo;
     private Genero genero;
@@ -33,7 +34,7 @@ public class FavoritoDTO {
     }
     
 
-    public String getIdUsuario() {
+    public ObjectId getIdUsuario() {
         return idUsuario;
     }
 
@@ -66,13 +67,14 @@ public class FavoritoDTO {
     
     
     public static class Builder {
-        private String idUsuario;
+        private ObjectId idUsuario;
         private String idReferencia;
         private String nombreCancion;
         private Tipo tipo;
+        private Genero genero;
         private LocalDate fechaAgregacion;
 
-        public Builder setIdUsuario(String idUsuario) {
+        public Builder setIdUsuario(ObjectId idUsuario) {
             this.idUsuario = idUsuario;
             return this;
         }
@@ -89,6 +91,11 @@ public class FavoritoDTO {
 
         public Builder setTipo(Tipo tipo) {
             this.tipo = tipo;
+            return this;
+        }
+
+        public Builder setGenero(Genero genero) {
+            this.genero = genero;
             return this;
         }
 

@@ -59,7 +59,6 @@ public class pruebasAlbum {
         albumDAO.añadirAlbum(album1);
         albumDAO.añadirAlbum(album2);
 
-        
     }
     
 }

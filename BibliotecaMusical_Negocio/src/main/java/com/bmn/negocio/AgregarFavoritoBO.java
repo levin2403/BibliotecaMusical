@@ -8,10 +8,8 @@ import com.bdm.excepciones.DAOException;
 import com.bmd.daoInterfaces.IFavoritoDAO;
 import com.bmd.entities.Favorito;
 import com.bmn.dto.FavoritoDTO;
-import com.bmn.dto.UsuarioDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IAgregarFavoritoBO;
-import com.bmn.singletonUsuario.UsuarioST;
 import org.bson.types.ObjectId;
 
 /**
@@ -27,13 +25,13 @@ public class AgregarFavoritoBO implements IAgregarFavoritoBO {
     }
 
     @Override
-    public boolean agregarFavorito(FavoritoDTO favorito, UsuarioDTO usuario) throws BOException {
-        verificarCampos(favorito, usuario);
-        return verificarFavorito(favorito, usuario);
+    public boolean agregarFavorito(FavoritoDTO favorito) throws BOException {
+        verificarCampos(favorito);
+        return verificarFavorito(favorito);
     }
     
-    private void verificarCampos(FavoritoDTO favorito, UsuarioDTO usuarioDTO)throws BOException {
-        if (favorito.getIdUsuario().isEmpty()) {
+    private void verificarCampos(FavoritoDTO favorito)throws BOException {
+        if (favorito.getIdUsuario() == null) {
             throw new BOException("La referencia al usuario no puede estar vacia.");
         }
         if (favorito.getIdReferencia().isEmpty()) {
@@ -47,38 +45,44 @@ public class AgregarFavoritoBO implements IAgregarFavoritoBO {
         }
     }
     
-    private boolean verificarFavorito(FavoritoDTO favoritoDTO, UsuarioDTO usuarioDTO) throws BOException {
+    private boolean verificarFavorito(FavoritoDTO favoritoDTO) throws BOException {
         try{
             //transformo de dto a entidad.
             Favorito favorito = toFavorito(favoritoDTO);
             
-            ObjectId idReferencia = new ObjectId(favorito.getIdReferencia());
+            ObjectId idReferencia = favorito.getIdReferencia();
             
             //transformamos al dto a entidad al usuario.
-            ObjectId idUsuario = UsuarioST.getInstance().getId();
+            ObjectId idUsuario = new ObjectId("674fc2f4f736902f3ddd3e5f");
             
             // si no existe dentro de los favoritos del usuario 
             // lo guardamos
             if (favoritoDAO.isFavorito(idReferencia, idUsuario)) { 
-                favoritoDAO.agregarFavorito(favorito); 
-                return true; //retornamos verdadero porque se agrego.
-            }
-            else{
                 //si no esta en los favoritos del usuario lo eliminamos.
                 String tipo = favorito.getTipo();
                 
+                System.out.println("se va a elimianar");
                 favoritoDAO.eliminarFavorito(idReferencia, idUsuario, tipo); 
-                return false;// retornamos falso porque se elimino.
+                System.out.println("se elimiano");
+            }
+            else{
+                
+                System.out.println("se va a agregar");
+                
+                favoritoDAO.agregarFavorito(favorito); 
+                return true; //retornamos verdadero porque se agrego.
+                
             }
         }catch(DAOException ex){
             throw new BOException(ex.getMessage());
         }
+        return false;
     }
-    
+
     private Favorito toFavorito(FavoritoDTO favoritoDTO){
         Favorito favorito = new Favorito.Builder().
-                setIdUsuario(new ObjectId(favoritoDTO.getIdUsuario())).
-                setIdReferencia(favoritoDTO.getIdReferencia()).
+                setIdUsuario(favoritoDTO.getIdUsuario()).
+                setIdReferencia(new ObjectId(favoritoDTO.getIdReferencia())).
                 setNombreCancion((favoritoDTO.getNombreCancion() == null) ? null : favoritoDTO.getNombreCancion()).
                 setTipo(favoritoDTO.getTipo().name()).
                 setFechaAgregacion(favoritoDTO.getFechaAgregacion()).

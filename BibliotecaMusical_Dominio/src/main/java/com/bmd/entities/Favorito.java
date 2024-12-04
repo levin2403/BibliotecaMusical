@@ -17,7 +17,7 @@ public class Favorito {
     @BsonProperty("id_usuario") 
     private ObjectId idUsuario; 
     @BsonProperty("id_referencia") 
-    private String idReferencia; 
+    private ObjectId idReferencia; 
     private String tipo; // Artista, Album, Cancion 
     private String genero;
     @BsonProperty("nombre_cancion")
@@ -42,7 +42,7 @@ public class Favorito {
         return idUsuario;
     }
 
-    public String getIdReferencia() {
+    public ObjectId getIdReferencia() {
         return idReferencia;
     }
 
@@ -66,7 +66,7 @@ public class Favorito {
         this.idUsuario = idUsuario;
     }
 
-    public void setIdReferencia(String idReferencia) {
+    public void setIdReferencia(ObjectId idReferencia) {
         this.idReferencia = idReferencia;
     }
 
@@ -96,7 +96,7 @@ public class Favorito {
     public static class Builder{
         
         ObjectId idUsuario;
-        String idReferencia;
+        ObjectId idReferencia;
         String tipo;
         String genero;
         String nombreCancion;
@@ -107,7 +107,7 @@ public class Favorito {
             return this;
         }
 
-        public Builder setIdReferencia(String idReferencia) {
+        public Builder setIdReferencia(ObjectId idReferencia) {
             this.idReferencia = idReferencia;
             return this;
         }
