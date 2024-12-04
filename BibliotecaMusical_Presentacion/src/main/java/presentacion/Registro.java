@@ -21,9 +21,37 @@ public class Registro extends javax.swing.JFrame {
     private int imagenActual;
 
     public Registro() {
-        this(BOFactory.registrarUsuarioFactory());
-        initComponents();
+        initComponents(); // Mantén esto primero
+        this.registrarUsuarioBO = BOFactory.registrarUsuarioFactory();
         inicializarImagenes();
+
+        // Asegurarnos que los campos están habilitados y editables
+        nombreTxt.setEnabled(true);
+        nombreTxt.setEditable(true);
+        correoTxt.setEnabled(true);
+        correoTxt.setEditable(true);
+        contraseñaTxt.setEnabled(true);
+        confirmarContraseñaTxt.setEnabled(true);
+
+        // Añadir un DocumentListener para debug
+        nombreTxt.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                updateText();
+            }
+
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                updateText();
+            }
+
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                updateText();
+            }
+
+            public void updateText() {
+                System.out.println("Texto cambiando en nombreTxt: '" + nombreTxt.getText() + "'");
+            }
+        });
+
         configurarEscuchasComponentes();
     }
 
@@ -38,8 +66,12 @@ public class Registro extends javax.swing.JFrame {
         anteriorImagenBtn.addActionListener(evt -> navegarImagenAnterior());
         siguienteImagenBtn.addActionListener(evt -> navegarImagenSiguiente());
 
+        // Usar ActionListener en lugar de MouseListener para el botón de registro
         registroBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
+                System.out.println("Botón de registro clickeado");
+                System.out.println("Valor actual de nombreTxt: '" + nombreTxt.getText() + "'");
                 guardarCambios();
             }
         });
@@ -55,12 +87,19 @@ public class Registro extends javax.swing.JFrame {
 
     private void guardarCambios() {
         try {
+            System.out.println("Método guardarCambios() llamado");
             // Obtener los datos ingresados por el usuario
             String nombre = nombreTxt.getText().trim();
             String correo = correoTxt.getText().trim();
             String contrasena = new String(contraseñaTxt.getPassword());
             String confirmarContrasena = new String(confirmarContraseñaTxt.getPassword());
 
+            // Debug: Imprimir todos los valores
+            System.out.println("Debug - Valores ingresados:");
+            System.out.println("Nombre: '" + nombre + "'");
+            System.out.println("Correo: '" + correo + "'");
+            System.out.println("Contraseña: " + (contrasena.isEmpty() ? "vacía" : "tiene contenido"));
+            System.out.println("Confirmar Contraseña: " + (confirmarContrasena.isEmpty() ? "vacía" : "tiene contenido"));
             // Validaciones básicas para evitar campos vacíos o inconsistencias
             if (nombre.isEmpty()) {
                 // Validar que el campo "Nombre" no esté vacío
@@ -90,11 +129,12 @@ public class Registro extends javax.swing.JFrame {
 
             // Crear un objeto UsuarioRegistrarDTO utilizando el patrón Builder
             UsuarioRegistrarDTO usuario = new UsuarioRegistrarDTO.Builder()
-                    .setNombre(nombre) // Asignar el nombre ingresado
-                    .setCorreo(correo) // Asignar el correo ingresado
-                    .setContrasena(contrasena) // Asignar la contraseña ingresada
-                    .setImagenPerfil(obtenerRutaImagen()) // Asignar la imagen de perfil seleccionada
-                    .build(); // Construir el objeto
+                    .setNombre(nombre)
+                    .setCorreo(correo)
+                    .setContrasena(contrasena)
+                    .setContrasenaConfirmar(confirmarContrasena) // Agregar esta línea
+                    .setImagenPerfil(obtenerRutaImagen())
+                    .build();
 
             // Registrar al usuario llamando al método correspondiente en la capa de negocio
             registrarUsuarioBO.registrarUsuario(usuario);
@@ -371,11 +411,6 @@ public class Registro extends javax.swing.JFrame {
         registroBtn.setRoundBottomRight(50);
         registroBtn.setRoundTopLeft(50);
         registroBtn.setRoundTopRight(50);
-        registroBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registroBtnMouseClicked(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -465,11 +500,6 @@ public class Registro extends javax.swing.JFrame {
     private void anteriorImagenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorImagenBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_anteriorImagenBtnActionPerformed
-
-    private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
-
-
-    }//GEN-LAST:event_registroBtnMouseClicked
 
     /**
      * @param args the command line arguments

@@ -131,6 +131,7 @@ public class Usuario extends javax.swing.JFrame {
 
     private void guardarCambios() {
         try {
+            
             String nombre = nombreTxt.getText();
             String correo = correoTxt.getText();
             String contraseña = new String(contraseñaTxt.getPassword());
