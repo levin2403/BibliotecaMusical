@@ -1,17 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
-import java.awt.Dimension;
+import com.bmn.dto.UsuarioRegistrarDTO;
+import com.bmn.excepciones.BOException;
+import com.bmn.factories.BOFactory;
+import com.bmn.interfaces.IRegistrarUsuarioBO;
 import java.awt.Image;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,202 +16,25 @@ import javax.swing.SwingUtilities;
  */
 public class Registro extends javax.swing.JFrame {
 
-    // Variables para manejar las imágenes de Registro
+    private IRegistrarUsuarioBO registrarUsuarioBO;
     private ArrayList<ImageIcon> imagenesRegistro;
     private int imagenActual;
-    private static final int MIN_PASSWORD_LENGTH = 8;
-    private static final int MAX_NAME_LENGTH = 50;
-    private static final int MAX_EMAIL_LENGTH = 100;
 
     public Registro() {
+        this(BOFactory.registrarUsuarioFactory());
         initComponents();
-        initImagenes();
-        setupComponents();
-
-        // Inicializar y configurar imageLabel
-        imageLabel = new javax.swing.JLabel();
-        imagenDeRegistro.setPreferredSize(new java.awt.Dimension(300, 300));
-        imageLabel.setBounds(0, 0, imagenDeRegistro.getWidth(), imagenDeRegistro.getHeight());
-        imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imagenDeRegistro.setLayout(null); // Usar diseño absoluto
-        imagenDeRegistro.add(imageLabel); // Agregar el JLabel al PanelRound
-
-        // Llamar a actualizar la imagen cuando la ventana esté lista
-        java.awt.EventQueue.invokeLater(() -> actualizarImagenRegistro());
+        inicializarImagenes();
+        configurarEscuchasComponentes();
     }
 
-    private boolean validarNombre(String nombre) {
-        if (nombre == null || nombre.trim().isEmpty()) {
-            mostrarError("El nombre no puede estar vacío");
-            return false;
-        }
-
-        if (nombre.length() > MAX_NAME_LENGTH) {
-            mostrarError("El nombre no puede exceder los " + MAX_NAME_LENGTH + " caracteres");
-            return false;
-        }
-
-        // Validar que solo contenga letras y espacios
-        if (!nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
-            mostrarError("El nombre solo puede contener letras y espacios");
-            return false;
-        }
-
-        return true;
+    public Registro(IRegistrarUsuarioBO registrarUsuarioBO) {
+        this.registrarUsuarioBO = registrarUsuarioBO;
+        initComponents();
+        inicializarImagenes();
+        configurarEscuchasComponentes();
     }
 
-    private boolean validarCorreo(String correo) {
-        if (correo == null || correo.trim().isEmpty()) {
-            mostrarError("El correo no puede estar vacío");
-            return false;
-        }
-
-        if (correo.length() > MAX_EMAIL_LENGTH) {
-            mostrarError("El correo no puede exceder los " + MAX_EMAIL_LENGTH + " caracteres");
-            return false;
-        }
-
-        // Patrón para validar el formato del correo
-        String emailPattern
-                = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
-        if (!Pattern.compile(emailPattern).matcher(correo).matches()) {
-            mostrarError("El formato del correo electrónico no es válido");
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean validarContraseña(String contraseña, String confirmacion) {
-        if (contraseña == null || contraseña.isEmpty()) {
-            mostrarError("La contraseña no puede estar vacía");
-            return false;
-        }
-
-        if (contraseña.length() < MIN_PASSWORD_LENGTH) {
-            mostrarError("La contraseña debe tener al menos " + MIN_PASSWORD_LENGTH + " caracteres");
-            return false;
-        }
-
-        // Validar que la contraseña contenga al menos una mayúscula, una minúscula y un número
-        if (!contraseña.matches(".*[A-Z].*")) {
-            mostrarError("La contraseña debe contener al menos una letra mayúscula");
-            return false;
-        }
-
-        if (!contraseña.matches(".*[a-z].*")) {
-            mostrarError("La contraseña debe contener al menos una letra minúscula");
-            return false;
-        }
-
-        if (!contraseña.matches(".*\\d.*")) {
-            mostrarError("La contraseña debe contener al menos un número");
-            return false;
-        }
-
-        // Validar caracteres especiales
-        if (!contraseña.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*")) {
-            mostrarError("La contraseña debe contener al menos un carácter especial");
-            return false;
-        }
-
-        // Validar que las contraseñas coincidan
-        if (!contraseña.equals(confirmacion)) {
-            mostrarError("Las contraseñas no coinciden");
-            return false;
-        }
-
-        return true;
-    }
-
-    private void guardarCambios() {
-        try {
-            String nombre = nombreTxt.getText();
-            String correo = correoTxt.getText();
-            String contraseña = new String(contraseñaTxt.getPassword());
-            String confirmarContraseña = new String(confirmarContraseñaTxt.getPassword());
-
-            // Realizar todas las validaciones
-            boolean nombreValido = validarNombre(nombre);
-            boolean correoValido = validarCorreo(correo);
-            boolean contraseñaValida = validarContraseña(contraseña, confirmarContraseña);
-
-            // Solo proceder si todas las validaciones son exitosas
-            if (nombreValido && correoValido && contraseñaValida) {
-                // Aquí iría el código para guardar en la base de datos
-
-                // Mostrar mensaje de éxito
-                javax.swing.JOptionPane.showMessageDialog(
-                        this,
-                        "Los cambios se han guardado exitosamente",
-                        "Éxito",
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE
-                );
-
-                // Cerrar ventana actual y abrir Principal
-                dispose();
-                java.awt.EventQueue.invokeLater(() -> {
-                    try {
-                        new Principal().setVisible(true);
-                    } catch (Exception e) {
-                        mostrarError("Error al abrir la ventana principal: " + e.getMessage());
-                        e.printStackTrace();
-                    }
-                });
-            }
-        } catch (Exception e) {
-            mostrarError("Error al procesar los datos: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void mostrarError(String mensaje) {
-        javax.swing.JOptionPane.showMessageDialog(
-                this,
-                mensaje,
-                "Error de validación",
-                javax.swing.JOptionPane.ERROR_MESSAGE
-        );
-    }
-
-    private void initImagenes() {
-        imagenesRegistro = new ArrayList<>();
-        String[] imagePaths = {
-            "/usuario/usuario1.png",
-            "/usuario/usuario2.png",
-            "/usuario/usuario3.png"
-        };
-
-        boolean loadedAny = false;
-        for (String path : imagePaths) {
-            URL imageUrl = getClass().getResource(path);
-            if (imageUrl != null) {
-                imagenesRegistro.add(new ImageIcon(imageUrl));
-                loadedAny = true;
-            } else {
-                System.err.println("Failed to load image: " + path);
-            }
-        }
-
-        if (!loadedAny) {
-            // Add a default placeholder image or show error
-            mostrarError("No se pudieron cargar las imágenes de usuario. Verificar la ubicación de los recursos.");
-        }
-
-        imagenActual = 0;
-        actualizarImagenRegistro();
-    }
-
-    private void setupComponents() {
-        imagenDeRegistro.addComponentListener(new java.awt.event.ComponentAdapter() {
-            @Override
-            public void componentResized(java.awt.event.ComponentEvent e) {
-                actualizarImagenRegistro(); // Redimensionar imagen al cambiar tamaño del panel
-            }
-        });
-
+    private void configurarEscuchasComponentes() {
         anteriorImagenBtn.addActionListener(evt -> navegarImagenAnterior());
         siguienteImagenBtn.addActionListener(evt -> navegarImagenSiguiente());
 
@@ -223,41 +43,179 @@ public class Registro extends javax.swing.JFrame {
                 guardarCambios();
             }
         });
+
+        if (atrasBtn != null) {
+            atrasBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    dispose();
+                }
+            });
+        }
+    }
+
+    private void guardarCambios() {
+        try {
+            // Obtener los datos ingresados por el usuario
+            String nombre = nombreTxt.getText().trim();
+            String correo = correoTxt.getText().trim();
+            String contrasena = new String(contraseñaTxt.getPassword());
+            String confirmarContrasena = new String(confirmarContraseñaTxt.getPassword());
+
+            // Validaciones básicas para evitar campos vacíos o inconsistencias
+            if (nombre.isEmpty()) {
+                // Validar que el campo "Nombre" no esté vacío
+                System.out.println("Texto ingresado en el campo nombre: '" + nombre + "'");
+
+                mostrarError("El nombre no puede estar vacío");
+                return;
+            }
+
+            if (correo.isEmpty()) {
+                // Validar que el campo "Correo" no esté vacío
+                mostrarError("El correo no puede estar vacío");
+                return;
+            }
+
+            if (contrasena.isEmpty() || confirmarContrasena.isEmpty()) {
+                // Validar que ambos campos de contraseña no estén vacíos
+                mostrarError("La contraseña no puede estar vacía");
+                return;
+            }
+
+            if (!contrasena.equals(confirmarContrasena)) {
+                // Validar que la contraseña y su confirmación sean iguales
+                mostrarError("Las contraseñas no coinciden");
+                return;
+            }
+
+            // Crear un objeto UsuarioRegistrarDTO utilizando el patrón Builder
+            UsuarioRegistrarDTO usuario = new UsuarioRegistrarDTO.Builder()
+                    .setNombre(nombre) // Asignar el nombre ingresado
+                    .setCorreo(correo) // Asignar el correo ingresado
+                    .setContrasena(contrasena) // Asignar la contraseña ingresada
+                    .setImagenPerfil(obtenerRutaImagen()) // Asignar la imagen de perfil seleccionada
+                    .build(); // Construir el objeto
+
+            // Registrar al usuario llamando al método correspondiente en la capa de negocio
+            registrarUsuarioBO.registrarUsuario(usuario);
+
+            // Mostrar un mensaje de éxito al usuario
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Registro exitoso", // Mensaje principal
+                    "Éxito", // Título de la ventana
+                    JOptionPane.INFORMATION_MESSAGE // Tipo de mensaje
+            );
+
+            // Cerrar la ventana actual y abrir la ventana principal
+            dispose(); // Cierra la ventana actual
+            java.awt.EventQueue.invokeLater(() -> {
+                try {
+                    // Intenta abrir la ventana principal
+                    new Principal().setVisible(true);
+                } catch (Exception e) {
+                    // Muestra un error si no se puede abrir la ventana principal
+                    mostrarError("Error al abrir la ventana principal: " + e.getMessage());
+                }
+            });
+
+        } catch (BOException ex) {
+            // Capturar y mostrar errores relacionados con el registro de usuario
+            mostrarError("Error al registrar usuario: " + ex.getMessage());
+        }
+    }
+
+    private String obtenerRutaImagen() {
+        // Verificar si hay imágenes disponibles y si el índice actual es válido
+        if (!imagenesRegistro.isEmpty() && imagenActual >= 0 && imagenActual < imagenesRegistro.size()) {
+            // Retorna la ruta de la imagen seleccionada según el índice actual
+            return "/usuario/usuario" + (imagenActual + 1) + ".png";
+        }
+        // Retorna null si no se pudo determinar una imagen válida
+        return null;
+    }
+
+    private void inicializarImagenes() {
+        // Configurar el tamaño del panel que contiene la imagen
+        imagenDeRegistro.setPreferredSize(new java.awt.Dimension(300, 300));
+        imagenDeRegistro.setSize(300, 300);
+        imagenDeRegistro.setMinimumSize(new java.awt.Dimension(300, 300));
+        imagenDeRegistro.setMaximumSize(new java.awt.Dimension(300, 300));
+
+        // Lista para almacenar las imágenes
+        imagenesRegistro = new ArrayList<>();
+        String[] rutasImagenes = {
+            "/usuario/usuario1.png", // Ruta de la primera imagen
+            "/usuario/usuario2.png", // Ruta de la segunda imagen
+            "/usuario/usuario3.png" // Ruta de la tercera imagen
+        };
+
+        boolean seCargoAlgunaImagen = false; // Variable para verificar si alguna imagen se cargó
+        for (String ruta : rutasImagenes) {
+            // Cargar cada imagen desde su ruta
+            URL urlImagen = getClass().getResource(ruta);
+            if (urlImagen != null) {
+                // Si se encuentra la imagen, se añade a la lista
+                ImageIcon icono = new ImageIcon(urlImagen);
+                imagenesRegistro.add(icono);
+                seCargoAlgunaImagen = true;
+            } else {
+                // Si no se encuentra la imagen, se muestra un mensaje en la consola
+                System.err.println("No se pudo cargar la imagen: " + ruta);
+            }
+        }
+
+        if (!seCargoAlgunaImagen) {
+            // Mostrar un error si ninguna imagen pudo ser cargada
+            mostrarError("No se pudieron cargar las imágenes de usuario. Verificar la ubicación de los recursos.");
+        }
+
+        imagenActual = 0; // Inicializar el índice de la imagen actual
+        actualizarImagenRegistro(); // Actualizar la imagen mostrada en la interfaz
     }
 
     private void actualizarImagenRegistro() {
+        // Verificar si hay imágenes disponibles y si las dimensiones del panel son válidas
         if (!imagenesRegistro.isEmpty() && imagenDeRegistro.getWidth() > 0 && imagenDeRegistro.getHeight() > 0) {
             // Obtener la imagen actual
-            ImageIcon imgIcon = imagenesRegistro.get(imagenActual);
+            ImageIcon iconoImagen = imagenesRegistro.get(imagenActual);
 
-            // Escalar la imagen al tamaño de imagenDeRegistro
-            Image img = imgIcon.getImage().getScaledInstance(
+            // Escalar la imagen para ajustarse al tamaño del panel
+            Image img = iconoImagen.getImage().getScaledInstance(
                     imagenDeRegistro.getWidth(),
                     imagenDeRegistro.getHeight(),
                     Image.SCALE_SMOOTH
             );
 
-            // Establecer la imagen escalada en imageLabel
+            // Establecer la imagen escalada en el componente
             imageLabel.setIcon(new ImageIcon(img));
         }
     }
 
     private void navegarImagenAnterior() {
-        if (imagenActual > 0) {
-            imagenActual--;
-        } else {
-            imagenActual = imagenesRegistro.size() - 1;
-        }
-        actualizarImagenRegistro();
+        // Moverse a la imagen anterior en la lista
+        imagenActual = (imagenActual > 0)
+                ? imagenActual - 1
+                : imagenesRegistro.size() - 1;
+        actualizarImagenRegistro(); // Actualizar la imagen mostrada
     }
 
     private void navegarImagenSiguiente() {
-        if (imagenActual < imagenesRegistro.size() - 1) {
-            imagenActual++;
-        } else {
-            imagenActual = 0;
-        }
-        actualizarImagenRegistro();
+        // Moverse a la siguiente imagen en la lista
+        imagenActual = (imagenActual < imagenesRegistro.size() - 1)
+                ? imagenActual + 1
+                : 0;
+        actualizarImagenRegistro(); // Actualizar la imagen mostrada
+    }
+
+    private void mostrarError(String mensaje) {
+        // Mostrar un cuadro de diálogo con el mensaje de error
+        JOptionPane.showMessageDialog(
+                this,
+                mensaje, // Mensaje que se mostrará
+                "Error de registro", // Título del cuadro de diálogo
+                JOptionPane.ERROR_MESSAGE // Tipo de mensaje (error)
+        );
     }
 
     @SuppressWarnings("unchecked")
@@ -509,7 +467,8 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_anteriorImagenBtnActionPerformed
 
     private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
-        
+
+
     }//GEN-LAST:event_registroBtnMouseClicked
 
     /**
