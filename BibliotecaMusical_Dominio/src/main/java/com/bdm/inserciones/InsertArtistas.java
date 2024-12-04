@@ -1345,6 +1345,51 @@ public class InsertArtistas {
             .setGenero("Indie Folk")
             .setIntegrantes(integrantesTheLumineers)
             .build());
+        
+        //  Natanael Cano
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Natanael Cano")
+            .setImagen("natanael_cano.jpg")
+            .setGenero("Corridos Tumbados")
+            .build());
+
+        // Peso Pluma
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Peso Pluma")
+            .setImagen("peso_pluma.jpg")
+            .setGenero("Corridos Tumbados")
+            .build());
+
+        //  Tito Double P
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Tito Double P")
+            .setImagen("tito_double_p.jpg")
+            .setGenero("Corridos Belicos")
+            .build());
+
+        //  Luis R Conriquez
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Luis R Conriquez")
+            .setImagen("luis_r_conriquez.jpg")
+            .setGenero("Corridos Bélicos")
+            .build());
+
+        //  Junior H
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Junior H")
+            .setImagen("junior_h.jpg")
+            .setGenero("Corridos Tumbados")
+            .build());
 
         
         
