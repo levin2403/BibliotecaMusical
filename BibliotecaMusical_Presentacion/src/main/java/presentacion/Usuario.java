@@ -1,264 +1,211 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
-import java.awt.Dimension;
+import com.bmn.dto.UsuarioActualizarDTO;
+import com.bmn.excepciones.BOException;
+import com.bmn.factories.BOFactory;
+import com.bmn.interfaces.IActualizarUsuarioBO;
+import com.bmn.singletonUsuario.UsuarioST;
 import java.awt.Image;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
+import javax.swing.JOptionPane;
 
 /**
+ * Clase para actualizar el perfil de usuario
  *
- * @author Sebastian Murrieta Verduzco -233463
+ * @author Sebastian Murrieta Verduzco
  */
 public class Usuario extends javax.swing.JFrame {
 
-    // Variables para manejar las imágenes de usuario
+    private IActualizarUsuarioBO actualizarUsuarioBO;
     private ArrayList<ImageIcon> imagenesUsuario;
     private int imagenActual;
-    private static final int MIN_PASSWORD_LENGTH = 8;
-    private static final int MAX_NAME_LENGTH = 50;
-    private static final int MAX_EMAIL_LENGTH = 100;
 
     public Usuario() {
         initComponents();
-        initImagenes();
-        setupComponents();
+        this.actualizarUsuarioBO = BOFactory.actualizarUsuarioFactory();
+        inicializarImagenes();
 
-        // Inicializar y configurar imageLabel
-        imageLabel = new javax.swing.JLabel();
-        imagenDeUsuario.setPreferredSize(new java.awt.Dimension(300, 300));
-        imageLabel.setBounds(0, 0, imagenDeUsuario.getWidth(), imagenDeUsuario.getHeight());
-        imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imagenDeUsuario.setLayout(null); // Usar diseño absoluto
-        imagenDeUsuario.add(imageLabel); // Agregar el JLabel al PanelRound
+        // Prellenar campos con información actual del usuario
+        precargarInformacionUsuario();
 
-        // Llamar a actualizar la imagen cuando la ventana esté lista
-        java.awt.EventQueue.invokeLater(() -> actualizarImagenUsuario());
+        // Configurar componentes
+        nombreTxt.setEnabled(true);
+        nombreTxt.setEditable(true);
+        correoTxt.setEnabled(true);
+        correoTxt.setEditable(true);
+        contraseñaTxt.setEnabled(true);
+        confirmarContraseñaTxt.setEnabled(true);
+
+        configurarEscuchasComponentes();
     }
 
-    private boolean validarNombre(String nombre) {
-        if (nombre == null || nombre.trim().isEmpty()) {
-            mostrarError("El nombre no puede estar vacío");
-            return false;
-        }
+    private void precargarInformacionUsuario() {
+        // Cargar información del usuario desde el singleton
+        nombreTxt.setText(UsuarioST.getInstance().getNombre());
+        correoTxt.setText(UsuarioST.getInstance().getCorreo());
 
-        if (nombre.length() > MAX_NAME_LENGTH) {
-            mostrarError("El nombre no puede exceder los " + MAX_NAME_LENGTH + " caracteres");
-            return false;
-        }
-
-        // Validar que solo contenga letras y espacios
-        if (!nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
-            mostrarError("El nombre solo puede contener letras y espacios");
-            return false;
-        }
-
-        return true;
+        // Dejar contraseñas en blanco para que el usuario las reescriba
+        contraseñaTxt.setText("");
+        confirmarContraseñaTxt.setText("");
     }
 
-    private boolean validarCorreo(String correo) {
-        if (correo == null || correo.trim().isEmpty()) {
-            mostrarError("El correo no puede estar vacío");
-            return false;
+    private void configurarEscuchasComponentes() {
+        anteriorImagenBtn.addActionListener(evt -> navegarImagenAnterior());
+        siguienteImagenBtn.addActionListener(evt -> navegarImagenSiguiente());
+
+        aceptarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                guardarCambios();
+            }
+        });
+
+        if (regresarLb != null) {
+            regresarLb.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    dispose();
+                }
+            });
         }
-
-        if (correo.length() > MAX_EMAIL_LENGTH) {
-            mostrarError("El correo no puede exceder los " + MAX_EMAIL_LENGTH + " caracteres");
-            return false;
-        }
-
-        // Patrón para validar el formato del correo
-        String emailPattern
-                = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
-        if (!Pattern.compile(emailPattern).matcher(correo).matches()) {
-            mostrarError("El formato del correo electrónico no es válido");
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean validarContraseña(String contraseña, String confirmacion) {
-        if (contraseña == null || contraseña.isEmpty()) {
-            mostrarError("La contraseña no puede estar vacía");
-            return false;
-        }
-
-        if (contraseña.length() < MIN_PASSWORD_LENGTH) {
-            mostrarError("La contraseña debe tener al menos " + MIN_PASSWORD_LENGTH + " caracteres");
-            return false;
-        }
-
-        // Validar que la contraseña contenga al menos una mayúscula, una minúscula y un número
-        if (!contraseña.matches(".*[A-Z].*")) {
-            mostrarError("La contraseña debe contener al menos una letra mayúscula");
-            return false;
-        }
-
-        if (!contraseña.matches(".*[a-z].*")) {
-            mostrarError("La contraseña debe contener al menos una letra minúscula");
-            return false;
-        }
-
-        if (!contraseña.matches(".*\\d.*")) {
-            mostrarError("La contraseña debe contener al menos un número");
-            return false;
-        }
-
-        // Validar caracteres especiales
-        if (!contraseña.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*")) {
-            mostrarError("La contraseña debe contener al menos un carácter especial");
-            return false;
-        }
-
-        // Validar que las contraseñas coincidan
-        if (!contraseña.equals(confirmacion)) {
-            mostrarError("Las contraseñas no coinciden");
-            return false;
-        }
-
-        return true;
     }
 
     private void guardarCambios() {
         try {
-            
-            String nombre = nombreTxt.getText();
-            String correo = correoTxt.getText();
-            String contraseña = new String(contraseñaTxt.getPassword());
-            String confirmarContraseña = new String(confirmarContraseñaTxt.getPassword());
+            // Obtener los datos ingresados por el usuario
+            String nombre = nombreTxt.getText().trim();
+            String correo = correoTxt.getText().trim();
+            String contrasena = new String(contraseñaTxt.getPassword());
+            String confirmarContrasena = new String(confirmarContraseñaTxt.getPassword());
 
-            // Realizar todas las validaciones
-            boolean nombreValido = validarNombre(nombre);
-            boolean correoValido = validarCorreo(correo);
-            boolean contraseñaValida = validarContraseña(contraseña, confirmarContraseña);
-
-            // Solo proceder si todas las validaciones son exitosas
-            if (nombreValido && correoValido && contraseñaValida) {
-                // Aquí iría el código para guardar en la base de datos
-
-                // Mostrar mensaje de éxito
-                javax.swing.JOptionPane.showMessageDialog(
-                        this,
-                        "Los cambios se han guardado exitosamente",
-                        "Éxito",
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE
-                );
-
-                // Cerrar ventana actual y abrir Principal
-                dispose();
-                java.awt.EventQueue.invokeLater(() -> {
-                    try {
-                        new Principal().setVisible(true);
-                    } catch (Exception e) {
-                        mostrarError("Error al abrir la ventana principal: " + e.getMessage());
-                        e.printStackTrace();
-                    }
-                });
+            // Validaciones
+            if (nombre.isEmpty()) {
+                mostrarError("El nombre no puede estar vacío");
+                return;
             }
-        } catch (Exception e) {
-            mostrarError("Error al procesar los datos: " + e.getMessage());
-            e.printStackTrace();
+
+            if (correo.isEmpty()) {
+                mostrarError("El correo no puede estar vacío");
+                return;
+            }
+
+            if (contrasena.isEmpty() || confirmarContrasena.isEmpty()) {
+                mostrarError("La contraseña no puede estar vacía");
+                return;
+            }
+
+            if (!contrasena.equals(confirmarContrasena)) {
+                mostrarError("Las contraseñas no coinciden");
+                return;
+            }
+
+            // Crear DTO para actualizar usuario
+            UsuarioActualizarDTO usuario = new UsuarioActualizarDTO.Builder()
+                    .setNombre(nombre)
+                    .setCorreo(correo)
+                    .setContrasena(contrasena)
+                    .setContrasenaConfirmar(confirmarContrasena)
+                    .setImagenPerfil(obtenerRutaImagen())
+                    .build();
+
+            // Llamar al método de actualización
+            actualizarUsuarioBO.ActualizarUsuario(usuario);
+
+            // Mostrar mensaje de éxito
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Perfil actualizado exitosamente",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            // Opcional: Cerrar ventana actual y abrir principal
+            dispose();
+            new Principal().setVisible(true);
+
+        } catch (BOException ex) {
+            mostrarError("Error al actualizar perfil: " + ex.getMessage());
         }
     }
 
-    private void mostrarError(String mensaje) {
-        javax.swing.JOptionPane.showMessageDialog(
-                this,
-                mensaje,
-                "Error de validación",
-                javax.swing.JOptionPane.ERROR_MESSAGE
-        );
+    private String obtenerRutaImagen() {
+        if (!imagenesUsuario.isEmpty() && imagenActual >= 0 && imagenActual < imagenesUsuario.size()) {
+            return "/usuario/usuario" + (imagenActual + 1) + ".png";
+        }
+        return null;
     }
 
-    private void initImagenes() {
+    private void inicializarImagenes() {
+        // Similar a Registro, configurar panel de imagen
+        imagenDeUsuario.setPreferredSize(new java.awt.Dimension(300, 300));
+        imagenDeUsuario.setSize(300, 300);
+        imagenDeUsuario.setMinimumSize(new java.awt.Dimension(300, 300));
+        imagenDeUsuario.setMaximumSize(new java.awt.Dimension(300, 300));
+
+        // Cargar imágenes de usuario
         imagenesUsuario = new ArrayList<>();
-        String[] imagePaths = {
+        String[] rutasImagenes = {
             "/usuario/usuario1.png",
             "/usuario/usuario2.png",
             "/usuario/usuario3.png"
         };
 
-        boolean loadedAny = false;
-        for (String path : imagePaths) {
-            URL imageUrl = getClass().getResource(path);
-            if (imageUrl != null) {
-                imagenesUsuario.add(new ImageIcon(imageUrl));
-                loadedAny = true;
+        boolean seCargoAlgunaImagen = false;
+        for (String ruta : rutasImagenes) {
+            URL urlImagen = getClass().getResource(ruta);
+            if (urlImagen != null) {
+                ImageIcon icono = new ImageIcon(urlImagen);
+                imagenesUsuario.add(icono);
+                seCargoAlgunaImagen = true;
             } else {
-                System.err.println("Failed to load image: " + path);
+                System.err.println("No se pudo cargar la imagen: " + ruta);
             }
         }
 
-        if (!loadedAny) {
-            // Add a default placeholder image or show error
-            mostrarError("No se pudieron cargar las imágenes de usuario. Verificar la ubicación de los recursos.");
+        if (!seCargoAlgunaImagen) {
+            mostrarError("No se pudieron cargar las imágenes de usuario.");
         }
 
         imagenActual = 0;
-        actualizarImagenUsuario();
+        actualizarImagenRegistro();
     }
 
-    private void setupComponents() {
-        imagenDeUsuario.addComponentListener(new java.awt.event.ComponentAdapter() {
-            @Override
-            public void componentResized(java.awt.event.ComponentEvent e) {
-                actualizarImagenUsuario(); // Redimensionar imagen al cambiar tamaño del panel
-            }
-        });
-
-        anteriorImagenBtn.addActionListener(evt -> navegarImagenAnterior());
-        siguienteImagenBtn.addActionListener(evt -> navegarImagenSiguiente());
-
-        aceptarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                guardarCambios();
-            }
-        });
-    }
-
-    private void actualizarImagenUsuario() {
+    private void actualizarImagenRegistro() {
         if (!imagenesUsuario.isEmpty() && imagenDeUsuario.getWidth() > 0 && imagenDeUsuario.getHeight() > 0) {
-            // Obtener la imagen actual
-            ImageIcon imgIcon = imagenesUsuario.get(imagenActual);
+            ImageIcon iconoImagen = imagenesUsuario.get(imagenActual);
 
-            // Escalar la imagen al tamaño de imagenDeUsuario
-            Image img = imgIcon.getImage().getScaledInstance(
+            Image img = iconoImagen.getImage().getScaledInstance(
                     imagenDeUsuario.getWidth(),
                     imagenDeUsuario.getHeight(),
                     Image.SCALE_SMOOTH
             );
 
-            // Establecer la imagen escalada en imageLabel
             imageLabel.setIcon(new ImageIcon(img));
         }
     }
 
     private void navegarImagenAnterior() {
-        if (imagenActual > 0) {
-            imagenActual--;
-        } else {
-            imagenActual = imagenesUsuario.size() - 1;
-        }
-        actualizarImagenUsuario();
+        imagenActual = (imagenActual > 0)
+                ? imagenActual - 1
+                : imagenesUsuario.size() - 1;
+        actualizarImagenRegistro();
     }
 
     private void navegarImagenSiguiente() {
-        if (imagenActual < imagenesUsuario.size() - 1) {
-            imagenActual++;
-        } else {
-            imagenActual = 0;
-        }
-        actualizarImagenUsuario();
+        imagenActual = (imagenActual < imagenesUsuario.size() - 1)
+                ? imagenActual + 1
+                : 0;
+        actualizarImagenRegistro();
+    }
+
+    private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(
+                this,
+                mensaje,
+                "Error de actualización",
+                JOptionPane.ERROR_MESSAGE
+        );
     }
 
     @SuppressWarnings("unchecked")
@@ -468,22 +415,12 @@ public class Usuario extends javax.swing.JFrame {
         anteriorImagenBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         anteriorImagenBtn.setForeground(new java.awt.Color(255, 255, 255));
         anteriorImagenBtn.setText("<");
-        anteriorImagenBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                anteriorImagenBtnActionPerformed(evt);
-            }
-        });
         Fondo.add(anteriorImagenBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 470, 70, 30));
 
         siguienteImagenBtn.setBackground(new java.awt.Color(81, 137, 161));
         siguienteImagenBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         siguienteImagenBtn.setForeground(new java.awt.Color(255, 255, 255));
         siguienteImagenBtn.setText(">");
-        siguienteImagenBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                siguienteImagenBtnActionPerformed(evt);
-            }
-        });
         Fondo.add(siguienteImagenBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 470, 70, 30));
 
         aceptarBtn.setBackground(new java.awt.Color(81, 137, 161));
@@ -492,11 +429,6 @@ public class Usuario extends javax.swing.JFrame {
         aceptarBtn.setRoundBottomRight(50);
         aceptarBtn.setRoundTopLeft(50);
         aceptarBtn.setRoundTopRight(50);
-        aceptarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                aceptarBtnMouseClicked(evt);
-            }
-        });
 
         jLabel8.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -531,18 +463,6 @@ public class Usuario extends javax.swing.JFrame {
         dispose();
         new Principal().setVisible(true);
     }//GEN-LAST:event_regresarLbMouseClicked
-
-    private void siguienteImagenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteImagenBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_siguienteImagenBtnActionPerformed
-
-    private void anteriorImagenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorImagenBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_anteriorImagenBtnActionPerformed
-
-    private void aceptarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aceptarBtnMouseClicked
-        guardarCambios();
-    }//GEN-LAST:event_aceptarBtnMouseClicked
 
     /**
      * @param args the command line arguments

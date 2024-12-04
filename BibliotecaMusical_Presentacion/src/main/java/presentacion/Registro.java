@@ -55,13 +55,6 @@ public class Registro extends javax.swing.JFrame {
         configurarEscuchasComponentes();
     }
 
-    public Registro(IRegistrarUsuarioBO registrarUsuarioBO) {
-        this.registrarUsuarioBO = registrarUsuarioBO;
-        initComponents();
-        inicializarImagenes();
-        configurarEscuchasComponentes();
-    }
-
     private void configurarEscuchasComponentes() {
         anteriorImagenBtn.addActionListener(evt -> navegarImagenAnterior());
         siguienteImagenBtn.addActionListener(evt -> navegarImagenSiguiente());
@@ -463,22 +456,12 @@ public class Registro extends javax.swing.JFrame {
         anteriorImagenBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         anteriorImagenBtn.setForeground(new java.awt.Color(255, 255, 255));
         anteriorImagenBtn.setText("<");
-        anteriorImagenBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                anteriorImagenBtnActionPerformed(evt);
-            }
-        });
         Fondo.add(anteriorImagenBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 470, 70, 30));
 
         siguienteImagenBtn.setBackground(new java.awt.Color(81, 137, 161));
         siguienteImagenBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         siguienteImagenBtn.setForeground(new java.awt.Color(255, 255, 255));
         siguienteImagenBtn.setText(">");
-        siguienteImagenBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                siguienteImagenBtnActionPerformed(evt);
-            }
-        });
         Fondo.add(siguienteImagenBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 470, 70, 30));
 
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 720));
@@ -492,14 +475,6 @@ public class Registro extends javax.swing.JFrame {
         new Inicio().setVisible(true);
     }//GEN-LAST:event_atrasBtnMouseClicked
 
-
-    private void siguienteImagenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteImagenBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_siguienteImagenBtnActionPerformed
-
-    private void anteriorImagenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorImagenBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_anteriorImagenBtnActionPerformed
 
     /**
      * @param args the command line arguments
