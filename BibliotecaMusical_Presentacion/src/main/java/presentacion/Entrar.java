@@ -3,15 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package presentacion;
-import com.bmn.negocio.InsertEnlace; 
-import javax.swing.JOptionPane;
 
+import com.bmn.negocio.InsertEnlace;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Sebastian Murrieta Verduzco -233463
  */
 public class Entrar extends javax.swing.JFrame {
+
 
     /**
      * Creates new form Inicio
@@ -93,7 +94,7 @@ public class Entrar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void insertarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insertarBtnMouseClicked
-       try {
+        try {
             InsertEnlace.main(null);
             JOptionPane.showMessageDialog(this, "Inserción masiva completada exitosamente.");
         } catch (Exception e) {

@@ -5,6 +5,8 @@
 package presentacion;
 
 import com.bdm.conexion.ConexionMongo;
+import com.bmn.singletonUsuario.UsuarioST;
+import com.bmd.entities.Usuario;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import controlador.RenderCeldas;
@@ -21,12 +23,12 @@ import javax.swing.table.TableRowSorter;
 public class Principal extends javax.swing.JFrame {
 
     private boolean isMenuVisible = true;
+    private  Usuario usuarioActual;
 
     public Principal() {
+        this.usuarioActual = UsuarioST.getInstance();
         initComponents();
-        configurarTabla(); // Método para configurar la tabla
-        // Mueve el panel fuera de la vista al iniciar el frame
-        menuDesplegablePanel.setLocation(-menuDesplegablePanel.getWidth(), menuDesplegablePanel.getY());
+        configurarTabla();
     }
 
     /**
@@ -51,7 +53,7 @@ public class Principal extends javax.swing.JFrame {
      * se puedan editar las celdas.
      */
     private void configurarTabla() {
-        /// Configurar el modelo de la tabla sin datos precargados
+        // Configurar el modelo de la tabla sin datos precargados
         DefaultTableModel modelo = new DefaultTableModel(new String[]{"IMAGEN", "NOMBRE DEL ALBUM", "ARTISTA"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -109,12 +111,12 @@ public class Principal extends javax.swing.JFrame {
     private void cargarDatosDeLaBaseDeDatos(DefaultTableModel modelo) {
         // Obtener la instancia de la conexión a MongoDB
         ConexionMongo conexionMongo = ConexionMongo.getInstance();
-        MongoCollection<Document> coleccion = conexionMongo.getCollection("albums"); // Cambia el nombre de la colección si es necesario
+        MongoCollection<Document> coleccion = conexionMongo.getCollection("albums");
 
         try (MongoCursor<Document> cursor = coleccion.find().iterator()) {
             while (cursor.hasNext()) {
                 Document doc = cursor.next();
-                String imagen = doc.getString("imagen"); // Cambia el nombre de los campos si es necesario
+                String imagen = doc.getString("imagen");
                 String nombreAlbum = doc.getString("nombre_album");
                 String artista = doc.getString("artista");
 
@@ -122,9 +124,16 @@ public class Principal extends javax.swing.JFrame {
                 modelo.addRow(new Object[]{imagen, nombreAlbum, artista});
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar los datos de MongoDB: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar los datos de MongoDB: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    // Método para obtener el usuario actual si es necesario
+    public Usuario getUsuarioActual() {
+        return usuarioActual;
     }
 
     @SuppressWarnings("unchecked")
@@ -603,10 +612,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaActionPerformed
         String searchTerm = busqueda.getText().trim();
-        if (!searchTerm.isEmpty()) {
-            filterTable(searchTerm);
-        } else {
-        }
+        filterTable(searchTerm);
     }//GEN-LAST:event_busquedaActionPerformed
 
     private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
@@ -614,50 +620,107 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_buscarBtnActionPerformed
 
     private void perfilLbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_perfilLbMouseClicked
-        // TODO add your handling code here:
+        try {
+            ActualizarUsuario actualizarUsuario = new ActualizarUsuario();
+            actualizarUsuario.setLocationRelativeTo(this); // Center the new window
+            actualizarUsuario.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al abrir la ventana de actualización: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_perfilLbMouseClicked
 
     private void artistasFavLbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_artistasFavLbMouseClicked
-        // TODO add your handling code here:
+        try {
+            // Example: new FavoriteArtists().setVisible(true);
+            JOptionPane.showMessageDialog(this,
+                    "Función en desarrollo",
+                    "Aviso",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al abrir artistas favoritos: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_artistasFavLbMouseClicked
 
     private void menuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBtnActionPerformed
+        final int ANIMATION_SPEED = 15;
+        final int STEP_SIZE = 15;
         int panelWidth = menuDesplegablePanel.getWidth();
-        int targetX = isMenuVisible ? -panelWidth : 0; // Determina el objetivo según el estado
-        isMenuVisible = !isMenuVisible; // Alternar estado
+        int targetX = isMenuVisible ? -panelWidth : 0;
 
-        // Desactivar tabla cuando el menú está visible
+        // Disable table and search components when menu is visible
         tablaAlbum.setEnabled(!isMenuVisible);
+        busqueda.setEnabled(!isMenuVisible);
+        buscarBtn.setEnabled(!isMenuVisible);
 
-        javax.swing.Timer timer = new javax.swing.Timer(15, new java.awt.event.ActionListener() {
+        javax.swing.Timer timer = new javax.swing.Timer(ANIMATION_SPEED, new java.awt.event.ActionListener() {
             int currentX = menuDesplegablePanel.getX();
 
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if ((isMenuVisible && currentX < targetX) || (!isMenuVisible && currentX > targetX)) {
-                    currentX += isMenuVisible ? 15 : -15; // Mover según el estado
+                    currentX += isMenuVisible ? STEP_SIZE : -STEP_SIZE;
                     menuDesplegablePanel.setLocation(currentX, menuDesplegablePanel.getY());
                 } else {
                     ((javax.swing.Timer) e.getSource()).stop();
+                    menuDesplegablePanel.setLocation(targetX, menuDesplegablePanel.getY()); // Ensure final position
                 }
             }
         });
 
+        isMenuVisible = !isMenuVisible;
         timer.start();
-
     }//GEN-LAST:event_menuBtnActionPerformed
 
     private void artistaLbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_artistaLbMouseClicked
-        // TODO add your handling code here:
+        try {
+            // Example: new ArtistaView().setVisible(true);
+            JOptionPane.showMessageDialog(this,
+                    "Función en desarrollo",
+                    "Aviso",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al abrir vista de artistas: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_artistaLbMouseClicked
 
     private void albumFavLbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_albumFavLbMouseClicked
-        // TODO add your handling code here:
+        try {
+            // Add your implementation here
+            // Example: new FavoriteAlbums().setVisible(true);
+            JOptionPane.showMessageDialog(this,
+                    "Función en desarrollo",
+                    "Aviso",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al abrir álbumes favoritos: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_albumFavLbMouseClicked
 
     private void albumLbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_albumLbMouseClicked
-        new Album().setVisible(true);
-        this.dispose();
+        try {
+            Album albumView = new Album();
+            albumView.setLocationRelativeTo(this); // Center the new window
+            albumView.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al abrir la ventana de álbumes: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_albumLbMouseClicked
 
     private void salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirMouseClicked
@@ -665,25 +728,15 @@ public class Principal extends javax.swing.JFrame {
                 this,
                 "¿Está seguro que desea salir?",
                 "Confirmar Salida",
-                JOptionPane.YES_NO_OPTION
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
         );
 
         if (confirm == JOptionPane.YES_OPTION) {
+            dispose(); // Properly dispose of the window instead of System.exit(0)
             System.exit(0);
         }
     }//GEN-LAST:event_salirMouseClicked
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Canciones;

@@ -1,177 +1,138 @@
 package presentacion;
 
+import com.bmd.entities.Usuario;
 import com.bmn.dto.UsuarioActualizarDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.factories.BOFactory;
-import com.bmn.interfaces.IActualizarUsuarioBO;
+import com.bmn.negocio.ActualizarUsuarioBO;
 import com.bmn.singletonUsuario.UsuarioST;
+
 import java.awt.Image;
 import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 
 /**
- * Clase para actualizar el perfil de usuario o solamente para consultar
+ * Frame para actualizar el perfil de usuario
  *
- * @author Sebastian Murrieta Verduzco
+ * @author Sebastian Murrieta Verduzco -233463
  */
-public class ActualizarUsuario extends javax.swing.JFrame {
+public class ActualizarUsuario extends JFrame {
 
-    private IActualizarUsuarioBO actualizarUsuarioBO;
+    // Business logic and state variables
+    private ActualizarUsuarioBO actualizarUsuarioBO;
     private ArrayList<ImageIcon> imagenesUsuario;
     private int imagenActual;
-    private boolean estaUsuarioBaneado;
+    private Usuario usuarioActual;
 
+    /**
+     * Constructor de la clase ActualizarUsuario
+     *
+     * @param usuario Usuario a actualizar
+     */
     public ActualizarUsuario() {
         initComponents();
+        this.usuarioActual = UsuarioST.getInstance();
         this.actualizarUsuarioBO = BOFactory.actualizarUsuarioFactory();
         inicializarImagenes();
-
-        // Si no está baneado, proceder con la precarga de información
-        if (!estaUsuarioBaneado) {
-            precargarInformacionUsuario();
-
-            // Configurar componentes
-            nombreTxt.setEnabled(true);
-            nombreTxt.setEditable(true);
-            correoTxt.setEnabled(true);
-            correoTxt.setEditable(true);
-            contraseñaTxt.setEnabled(true);
-            confirmarContraseñaTxt.setEnabled(true);
-            aceptarBtn.setVisible(true);
-            banBtn.setVisible(false);
-        } else {
-            // Si está baneado, deshabilitar campos de actualización
-            deshabilitarCamposActualizacion();
-            aceptarBtn.setVisible(false);
-            banBtn.setVisible(true);
-        }
-
+        precargarInformacionUsuario();
         configurarEscuchasComponentes();
+
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 
-    private void deshabilitarCamposActualizacion() {
-        nombreTxt.setEnabled(false);
-        nombreTxt.setEditable(false);
-        correoTxt.setEnabled(false);
-        correoTxt.setEditable(false);
-        contraseñaTxt.setEnabled(false);
-        confirmarContraseñaTxt.setEnabled(false);
-        anteriorImagenBtn.setEnabled(false);
-        siguienteImagenBtn.setEnabled(false);
-    }
-
+    /**
+     * Precarga la información del usuario en los campos correspondientes
+     */
     private void precargarInformacionUsuario() {
-        // Cargar información del usuario desde el singleton
-        nombreTxt.setText(UsuarioST.getInstance().getNombre());
-        correoTxt.setText(UsuarioST.getInstance().getCorreo());
-
-        // Dejar contraseñas en blanco para que el usuario las reescriba
-        contraseñaTxt.setText("");
-        confirmarContraseñaTxt.setText("");
+        if (usuarioActual != null) {
+            nombreTxt.setText(usuarioActual.getNombre());
+            correoTxt.setText(usuarioActual.getCorreo());
+            contraseñaTxt.setText("");
+            confirmarContraseñaTxt.setText("");
+        }
     }
 
+    /**
+     * Configura los listeners para los componentes interactivos
+     */
     private void configurarEscuchasComponentes() {
         anteriorImagenBtn.addActionListener(evt -> navegarImagenAnterior());
         siguienteImagenBtn.addActionListener(evt -> navegarImagenSiguiente());
-
         aceptarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 guardarCambios();
             }
         });
-
-        if (regresarLb != null) {
-            regresarLb.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    dispose();
-                    new Principal().setVisible(true);
-                }
-            });
-        }
+        regresarLb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                volverAPrincipal();
+            }
+        });
     }
 
+    /**
+     * Guarda los cambios realizados en el perfil del usuario
+     */
     private void guardarCambios() {
         try {
-            // Verificar si el usuario está baneado antes de guardar cambios
-            if (estaUsuarioBaneado) {
-                mostrarError("No es posible actualizar un usuario baneado");
-                return;
-            }
-
-            // Obtener los datos ingresados por el usuario
             String nombre = nombreTxt.getText().trim();
             String correo = correoTxt.getText().trim();
             String contrasena = new String(contraseñaTxt.getPassword());
             String confirmarContrasena = new String(confirmarContraseñaTxt.getPassword());
 
-            // Validaciones
-            if (nombre.isEmpty()) {
-                mostrarError("El nombre no puede estar vacío");
-                return;
+            if (validarCampos(nombre, correo, contrasena, confirmarContrasena)) {
+                UsuarioActualizarDTO usuarioActualizar = new UsuarioActualizarDTO.Builder()
+                        .setNombre(nombre)
+                        .setCorreo(correo)
+                        .setContrasena(contrasena)
+                        .setContrasenaConfirmar(confirmarContrasena)
+                        .setImagenPerfil(obtenerRutaImagen())
+                        .build();
+
+                actualizarUsuarioBO.ActualizarUsuario(usuarioActualizar);
+                mostrarMensajeExito();
+                volverAPrincipal();
             }
-
-            if (correo.isEmpty()) {
-                mostrarError("El correo no puede estar vacío");
-                return;
-            }
-
-            if (contrasena.isEmpty() || confirmarContrasena.isEmpty()) {
-                mostrarError("La contraseña no puede estar vacía");
-                return;
-            }
-
-            if (!contrasena.equals(confirmarContrasena)) {
-                mostrarError("Las contraseñas no coinciden");
-                return;
-            }
-
-            // Crear DTO para actualizar usuario
-            UsuarioActualizarDTO usuario = new UsuarioActualizarDTO.Builder()
-                    .setNombre(nombre)
-                    .setCorreo(correo)
-                    .setContrasena(contrasena)
-                    .setContrasenaConfirmar(confirmarContrasena)
-                    .setImagenPerfil(obtenerRutaImagen())
-                    .build();
-
-            // Llamar al método de actualización
-            actualizarUsuarioBO.ActualizarUsuario(usuario);
-
-            // Mostrar mensaje de éxito
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Perfil actualizado exitosamente",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-
-            // Opcional: Cerrar ventana actual y abrir principal
-            dispose();
-            new Principal().setVisible(true);
-
         } catch (BOException ex) {
             mostrarError("Error al actualizar perfil: " + ex.getMessage());
         }
     }
 
-    private String obtenerRutaImagen() {
-        if (!imagenesUsuario.isEmpty() && imagenActual >= 0 && imagenActual < imagenesUsuario.size()) {
-            return "/usuario/usuario" + (imagenActual + 1) + ".png";
+    /**
+     * Valida los campos del formulario
+     */
+    private boolean validarCampos(String nombre, String correo, String contrasena, String confirmarContrasena) {
+        if (nombre.isEmpty()) {
+            mostrarError("El nombre no puede estar vacío");
+            return false;
         }
-        return null;
+        if (correo.isEmpty()) {
+            mostrarError("El correo no puede estar vacío");
+            return false;
+        }
+        if (contrasena.isEmpty() || confirmarContrasena.isEmpty()) {
+            mostrarError("La contraseña no puede estar vacía");
+            return false;
+        }
+        if (!contrasena.equals(confirmarContrasena)) {
+            mostrarError("Las contraseñas no coinciden");
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Inicializa las imágenes de perfil disponibles
+     */
     private void inicializarImagenes() {
-        // Similar a Registro, configurar panel de imagen
         imagenDeUsuario.setPreferredSize(new java.awt.Dimension(300, 300));
         imagenDeUsuario.setSize(300, 300);
         imagenDeUsuario.setMinimumSize(new java.awt.Dimension(300, 300));
         imagenDeUsuario.setMaximumSize(new java.awt.Dimension(300, 300));
-
-        // Cargar imágenes de usuario
         imagenesUsuario = new ArrayList<>();
         String[] rutasImagenes = {
             "/usuario/usuario1.png",
@@ -179,60 +140,93 @@ public class ActualizarUsuario extends javax.swing.JFrame {
             "/usuario/usuario3.png"
         };
 
-        boolean seCargoAlgunaImagen = false;
         for (String ruta : rutasImagenes) {
             URL urlImagen = getClass().getResource(ruta);
             if (urlImagen != null) {
-                ImageIcon icono = new ImageIcon(urlImagen);
-                imagenesUsuario.add(icono);
-                seCargoAlgunaImagen = true;
-            } else {
-                System.err.println("No se pudo cargar la imagen: " + ruta);
+                imagenesUsuario.add(new ImageIcon(urlImagen));
             }
         }
 
-        if (!seCargoAlgunaImagen) {
-            mostrarError("No se pudieron cargar las imágenes de usuario.");
-        }
-
         imagenActual = 0;
+        if (usuarioActual.getImagenPerfil() != null) {
+            String imagenPerfil = usuarioActual.getImagenPerfil();
+            for (int i = 0; i < rutasImagenes.length; i++) {
+                if (rutasImagenes[i].equals(imagenPerfil)) {
+                    imagenActual = i;
+                    break;
+                }
+            }
+        }
         actualizarImagenRegistro();
     }
 
+    /**
+     * Actualiza la imagen mostrada en el registro
+     */
     private void actualizarImagenRegistro() {
-        if (!imagenesUsuario.isEmpty() && imagenDeUsuario.getWidth() > 0 && imagenDeUsuario.getHeight() > 0) {
+        if (!imagenesUsuario.isEmpty() && imagenDeUsuario.getWidth() > 0) {
             ImageIcon iconoImagen = imagenesUsuario.get(imagenActual);
-
             Image img = iconoImagen.getImage().getScaledInstance(
                     imagenDeUsuario.getWidth(),
                     imagenDeUsuario.getHeight(),
                     Image.SCALE_SMOOTH
             );
-
             imageLabel.setIcon(new ImageIcon(img));
         }
     }
 
+    /**
+     * Obtiene la ruta de la imagen actual
+     */
+    private String obtenerRutaImagen() {
+        return "/usuario/usuario" + (imagenActual + 1) + ".png";
+    }
+
+    /**
+     * Navega a la imagen anterior
+     */
     private void navegarImagenAnterior() {
-        imagenActual = (imagenActual > 0)
-                ? imagenActual - 1
-                : imagenesUsuario.size() - 1;
+        imagenActual = (imagenActual > 0) ? imagenActual - 1 : imagenesUsuario.size() - 1;
         actualizarImagenRegistro();
     }
 
+    /**
+     * Navega a la siguiente imagen
+     */
     private void navegarImagenSiguiente() {
-        imagenActual = (imagenActual < imagenesUsuario.size() - 1)
-                ? imagenActual + 1
-                : 0;
+        imagenActual = (imagenActual < imagenesUsuario.size() - 1) ? imagenActual + 1 : 0;
         actualizarImagenRegistro();
     }
 
+    /**
+     * Vuelve a la pantalla principal
+     */
+    private void volverAPrincipal() {
+        new Principal().setVisible(true);
+        dispose();
+    }
+
+    /**
+     * Muestra un mensaje de error
+     */
     private void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(
                 this,
                 mensaje,
-                "Error de actualización",
+                "Error",
                 JOptionPane.ERROR_MESSAGE
+        );
+    }
+
+    /**
+     * Muestra un mensaje de éxito
+     */
+    private void mostrarMensajeExito() {
+        JOptionPane.showMessageDialog(
+                this,
+                "Perfil actualizado exitosamente",
+                "Éxito",
+                JOptionPane.INFORMATION_MESSAGE
         );
     }
 
@@ -481,19 +475,6 @@ public class ActualizarUsuario extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ActualizarUsuario().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
