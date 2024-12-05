@@ -12,33 +12,54 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
- * Clase para actualizar el perfil de usuario
+ * Clase para actualizar el perfil de usuario o solamente para consultar
  *
  * @author Sebastian Murrieta Verduzco
  */
-public class Usuario extends javax.swing.JFrame {
+public class ActualizarUsuario extends javax.swing.JFrame {
 
     private IActualizarUsuarioBO actualizarUsuarioBO;
     private ArrayList<ImageIcon> imagenesUsuario;
     private int imagenActual;
+    private boolean estaUsuarioBaneado;
 
-    public Usuario() {
+    public ActualizarUsuario() {
         initComponents();
         this.actualizarUsuarioBO = BOFactory.actualizarUsuarioFactory();
         inicializarImagenes();
 
-        // Prellenar campos con información actual del usuario
-        precargarInformacionUsuario();
+        // Si no está baneado, proceder con la precarga de información
+        if (!estaUsuarioBaneado) {
+            precargarInformacionUsuario();
 
-        // Configurar componentes
-        nombreTxt.setEnabled(true);
-        nombreTxt.setEditable(true);
-        correoTxt.setEnabled(true);
-        correoTxt.setEditable(true);
-        contraseñaTxt.setEnabled(true);
-        confirmarContraseñaTxt.setEnabled(true);
+            // Configurar componentes
+            nombreTxt.setEnabled(true);
+            nombreTxt.setEditable(true);
+            correoTxt.setEnabled(true);
+            correoTxt.setEditable(true);
+            contraseñaTxt.setEnabled(true);
+            confirmarContraseñaTxt.setEnabled(true);
+            aceptarBtn.setVisible(true);
+            banBtn.setVisible(false);
+        } else {
+            // Si está baneado, deshabilitar campos de actualización
+            deshabilitarCamposActualizacion();
+            aceptarBtn.setVisible(false);
+            banBtn.setVisible(true);
+        }
 
         configurarEscuchasComponentes();
+    }
+
+    private void deshabilitarCamposActualizacion() {
+        nombreTxt.setEnabled(false);
+        nombreTxt.setEditable(false);
+        correoTxt.setEnabled(false);
+        correoTxt.setEditable(false);
+        contraseñaTxt.setEnabled(false);
+        confirmarContraseñaTxt.setEnabled(false);
+        anteriorImagenBtn.setEnabled(false);
+        siguienteImagenBtn.setEnabled(false);
     }
 
     private void precargarInformacionUsuario() {
@@ -66,6 +87,7 @@ public class Usuario extends javax.swing.JFrame {
             regresarLb.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     dispose();
+                    new Principal().setVisible(true);
                 }
             });
         }
@@ -73,6 +95,12 @@ public class Usuario extends javax.swing.JFrame {
 
     private void guardarCambios() {
         try {
+            // Verificar si el usuario está baneado antes de guardar cambios
+            if (estaUsuarioBaneado) {
+                mostrarError("No es posible actualizar un usuario baneado");
+                return;
+            }
+
             // Obtener los datos ingresados por el usuario
             String nombre = nombreTxt.getText().trim();
             String correo = correoTxt.getText().trim();
@@ -350,11 +378,6 @@ public class Usuario extends javax.swing.JFrame {
         regresarLb.setForeground(new java.awt.Color(159, 159, 159));
         regresarLb.setText("Regresar");
         regresarLb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        regresarLb.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regresarLbMouseClicked(evt);
-            }
-        });
         Fondo.add(regresarLb, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 670, -1, -1));
 
         banBtn.setBackground(new java.awt.Color(42, 89, 109));
@@ -459,45 +482,15 @@ public class Usuario extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void regresarLbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regresarLbMouseClicked
-        dispose();
-        new Principal().setVisible(true);
-    }//GEN-LAST:event_regresarLbMouseClicked
-
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Usuario().setVisible(true);
+                new ActualizarUsuario().setVisible(true);
             }
         });
     }

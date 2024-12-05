@@ -4,17 +4,141 @@
  */
 package presentacion;
 
+import com.bmn.dto.UsuarioIniciarSesionDTO;
+import com.bmn.excepciones.BOException;
+import com.bmn.factories.BOFactory;
+import com.bmn.negocio.InicioSesionBO;
+import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Sebastian Murrieta Verduzco -233463
  */
 public class Inicio extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Inicio
-     */
     public Inicio() {
         initComponents();
+        customizeComponents();
+    }
+
+    /**
+     * Additional UI customization and input validation
+     */
+    private void customizeComponents() {
+        // Add placeholder and focus listeners to text fields
+        addPlaceholderAndValidation(correoTxt, "Ingrese su correo electrónico");
+
+        // Customize error handling for text fields
+        correoTxt.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                validateEmail();
+            }
+        });
+    }
+
+    /**
+     * Add placeholder text and focus handling to text fields
+     *
+     * @param textField The text field to customize
+     * @param placeholderText The placeholder text to show
+     */
+    private void addPlaceholderAndValidation(javax.swing.JTextField textField, String placeholderText) {
+        textField.setForeground(Color.GRAY);
+        textField.setText(placeholderText);
+
+        textField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField.getText().equals(placeholderText)) {
+                    textField.setText("");
+                    textField.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setForeground(Color.GRAY);
+                    textField.setText(placeholderText);
+                }
+            }
+        });
+    }
+
+    /**
+     * Validate email format before login attempt
+     *
+     * @return true if email is valid, false otherwise
+     */
+    private boolean validateEmail() {
+        String email = correoTxt.getText().trim();
+
+        // Simple email validation regex
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+
+        if (email.isEmpty() || email.equals("Ingrese su correo electrónico")) {
+            JOptionPane.showMessageDialog(this,
+                    "Por favor, ingrese un correo electrónico",
+                    "Error de Validación",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!Pattern.matches(emailRegex, email)) {
+            JOptionPane.showMessageDialog(this,
+                    "El formato del correo electrónico no es válido",
+                    "Error de Formato",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Enhanced login method with additional error handling
+     */
+    private void performLogin() {
+        // Validate email first
+        if (!validateEmail()) {
+            return;
+        }
+
+        String correo = correoTxt.getText().trim();
+        String contrasena = new String(contraseñaTxt.getPassword());
+
+        try {
+            // Use BOFactory to create InicioSesionBO
+            InicioSesionBO inicio = BOFactory.inicioSesionFactory();
+
+            // Create DTO and populate
+            UsuarioIniciarSesionDTO usuario
+                    = new UsuarioIniciarSesionDTO(correo, contrasena);
+
+            // Attempt login
+            inicio.iniciarSesion(usuario);
+
+            // Open main window if successful
+            new Entrar().setVisible(true);
+            this.dispose(); // Close login window
+        } catch (BOException ex) {
+            // Business logic specific error
+            JOptionPane.showMessageDialog(this,
+                    "Error de Inicio de Sesión: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            // Unexpected errors
+            JOptionPane.showMessageDialog(this,
+                    "Error inesperado: " + ex.getMessage(),
+                    "Error del Sistema",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -31,10 +155,10 @@ public class Inicio extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         panelGlowingGradient3 = new javaswingdev.pggb.PanelGlowingGradient();
         jLabel6 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        contraseñaTxt = new javax.swing.JPasswordField();
         panelGlowingGradient2 = new javaswingdev.pggb.PanelGlowingGradient();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        correoTxt = new javax.swing.JTextField();
         registroBtn = new javax.swing.JLabel();
         InicioBtn = new controlador.PanelRound();
         jLabel2 = new javax.swing.JLabel();
@@ -85,10 +209,10 @@ public class Inicio extends javax.swing.JFrame {
         panelGlowingGradient3.add(jLabel6);
         jLabel6.setBounds(30, 30, 121, 30);
 
-        jPasswordField1.setBackground(new java.awt.Color(24, 40, 54));
-        jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
-        panelGlowingGradient3.add(jPasswordField1);
-        jPasswordField1.setBounds(160, 30, 260, 30);
+        contraseñaTxt.setBackground(new java.awt.Color(24, 40, 54));
+        contraseñaTxt.setForeground(new java.awt.Color(255, 255, 255));
+        panelGlowingGradient3.add(contraseñaTxt);
+        contraseñaTxt.setBounds(160, 30, 260, 30);
 
         Fondo.add(panelGlowingGradient3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 450, 91));
 
@@ -103,11 +227,11 @@ public class Inicio extends javax.swing.JFrame {
         panelGlowingGradient2.add(jLabel5);
         jLabel5.setBounds(30, 30, 80, 30);
 
-        jTextField2.setBackground(new java.awt.Color(24, 40, 54));
-        jTextField2.setFont(new java.awt.Font("OCR A Extended", 0, 12)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
-        panelGlowingGradient2.add(jTextField2);
-        jTextField2.setBounds(110, 30, 310, 30);
+        correoTxt.setBackground(new java.awt.Color(24, 40, 54));
+        correoTxt.setFont(new java.awt.Font("OCR A Extended", 0, 12)); // NOI18N
+        correoTxt.setForeground(new java.awt.Color(255, 255, 255));
+        panelGlowingGradient2.add(correoTxt);
+        correoTxt.setBounds(110, 30, 310, 30);
 
         Fondo.add(panelGlowingGradient2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 450, 91));
 
@@ -164,22 +288,23 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
+        dispose();
         new Registro().setVisible(true);
     }//GEN-LAST:event_registroBtnMouseClicked
 
     private void InicioBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InicioBtnMouseClicked
-        new Entrar().setVisible(true);
+        performLogin();
     }//GEN-LAST:event_InicioBtnMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
     private controlador.PanelRound InicioBtn;
+    private javax.swing.JPasswordField contraseñaTxt;
+    private javax.swing.JTextField correoTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField2;
     private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient2;
     private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient3;
     private controlador.PanelRound panelRound1;
