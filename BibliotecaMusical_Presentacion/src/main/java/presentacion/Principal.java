@@ -4,16 +4,21 @@
  */
 package presentacion;
 
-import com.bdm.conexion.ConexionMongo;
-import com.bmn.singletonUsuario.UsuarioST;
+import java.awt.Graphics2D;
 import com.bmd.entities.Usuario;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
+import com.bmn.dto.AlbumVistaDTO;
+import com.bmn.dto.constantes.Genero;
+import com.bmn.excepciones.BOException;
+import com.bmn.factories.BOFactory;
+import com.bmn.negocio.ObtenerAlbumesFiltradosBO;
 import controlador.RenderCeldas;
-import org.bson.Document;
 import javax.swing.*;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URL;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -23,12 +28,33 @@ import javax.swing.table.TableRowSorter;
 public class Principal extends javax.swing.JFrame {
 
     private boolean isMenuVisible = true;
-    private  Usuario usuarioActual;
+    private Usuario usuarioActual;
 
     public Principal() {
-        this.usuarioActual = UsuarioST.getInstance();
-        initComponents();
-        configurarTabla();
+        try {
+            // Inicializar componentes gráficos
+            initComponents();
+
+            // Configurar tabla para mostrar álbumes
+            configurarTabla();
+
+            // Cargar los géneros en el ComboBox
+            cargarComboBox();
+
+            // Mostrar información del usuario actual en la interfaz si es necesario
+            if (usuarioActual != null) {
+                System.out.println("Usuario actual: " + usuarioActual.getNombre());
+            } else {
+                System.out.println("No se encontró información del usuario actual.");
+            }
+        } catch (Exception e) {
+            // Manejo de excepciones generales
+            JOptionPane.showMessageDialog(this,
+                    "Error al inicializar la ventana principal: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 
     /**
@@ -59,19 +85,22 @@ public class Principal extends javax.swing.JFrame {
             public boolean isCellEditable(int row, int column) {
                 return false; // Hacer la tabla no editable
             }
+
+            // Override the getColumnClass to ensure proper rendering of images
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 0) {
+                    return ImageIcon.class; // Column 0 is for images
+                }
+                return Object.class;
+            }
         };
         tablaAlbum.setModel(modelo);
 
-        // Evitar que las columnas se reordenen
-        tablaAlbum.getTableHeader().setReorderingAllowed(false);
-
-        // Deshabilitar la modificación del tamaño de las columnas
-        for (int i = 0; i < tablaAlbum.getColumnModel().getColumnCount(); i++) {
-            tablaAlbum.getColumnModel().getColumn(i).setResizable(false);
-        }
+        // Configurar render personalizado
+        RenderCeldas render = new RenderCeldas(tablaAlbum);
 
         // Configurar alineaciones específicas para cada columna
-        RenderCeldas render = new RenderCeldas(tablaAlbum);
         render.setColumnAlignment(0, SwingConstants.CENTER); // Imagen centrada
         render.setColumnAlignment(1, SwingConstants.CENTER); // Nombre centrado
         render.setColumnAlignment(2, SwingConstants.LEFT);   // Artista a la izquierda
@@ -82,9 +111,6 @@ public class Principal extends javax.swing.JFrame {
         tablaAlbum.setRowHeight(50);                     // Altura de las filas
         tablaAlbum.setSelectionBackground(new Color(58, 107, 128)); // Fondo de selección
         tablaAlbum.setSelectionForeground(Color.WHITE);             // Texto de selección
-        tablaAlbum.setShowHorizontalLines(true);        // Mostrar líneas horizontales
-        tablaAlbum.setShowVerticalLines(false);         // Ocultar líneas verticales
-        tablaAlbum.setGridColor(new Color(255, 255, 255, 50)); // Color de las líneas de cuadrícula
 
         // Configurar el header de la tabla con el color específico y centrado
         tablaAlbum.getTableHeader().setBackground(new Color(35, 58, 68));
@@ -95,12 +121,72 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1.getViewport().setBackground(new Color(35, 58, 68));
 
         // Ajustar el ancho de las columnas
-        tablaAlbum.getColumnModel().getColumn(0).setPreferredWidth(200); // Imagen
-        tablaAlbum.getColumnModel().getColumn(1).setPreferredWidth(150); // Nombre
-        tablaAlbum.getColumnModel().getColumn(2).setPreferredWidth(100); // Artista
+        tablaAlbum.getColumnModel().getColumn(0).setPreferredWidth(100);  // Imagen
+        tablaAlbum.getColumnModel().getColumn(1).setPreferredWidth(200);  // Nombre
+        tablaAlbum.getColumnModel().getColumn(2).setPreferredWidth(150);  // Artista
 
         // Llenar la tabla con los datos de la base de datos
         cargarDatosDeLaBaseDeDatos(modelo);
+    }
+
+    private void cargarComboBox() {
+        for (Genero genero : Genero.values()) {
+            generoFiltro.addItem(genero.name());
+        }
+    }
+
+    private ImageIcon cargarImagen(String nombreImagen) {
+        try {
+            // Ruta base de las imágenes
+            String rutaBase = "/BibliotecaMusical_Dominio/ImagenesAlbum/";
+
+            // Construir la ruta completa del archivo
+            File archivoImagen = new File(rutaBase + nombreImagen);
+
+            // Verificar si el archivo existe
+            if (archivoImagen.exists()) {
+                // Cargar la imagen original
+                ImageIcon originalIcon = new ImageIcon(archivoImagen.getPath());
+
+                // Escalar la imagen para que se ajuste a la tabla
+                Image scaledImage = originalIcon.getImage().getScaledInstance(
+                        50, 50, Image.SCALE_SMOOTH);
+
+                return new ImageIcon(scaledImage);
+            } else {
+                // Intentar cargar una imagen por defecto
+                URL defaultImageUrl = getClass().getResource("/default-album.png");
+                if (defaultImageUrl != null) {
+                    return new ImageIcon(defaultImageUrl);
+                }
+
+                // Si no se encuentra la imagen por defecto, crear un placeholder
+                BufferedImage placeholderImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2d = placeholderImage.createGraphics();
+                g2d.setColor(Color.LIGHT_GRAY);
+                g2d.fillRect(0, 0, 50, 50);
+                g2d.setColor(Color.BLACK);
+                g2d.drawString("No Image", 5, 25);
+                g2d.dispose();
+
+                return new ImageIcon(placeholderImage);
+            }
+        } catch (Exception e) {
+            // Manejar cualquier error al cargar la imagen
+            System.err.println("Error al cargar imagen: " + nombreImagen);
+            e.printStackTrace();
+
+            // Crear un placeholder si hay un error
+            BufferedImage placeholderImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = placeholderImage.createGraphics();
+            g2d.setColor(Color.LIGHT_GRAY);
+            g2d.fillRect(0, 0, 50, 50);
+            g2d.setColor(Color.BLACK);
+            g2d.drawString("Error", 10, 25);
+            g2d.dispose();
+
+            return new ImageIcon(placeholderImage);
+        }
     }
 
     /**
@@ -109,23 +195,42 @@ public class Principal extends javax.swing.JFrame {
      * @param modelo El modelo de la tabla al que se agregarán los datos.
      */
     private void cargarDatosDeLaBaseDeDatos(DefaultTableModel modelo) {
-        // Obtener la instancia de la conexión a MongoDB
-        ConexionMongo conexionMongo = ConexionMongo.getInstance();
-        MongoCollection<Document> coleccion = conexionMongo.getCollection("albums");
+        try {
+            // Obtain an instance of the BO for filtering albums
+            ObtenerAlbumesFiltradosBO obtener = BOFactory.obtenerAlbumesFiltradosFactory();
 
-        try (MongoCursor<Document> cursor = coleccion.find().iterator()) {
-            while (cursor.hasNext()) {
-                Document doc = cursor.next();
-                String imagen = doc.getString("imagen");
-                String nombreAlbum = doc.getString("nombre_album");
-                String artista = doc.getString("artista");
+            // Call the business logic method to search for albums
+            List<AlbumVistaDTO> albumes = obtener.BuscarPorFiltro(null, null, null);
 
-                // Agregar los datos a la tabla
-                modelo.addRow(new Object[]{imagen, nombreAlbum, artista});
+            // Debug: Imprimir número de álbumes
+            System.out.println("Número de álbumes encontrados: " + albumes.size());
+
+            // Clear existing rows
+            modelo.setRowCount(0);
+
+            // Iterate over the results and add them to the table
+            for (AlbumVistaDTO album : albumes) {
+                // Debug: Imprimir detalles de cada álbum
+                System.out.println("Álbum: " + album.getNombre()
+                        + ", Artista: " + album.getArtistaVista().getNombre()
+                        + ", Imagen: " + album.getImagen());
+
+                // Load image from file system
+                ImageIcon imagen = cargarImagen(album.getImagen());
+
+                modelo.addRow(new Object[]{
+                    imagen, // Use the loaded image
+                    album.getNombre(),
+                    album.getArtistaVista().getNombre()
+                });
             }
-        } catch (Exception e) {
+
+            // Debug: Imprimir número de filas añadidas
+            System.out.println("Filas añadidas a la tabla: " + modelo.getRowCount());
+        } catch (BOException e) {
+            e.printStackTrace(); // Esto imprimirá el stack trace completo
             JOptionPane.showMessageDialog(this,
-                    "Error al cargar los datos de MongoDB: " + e.getMessage(),
+                    "Error al cargar álbumes: " + e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -364,7 +469,9 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        generoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        generoFiltro.setBackground(new java.awt.Color(35, 58, 68));
+        generoFiltro.setFont(new java.awt.Font("OCR A Extended", 0, 12)); // NOI18N
+        generoFiltro.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
