@@ -55,7 +55,7 @@ public class ArtistaDAO implements IArtistaDAO {
             // Proyección para incluir solo los campos necesarios del Album
             Bson projection = fields(
                 include("id", "tipo_artista", "nombre", "imagen", "genero", "integrantes", "estado_actividad"),
-                Projections.computed("albums", fields(include("id", "nombre", "imagen_portada")))
+                Projections.computed("albumes", fields(include("id", "nombre", "imagen_portada")))
             );
 
             // Consulta del artista por ID
@@ -97,7 +97,7 @@ public class ArtistaDAO implements IArtistaDAO {
             // Proyección para incluir solo los campos necesarios del Artista
             Bson projection = fields(
                 include("id", "nombre", "imagen"),
-                Projections.computed("albums", fields(include("id", "nombre", "imagen_portada")))
+                Projections.computed("albumes", fields(include("id", "nombre", "imagen_portada")))
             );
 
             // Consulta con los filtros y la proyección

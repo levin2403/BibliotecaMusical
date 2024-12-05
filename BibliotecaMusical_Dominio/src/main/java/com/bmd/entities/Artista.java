@@ -23,7 +23,7 @@ public class Artista {
     private String imagen; 
     private String genero; 
     private List<Integrante> integrantes; 
-    private List<Album> albums;
+    private List<Album> albumes;
 
     public Artista() {
     }
@@ -35,7 +35,7 @@ public class Artista {
         this.imagen = builder.imagen;
         this.genero = builder.genero;
         this.integrantes = builder.integrantes;
-        this.albums = builder.albums;
+        this.albumes = builder.albumes;
     }
 
     public ObjectId getId() {
@@ -62,12 +62,12 @@ public class Artista {
         return integrantes;
     }
 
-    public List<Album> getAlbums() {
-        return albums;
+    public List<Album> getalbumes() {
+        return albumes;
     }
     
-    public void setAlbums(List<Album> albums) {
-        this.albums = albums;
+    public void setalbumes(List<Album> albumes) {
+        this.albumes = albumes;
     }
 
     public void setId(ObjectId id) {
@@ -102,7 +102,7 @@ public class Artista {
                 ", imagen: " + imagen + 
                 ", genero: " + genero + 
                 ", integrantes: " + integrantes + 
-                ", albums: " + albums + '}';
+                ", albumes: " + albumes + '}';
     }
     
     public static class Builder {
@@ -113,7 +113,7 @@ public class Artista {
         private String imagen;
         private String genero;
         private List<Integrante> integrantes;
-        private List<Album> albums;
+        private List<Album> albumes;
 
         public Builder setId(ObjectId id) {
             this.id = id;
@@ -145,8 +145,8 @@ public class Artista {
             return this;
         }
 
-        public Builder setAlbums(List<Album> albums) {
-            this.albums = albums;
+        public Builder setalbumes(List<Album> albumes) {
+            this.albumes = albumes;
             return this;
         }
 

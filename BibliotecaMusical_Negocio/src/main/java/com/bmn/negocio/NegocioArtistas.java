@@ -16,13 +16,13 @@ public class NegocioArtistas {
     public NegocioArtistas() {
         ConexionMongo conexion = ConexionMongo.getInstance();
         collectionArtista = conexion.getCollection("artistas");
-        collectionAlbum = conexion.getCollection("albums");
+        collectionAlbum = conexion.getCollection("albumes");
     }
 
-    public void insertarArtistasYAlbums(List<Artista> artistas, List<Album> albums) {
+    public void insertarArtistasYalbumes(List<Artista> artistas, List<Album> albumes) {
         // Imprimir el tamaño de las listas
         System.out.println("Número de artistas: " + artistas.size());
-        System.out.println("Número de álbumes: " + albums.size());
+        System.out.println("Número de álbumes: " + albumes.size());
 
         // Imprimir los nombres de los artistas
         for (Artista artista : artistas) {
@@ -30,7 +30,7 @@ public class NegocioArtistas {
         }
 
         // Imprimir los nombres de los álbumes
-        for (Album album : albums) {
+        for (Album album : albumes) {
             System.out.println("Álbum: " + album.getNombre());
         }
 
@@ -47,7 +47,7 @@ public class NegocioArtistas {
         }
 
         // Inserta los álbumes en MongoDB
-        for (Album album : albums) {
+        for (Album album : albumes) {
             try {
                 Document document = new Document()
                     .append("_id", album.getId()) // Utilizar el ObjectId generado

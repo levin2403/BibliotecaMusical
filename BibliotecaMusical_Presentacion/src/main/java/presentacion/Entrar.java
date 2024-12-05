@@ -103,6 +103,7 @@ public class Entrar extends javax.swing.JFrame {
     }//GEN-LAST:event_insertarBtnMouseClicked
 
     private void entrarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entrarBtnMouseClicked
+        dispose();
         new Principal().setVisible(true);
     }//GEN-LAST:event_entrarBtnMouseClicked
 
