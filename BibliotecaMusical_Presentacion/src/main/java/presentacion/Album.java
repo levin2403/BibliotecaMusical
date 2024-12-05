@@ -24,7 +24,7 @@ public class Album extends javax.swing.JFrame {
         initComponents();
         configurarTabla(); // Método para configurar la tabla
         // Mueve el panel fuera de la vista al iniciar el frame
-    menuDesplegablePanel.setLocation(-menuDesplegablePanel.getWidth(), menuDesplegablePanel.getY());
+        menuDesplegablePanel.setLocation(-menuDesplegablePanel.getWidth(), menuDesplegablePanel.getY());
     }
 
     private void configurarTabla() {

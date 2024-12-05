@@ -4,6 +4,7 @@
  */
 package presentacion;
 
+import com.bmn.negocio.ObtenerArtistasFavoritosBO;
 import controlador.RenderCeldas;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
@@ -16,6 +17,7 @@ import javax.swing.SwingConstants;
 public class ArtistaFavorito extends javax.swing.JFrame {
 
     private boolean isMenuVisible = true;
+    private ObtenerArtistasFavoritosBO favoritos;
 
     /**
      * Creates new form Inicio
@@ -24,7 +26,8 @@ public class ArtistaFavorito extends javax.swing.JFrame {
         initComponents();
         configurarTabla(); // Método para configurar la tabla
         // Mueve el panel fuera de la vista al iniciar el frame
-    menuDesplegablePanel.setLocation(-menuDesplegablePanel.getWidth(), menuDesplegablePanel.getY());
+        menuDesplegablePanel.setLocation(-menuDesplegablePanel.getWidth(), 
+                menuDesplegablePanel.getY());
     }
 
     private void configurarTabla() {
