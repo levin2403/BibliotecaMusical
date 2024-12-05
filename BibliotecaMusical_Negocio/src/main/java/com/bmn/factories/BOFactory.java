@@ -10,6 +10,7 @@ import com.bmd.dao.ArtistaDAO;
 import com.bmd.dao.FavoritoDAO;
 import com.bmd.dao.UsuarioDAO;
 import com.bmn.negocio.ActualizarUsuarioBO;
+import com.bmn.negocio.AgregarCancionFavoritaBO;
 import com.bmn.negocio.AgregarFavoritoBO;
 import com.bmn.negocio.AgregarRestringidoBO;
 import com.bmn.negocio.EliminarRestringidoBO;
@@ -130,4 +131,10 @@ public class BOFactory {
         return new RegistrarUsuarioBO(usuarioDAO, hasher);
     }
 
+    public static AgregarCancionFavoritaBO agregarCancionFavoritaFactory() {
+        ConexionMongo conexion = new ConexionMongo();
+        FavoritoDAO favoritoDAO = new FavoritoDAO(conexion);
+        return new AgregarCancionFavoritaBO(favoritoDAO);
+    }
+    
 }
