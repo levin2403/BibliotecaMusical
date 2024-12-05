@@ -58,7 +58,7 @@ public class pruebasArtista {
         banda1.setImagen("url_to_banda1_image.jpg");
         banda1.setGenero("Cumbia");
         banda1.setIntegrantes(integrantes);
-        banda1.setAlbums(new ArrayList<>());
+        banda1.setalbumes(new ArrayList<>());
 
         Artista banda2 = new Artista();
         banda2.setId(new ObjectId("604c77f2a1b5b7844c8b4582")); // ObjectId válido
@@ -67,7 +67,7 @@ public class pruebasArtista {
         banda2.setImagen("url_to_banda2_image.jpg");
         banda2.setGenero("Latin Funk");
         banda2.setIntegrantes(integrantes);
-        banda2.setAlbums(new ArrayList<>());
+        banda2.setalbumes(new ArrayList<>());
 
         Artista solista1 = new Artista();
         solista1.setId(new ObjectId("604c77f2a1b5b7844c8b4583")); // ObjectId válido
@@ -76,7 +76,7 @@ public class pruebasArtista {
         solista1.setImagen("url_to_solista1_image.jpg");
         solista1.setGenero("Ranchera");
         solista1.setIntegrantes(new ArrayList<>());
-        solista1.setAlbums(new ArrayList<>());
+        solista1.setalbumes(new ArrayList<>());
 
         Artista solista2 = new Artista();
         solista2.setId(new ObjectId("604c77f2a1b5b7844c8b4584")); // ObjectId válido
@@ -85,7 +85,7 @@ public class pruebasArtista {
         solista2.setImagen("url_to_solista2_image.jpg");
         solista2.setGenero("Afrobeat");
         solista2.setIntegrantes(new ArrayList<>());
-        solista2.setAlbums(new ArrayList<>());
+        solista2.setalbumes(new ArrayList<>());
  
         
         artistaDAO.añadirArtista(banda1);

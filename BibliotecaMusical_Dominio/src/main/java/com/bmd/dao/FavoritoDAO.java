@@ -246,7 +246,7 @@ public class FavoritoDAO implements IFavoritoDAO {
                     
                     Bson projection = fields(
                         include("id", "nombre", "imagen"),
-                        Projections.computed("albums", fields(include("id", "nombre", "imagen_portada")))
+                        Projections.computed("albumes", fields(include("id", "nombre", "imagen_portada")))
                     );
                     
                     Artista artista = artistaCollection.find(eq("_id", favorito.getIdReferencia()))

@@ -91,7 +91,7 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
                 setImagen(artista.getImagen()).
                 setGenero(Genero.valueOf(artista.getGenero())).
                 setIntegrantes(toIntegranteDTO(artista.getIntegrantes())).
-                setAlbums(toAlbumMuestraDTO(artista.getAlbums())).
+                setalbumes(toAlbumMuestraDTO(artista.getalbumes())).
                 build();
         return artistaDTO;
     }
@@ -112,10 +112,10 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
         return integrantesDTO;
     }
     
-    private List<AlbumMuestraDTO> toAlbumMuestraDTO(List<Album> albums){
+    private List<AlbumMuestraDTO> toAlbumMuestraDTO(List<Album> albumes){
         List<AlbumMuestraDTO> albumMuestaDTO = new ArrayList<>();
         
-        for (Album album : albums) {
+        for (Album album : albumes) {
             AlbumMuestraDTO albumMuestra = 
                     new AlbumMuestraDTO(album.getId().toString(), album.getNombre(), 
                             album.getImagenPortada());

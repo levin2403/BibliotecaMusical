@@ -7,16 +7,16 @@ import java.util.ArrayList;
 import org.bson.types.ObjectId;
 import java.util.List;
 
-public class InsertAlbums {
+public class InsertaAlbumes {
 ObjectId id = new ObjectId();
 
     public List<Album> crearAlbums(List<Artista> artistas) {
-        List<Album> albums = new ArrayList<>();
+        List<Album> albumes = new ArrayList<>();
 
         // Crea manualmente los álbumes para los artistas
         for (Artista artista : artistas) {
             if ("Selena Quintanilla".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Amor Prohibido")
                         .setImagenPortada("amor_prohibido.jpg")
@@ -26,7 +26,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Amor Prohibido", "Baila Esta Cumbia", "La Carcacha"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Entre a Mi Mundo")
                         .setImagenPortada("entre_a_mi_mundo.jpg")
@@ -36,7 +36,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Como La Flor", "La Carcacha", "¿Qué Creías?"))
                         .build());
             } else if ("Shakira".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Pies Descalzos")
                         .setImagenPortada("pies_descalzos.jpg")
@@ -46,7 +46,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Estoy Aquí", "Pies Descalzos", "Antología"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Dónde Están los Ladrones?")
                         .setImagenPortada("donde_estan_los_ladrones.jpg")
@@ -56,7 +56,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Ciega, Sordomuda", "Si Te Vas", "Moscas En La Casa"))
                         .build());
             } else if ("Enrique Iglesias".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Enrique Iglesias")
                         .setImagenPortada("enrique_iglesias.jpg")
@@ -66,7 +66,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Bailamos", "Experiencia Religiosa", "Si Tú Te Vas"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Escape")
                         .setImagenPortada("escape.jpg")
@@ -76,7 +76,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Escape", "Hero", "Don't Turn Off the Lights"))
                         .build());
             } else if ("Daddy Yankee".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Barrio Fino")
                         .setImagenPortada("barrio_fino.jpg")
@@ -86,7 +86,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Gasolina", "Lo Que Pasó, Pasó", "Rompe"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("El Cartel: The Big Boss")
                         .setImagenPortada("el_cartel_the_big_boss.jpg")
@@ -96,7 +96,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Impacto", "Ella Me Levantó", "Fuera de Control"))
                         .build());
             } else if ("Bad Bunny".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("YHLQMDLG")
                         .setImagenPortada("yhlqmdlg.jpg")
@@ -104,7 +104,7 @@ ObjectId id = new ObjectId();
                         .setGenero("Reggaeton").setArtista(artista)
                         .setCanciones(List.of("Vete", "Safaera", "Yo Perreo Sola"))
                         .build());
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("El Último Tour Del Mundo")
                         .setImagenPortada("el_ultimo_tour_del_mundo.jpg")
@@ -114,7 +114,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Dákiti", "Booker T", "La Noche de Anoche"))
                         .build());
             } else if ("Ozuna".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Odisea")
                         .setImagenPortada("odisea.jpg")
@@ -123,7 +123,7 @@ ObjectId id = new ObjectId();
                         .setArtista(artista)
                         .setCanciones(List.of("Dile Que Tú Me Quieres", "Se Preparó", "Tu Foto"))
                         .build());
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Aura")
                         .setImagenPortada("aura.jpg")
@@ -133,7 +133,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Vaina Loca", "Ibiza", "Hola"))
                         .build());
             } else if ("Camila".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Todo Cambió")
                         .setImagenPortada("todo_cambio.jpg")
@@ -142,7 +142,7 @@ ObjectId id = new ObjectId();
                         .setArtista(artista)
                         .setCanciones(List.of("Todo Cambió", "Mientes", "Alejate de Mí"))
                         .build());
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Dejarte de Amar")
                         .setImagenPortada("dejarte_de_amar.jpg")
@@ -152,7 +152,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Bésame", "Entre Tus Alas", "Maya"))
                         .build());
             } else if ("Ricky Martin".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Vuelve")
                         .setImagenPortada("vuelve.jpg")
@@ -161,7 +161,7 @@ ObjectId id = new ObjectId();
                         .setArtista(artista)
                         .setCanciones(List.of("La Copa de la Vida", "Vuelve", "Volverás"))
                         .build());
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Livin' la Vida Loca")
                         .setImagenPortada("livin_la_vida_loca.jpg")
@@ -171,7 +171,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Livin' la Vida Loca", "She's All I Ever Had", "Shake Your Bon-Bon"))
                         .build());
             } else if ("Juanes".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Fíjate Bien")
                         .setImagenPortada("fijate_bien.jpg")
@@ -180,7 +180,7 @@ ObjectId id = new ObjectId();
                         .setArtista(artista)
                         .setCanciones(List.of("A Dios le Pido", "Es Por Ti", "Para Tu Amor"))
                         .build());
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Un Día Normal")
                         .setImagenPortada("un_dia_normal.jpg")
@@ -190,7 +190,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("A Dios le Pido", "Un Día Normal", "La Paga"))
                         .build());
             } else if ("Alejandro Sanz".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Más")
                         .setImagenPortada("mas.jpg")
@@ -199,7 +199,7 @@ ObjectId id = new ObjectId();
                         .setArtista(artista)
                         .setCanciones(List.of("Corazón Partío", "Amiga Mía", "Y, ¿Si Fuera Ella?"))
                         .build());
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                        .setId(new ObjectId())
                         .setNombre("El Alma al Aire")
                         .setImagenPortada("el_alma_al_aire.jpg")
@@ -209,7 +209,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Cuando Nadie Me Ve", "Quisiera Ser", "El Alma al Aire"))
                         .build());
             } else if ("Marc Anthony".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Otra Nota")
                         .setImagenPortada("otra_nota.jpg")
@@ -218,7 +218,7 @@ ObjectId id = new ObjectId();
                         .setArtista(artista)
                         .setCanciones(List.of("Vivir lo Nuestro", "Te Conozco Bien", "Que Precio Tiene el Cielo"))
                         .build());
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Contra la Corriente")
                         .setImagenPortada("contra_la_corriente.jpg")
@@ -228,7 +228,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Y Hubo Alguien", "Contra la Corriente", "Me Voy a Regalar"))
                         .build());
             } else if ("Jennifer Lopez".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("On the 6")
                         .setImagenPortada("on_the_6.jpg")
@@ -237,7 +237,7 @@ ObjectId id = new ObjectId();
                         .setArtista(artista)
                         .setCanciones(List.of("If You Had My Love", "Waiting for Tonight", "No Me Ames"))
                         .build());
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("J.Lo")
                         .setImagenPortada("jlo.jpg")
@@ -247,7 +247,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Love Don't Cost a Thing", "Play", "Ain't It Funny"))
                         .build());
             } else if ("Luis Fonsi".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Comenzaré")
                         .setImagenPortada("comenzare.jpg")
@@ -256,7 +256,7 @@ ObjectId id = new ObjectId();
                         .setArtista(artista)
                         .setCanciones(List.of("Échame la Culpa", "Dime Cómo Quieres", "No Te Vayas"))
                         .build());
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Palabras del Silencio")
                         .setImagenPortada("palabras_del_silencio.jpg")
@@ -266,7 +266,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Aquí Estoy Yo", "No Me Doy Por Vencido", "Llueve Por Dentro"))
                         .build());
             } else if ("Carlos Vives".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Clásicos de la Provincia")
                         .setImagenPortada("clasicos_de_la_provincia.jpg")
@@ -275,7 +275,7 @@ ObjectId id = new ObjectId();
                         .setArtista(artista)
                         .setCanciones(List.of("La Tierra del Olvido", "Fruta Fresca", "Como le Gusta a Tu Cuerpo"))
                         .build());
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Déjame Entrar")
                         .setImagenPortada("dejame_entrar.jpg")
@@ -285,7 +285,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Déjame Entrar", "Amor Sensible", "Papadio"))
                         .build());
             } else if ("Juan Gabriel".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Querida")
                         .setImagenPortada("querida.jpg")
@@ -295,7 +295,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Querida", "La Farsa", "No Tengo Dinero"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Recuerdos, Vol. II")
                         .setImagenPortada("recuerdos_vol_ii.jpg")
@@ -305,7 +305,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Te lo Pido por Favor", "No Me Vuelvo a Enamorar", "Caray"))
                         .build());
             } else if ("Alejandro Fernández".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Me Volvieron Loco Tus Besos")
                         .setImagenPortada("me_volvieron_loco.jpg")
@@ -315,7 +315,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Me Volvieron Loco Tus Besos", "Que Manera de Quererte", "Te Voy a Perder"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Muy Dentro de Mi Corazón")
                         .setImagenPortada("muy_dentro_de_mi_corazon.jpg")
@@ -325,7 +325,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Como Quien Pierde una Estrella", "Abrazame", "Nube Viajera"))
                         .build());
             } else if ("Vicente Fernández".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("La Voz Que Te Conquista")
                         .setImagenPortada("la_voz_que_te_conquista.jpg")
@@ -335,7 +335,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("El Son de la Negra", "Volver Volver", "La Ley del Monte"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Para Siempre")
                         .setImagenPortada("para_siempre.jpg")
@@ -345,7 +345,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Estos Celos", "La Derrota", "El Último Beso"))
                         .build());
             } else if ("Pedro Infante".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("El Inmortal")
                         .setImagenPortada("el_inmortal.jpg")
@@ -355,7 +355,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Amorcito Corazón", "Cien Años", "La Que Se Fue"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Las Mañanitas a Pedro Infante")
                         .setImagenPortada("las_mananitas_a_pedro_infante.jpg")
@@ -365,7 +365,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Las Mañanitas", "Serenata Huasteca", "La Calandria"))
                         .build());
             } else if ("La India".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Sobre el Fuego")
                         .setImagenPortada("sobre_el_fuego.jpg")
@@ -375,7 +375,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Nunca Voy a Olvidarte", "Mi Mayor Venganza", "Me Voy"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Dicen Que Soy")
                         .setImagenPortada("dicen_que_soy.jpg")
@@ -385,7 +385,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Dicen Que Soy", "Ese Hombre", "Vivir Lo Nuestro"))
                         .build());
             } else if ("Celia Cruz".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("La Negra Tiene Tumbao")
                         .setImagenPortada("la_negra_tiene_tumbao.jpg")
@@ -395,7 +395,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("La Negra Tiene Tumbao", "Ríe y Llora", "Quimbara"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Regalo del Alma")
                         .setImagenPortada("regalo_del_alma.jpg")
@@ -405,7 +405,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Rie y Llora", "Ella Tiene Fuego", "Pa' Arriba no Va"))
                         .build());
             } else if ("Romeo Santos".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Fórmula, Vol. 1")
                         .setImagenPortada("formula_vol_1.jpg")
@@ -415,7 +415,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("You", "Promise", "El Amor Que Perdimos"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Fórmula, Vol. 2")
                         .setImagenPortada("formula_vol_2.jpg")
@@ -425,7 +425,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Propuesta Indecente", "Odio", "Eres Mía"))
                         .build());
             } else if ("Prince Royce".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Prince Royce")
                         .setImagenPortada("prince_roye.jpg")
@@ -435,7 +435,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Stand by Me", "Corazón Sin Cara", "El Amor Que Perdimos"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Phase II")
                         .setImagenPortada("phase_ii.jpg")
@@ -445,7 +445,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Las Cosas Pequeñas", "Incondicional", "Te Me Vas"))
                         .build());
             } else if ("Karol G".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                        .setId(new ObjectId())
                         .setNombre("Ocean")
                         .setImagenPortada("ocean.jpg")
@@ -455,7 +455,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Tusa", "Pineapple", "Bichota"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                        .setId(new ObjectId())
                         .setNombre("KG0516")
                         .setImagenPortada("kg0516.jpg")
@@ -465,7 +465,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("El Makinon", "200 Copas", "Location"))
                         .build());
             } else if ("J Balvin".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Vibras")
                         .setImagenPortada("vibras.jpg")
@@ -475,7 +475,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Mi Gente", "Ahora Me Llama", "Bobo"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Colores")
                         .setImagenPortada("colores.jpg")
@@ -485,7 +485,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Blanco", "Morado", "Rojo"))
                         .build());
             } else if ("Maluma".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("F.A.M.E.")
                         .setImagenPortada("fame.jpg")
@@ -495,7 +495,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Felices los 4", "Corazón", "El Préstamo"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("11:11")
                         .setImagenPortada("1111.jpg")
@@ -505,7 +505,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("HP", "11 PM", "Instinto Natural"))
                         .build());
             } else if ("Nicky Jam".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Fénix")
                         .setImagenPortada("fenix.jpg")
@@ -516,7 +516,7 @@ ObjectId id = new ObjectId();
                         .build());
 
                
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Íntimo")
                         .setImagenPortada("intimo.jpg")
@@ -526,7 +526,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Whine Up", "Te Robaré", "X"))
                         .build());
             } else if ("Zion & Lennox".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Motivan2")
                         .setImagenPortada("motivan2.jpg")
@@ -536,7 +536,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Otra Vez", "Si Tu Me Dices", "Me Llamas"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Los Verdaderos")
                         .setImagenPortada("los_verdaderos.jpg")
@@ -546,7 +546,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Te Hago el Amor", "Hoy Lo Siento", "Dame tu Amor"))
                         .build());
             } else if ("Anuel AA".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Real Hasta la Muerte")
                         .setImagenPortada("real_hasta_la_muerte.jpg")
@@ -556,7 +556,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Ella Quiere Beber", "Secreto", "Brindemos"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Emmanuel")
                         .setImagenPortada("emmanuel.jpg")
@@ -566,7 +566,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("China", "Emmanuel", "Hasta Que Dios Diga"))
                         .build());
             } else if ("La Banda MS".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("La Mejor Banda del Mundo")
                         .setImagenPortada("la_mejor_banda.jpg")
@@ -576,7 +576,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("No Me Pidas Perdón", "Hermosa Experiencia", "El Mechón"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("En Vivo")
                         .setImagenPortada("en_vivo.jpg")
@@ -586,7 +586,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Solo Con Verte", "Háblame de Ti", "Hermosa Experiencia"))
                         .build());
             } else if ("Intocable".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Intocable 20 Aniversario")
                         .setImagenPortada("intocable_20.jpg")
@@ -596,7 +596,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Aire", "Eres Mi Droga", "Te Amo Y Te Amo"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Highway")
                         .setImagenPortada("highway.jpg")
@@ -606,7 +606,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Quédate Conmigo", "Quiéreme", "Dímelo"))
                         .build());
             }else if ("The Beatles".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Abbey Road")
                         .setImagenPortada("abbey_road.jpg")
@@ -616,7 +616,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Come Together", "Something", "Here Comes the Sun"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Sgt. Pepper's Lonely Hearts Club Band")
                         .setImagenPortada("sgt_pepper.jpg")
@@ -627,7 +627,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Queen".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("A Night at the Opera")
                         .setImagenPortada("a_night_at_the_opera.jpg")
@@ -637,7 +637,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Bohemian Rhapsody", "Love of My Life", "You're My Best Friend"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("The Game")
                         .setImagenPortada("the_game.jpg")
@@ -648,7 +648,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Metallica".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Master of Puppets")
                         .setImagenPortada("master_of_puppets.jpg")
@@ -658,7 +658,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Battery", "Master of Puppets", "Welcome Home (Sanitarium)"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Metallica (The Black Album)")
                         .setImagenPortada("black_album.jpg")
@@ -669,7 +669,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("U2".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("The Joshua Tree")
                         .setImagenPortada("the_joshua_tree.jpg")
@@ -679,7 +679,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("With or Without You", "I Still Haven't Found What I'm Looking For", "Where the Streets Have No Name"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Achtung Baby")
                         .setImagenPortada("achtung_baby.jpg")
@@ -690,7 +690,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Nirvana".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Nevermind")
                         .setImagenPortada("nevermind.jpg")
@@ -700,7 +700,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Smells Like Teen Spirit", "Come as You Are", "Lithium"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("In Utero")
                         .setImagenPortada("in_utero.jpg")
@@ -710,7 +710,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Heart-Shaped Box", "Rape Me", "All Apologies"))
                         .build());
             }else if ("AC/DC".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Back in Black")
                         .setImagenPortada("back_in_black.jpg")
@@ -720,7 +720,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Hells Bells", "Shoot to Thrill", "Back in Black"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Highway to Hell")
                         .setImagenPortada("highway_to_hell.jpg")
@@ -731,7 +731,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("The Rolling Stones".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Exile on Main St.")
                         .setImagenPortada("exile_on_main_st.jpg")
@@ -741,7 +741,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Rocks Off", "Rip This Joint", "Tumbling Dice"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Sticky Fingers")
                         .setImagenPortada("sticky_fingers.jpg")
@@ -752,7 +752,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Guns N' Roses".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Appetite for Destruction")
                         .setImagenPortada("appetite_for_destruction.jpg")
@@ -762,7 +762,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Welcome to the Jungle", "Sweet Child o' Mine", "Paradise City"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Use Your Illusion I")
                         .setImagenPortada("use_your_illusion_i.jpg")
@@ -773,7 +773,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Red Hot Chili Peppers".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Californication")
                         .setImagenPortada("californication.jpg")
@@ -783,7 +783,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Scar Tissue", "Otherside", "Californication"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Blood Sugar Sex Magik")
                         .setImagenPortada("blood_sugar_sex_magik.jpg")
@@ -794,7 +794,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Pearl Jam".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Ten")
                         .setImagenPortada("ten.jpg")
@@ -804,7 +804,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Alive", "Even Flow", "Jeremy"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Vs.")
                         .setImagenPortada("vs.jpg")
@@ -814,7 +814,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Go", "Daughter", "Elderly Woman Behind the Counter in a Small Town"))
                         .build());
             }else if ("Aerosmith".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Toys in the Attic")
                         .setImagenPortada("toys_in_the_attic.jpg")
@@ -824,7 +824,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Sweet Emotion", "Walk This Way", "Big Ten Inch Record"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Pump")
                         .setImagenPortada("pump.jpg")
@@ -835,7 +835,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Foo Fighters".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("The Colour and the Shape")
                         .setImagenPortada("the_colour_and_the_shape.jpg")
@@ -845,7 +845,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Everlong", "My Hero", "Monkey Wrench"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Wasting Light")
                         .setImagenPortada("wasting_light.jpg")
@@ -856,7 +856,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Coldplay".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("A Rush of Blood to the Head")
                         .setImagenPortada("a_rush_of_blood_to_the_head.jpg")
@@ -866,7 +866,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Clocks", "The Scientist", "In My Place"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Viva la Vida or Death and All His Friends")
                         .setImagenPortada("viva_la_vida.jpg")
@@ -877,7 +877,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Maroon 5".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Songs About Jane")
                         .setImagenPortada("songs_about_jane.jpg")
@@ -887,7 +887,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("This Love", "She Will Be Loved", "Harder to Breathe"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Overexposed")
                         .setImagenPortada("overexposed.jpg")
@@ -898,7 +898,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Sleeping with Sirens".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("If You Were a Movie, This Would Be Your Soundtrack")
                         .setImagenPortada("if_you_were_a_movie.jpg")
@@ -908,7 +908,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Scene One - James Dean & Audrey Hepburn", "Scene Two - Roger Rabbit", "Scene Five - With Ears to See and Eyes to Hear"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Feel")
                         .setImagenPortada("feel.jpg")
@@ -918,7 +918,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Alone", "Congratulations", "Feel"))
                         .build());
             }else if ("Imagine Dragons".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Night Visions")
                         .setImagenPortada("night_visions.jpg")
@@ -928,7 +928,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Radioactive", "Demons", "It's Time"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Evolve")
                         .setImagenPortada("evolve.jpg")
@@ -939,7 +939,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Muse".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Black Holes and Revelations")
                         .setImagenPortada("black_holes_and_revelations.jpg")
@@ -949,7 +949,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Supermassive Black Hole", "Starlight", "Knights of Cydonia"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("The Resistance")
                         .setImagenPortada("the_resistance.jpg")
@@ -960,7 +960,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Arctic Monkeys".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("AM")
                         .setImagenPortada("am.jpg")
@@ -970,7 +970,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Do I Wanna Know?", "R U Mine?", "Why'd You Only Call Me When You're High?"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Favourite Worst Nightmare")
                         .setImagenPortada("favourite_worst_nightmare.jpg")
@@ -981,7 +981,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Panic! At The Disco".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("A Fever You Can't Sweat Out")
                         .setImagenPortada("a_fever_you_cant_sweat_out.jpg")
@@ -991,7 +991,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("I Write Sins Not Tragedies", "But It's Better If You Do", "Lying Is the Most Fun a Girl Can Have Without Taking Her Clothes Off"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Death of a Bachelor")
                         .setImagenPortada("death_of_a_bachelor.jpg")
@@ -1002,7 +1002,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Linkin Park".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Hybrid Theory")
                         .setImagenPortada("hybrid_theory.jpg")
@@ -1012,7 +1012,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("In the End", "Crawling", "One Step Closer"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Meteora")
                         .setImagenPortada("meteora.jpg")
@@ -1022,7 +1022,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Numb", "Somewhere I Belong", "Breaking the Habit"))
                         .build());
             }else if ("Twenty One Pilots".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Blurryface")
                         .setImagenPortada("blurryface.jpg")
@@ -1032,7 +1032,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Stressed Out", "Ride", "Tear in My Heart"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Trench")
                         .setImagenPortada("trench.jpg")
@@ -1043,7 +1043,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Green Day".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Dookie")
                         .setImagenPortada("dookie.jpg")
@@ -1053,7 +1053,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Basket Case", "When I Come Around", "Longview"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("American Idiot")
                         .setImagenPortada("american_idiot.jpg")
@@ -1064,7 +1064,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Kings of Leon".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Only by the Night")
                         .setImagenPortada("only_by_the_night.jpg")
@@ -1074,7 +1074,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Sex on Fire", "Use Somebody", "Closer"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Mechanical Bull")
                         .setImagenPortada("mechanical_bull.jpg")
@@ -1085,7 +1085,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("The Killers".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Hot Fuss")
                         .setImagenPortada("hot_fuss.jpg")
@@ -1095,7 +1095,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Mr. Brightside", "Somebody Told Me", "All These Things That I've Done"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Sam's Town")
                         .setImagenPortada("sams_town.jpg")
@@ -1106,7 +1106,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Paramore".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Riot!")
                         .setImagenPortada("riot.jpg")
@@ -1116,7 +1116,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Misery Business", "That's What You Get", "Crushcrushcrush"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Paramore")
                         .setImagenPortada("paramore.jpg")
@@ -1126,7 +1126,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Still Into You", "Ain't It Fun", "Now"))
                         .build());
             }else if ("Florence and the Machine".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Lungs")
                         .setImagenPortada("lungs.jpg")
@@ -1136,7 +1136,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Dog Days Are Over", "You've Got the Love", "Rabbit Heart (Raise It Up)"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Ceremonials")
                         .setImagenPortada("ceremonials.jpg")
@@ -1147,7 +1147,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("The Black Keys".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Brothers")
                         .setImagenPortada("brothers.jpg")
@@ -1157,7 +1157,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Tighten Up", "Howlin' for You", "Next Girl"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("El Camino")
                         .setImagenPortada("el_camino.jpg")
@@ -1168,7 +1168,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("The 1975".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("The 1975")
                         .setImagenPortada("the_1975.jpg")
@@ -1178,7 +1178,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Chocolate", "Sex", "Robbers"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("I Like It When You Sleep, for You Are So Beautiful Yet So Unaware of It")
                         .setImagenPortada("i_like_it_when_you_sleep.jpg")
@@ -1189,7 +1189,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Of Monsters and Men".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("My Head Is an Animal")
                         .setImagenPortada("my_head_is_an_animal.jpg")
@@ -1199,7 +1199,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Little Talks", "Mountain Sound", "King and Lionheart"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Beneath the Skin")
                         .setImagenPortada("beneath_the_skin.jpg")
@@ -1210,7 +1210,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("The Lumineers".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("The Lumineers")
                         .setImagenPortada("the_lumineers.jpg")
@@ -1220,7 +1220,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Ho Hey", "Stubborn Love", "Submarines"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Cleopatra")
                         .setImagenPortada("cleopatra.jpg")
@@ -1230,7 +1230,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Ophelia", "Cleopatra", "Angela"))
                         .build());
             } else if ("Natanael Cano".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Soy El Diablo")
                         .setImagenPortada("soy_el_diablo.jpg")
@@ -1240,7 +1240,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Soy El Diablo", "Amor Tumbado", "El Drip"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Corridos Tumbados")
                         .setImagenPortada("corridos_tumbados.jpg")
@@ -1251,7 +1251,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Peso Pluma".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("El Belicón")
                         .setImagenPortada("el_belicon.jpg")
@@ -1261,7 +1261,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("El Belicón", "Ando Enfocado", "Mil Historias"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Disco de Oro")
                         .setImagenPortada("disco_de_oro.jpg")
@@ -1272,7 +1272,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Tito Double P".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Vida Bélica")
                         .setImagenPortada("vida_belica.jpg")
@@ -1282,7 +1282,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("El Güero", "Las Plebes", "Entre Compas"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Destino Bélico")
                         .setImagenPortada("destino_belico.jpg")
@@ -1293,7 +1293,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Luis R Conriquez".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Mi Enemigo el Tiempo")
                         .setImagenPortada("mi_enemigo_el_tiempo.jpg")
@@ -1303,7 +1303,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("Mi Enemigo el Tiempo", "El Buho", "El Viejon"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Corridos Belicos")
                         .setImagenPortada("corridos_belicos.jpg")
@@ -1314,7 +1314,7 @@ ObjectId id = new ObjectId();
                         .build());
 
             } else if ("Junior H".equals(artista.getNombre())) {
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Atrapado en un Sueño")
                         .setImagenPortada("atrapado_en_un_sueno.jpg")
@@ -1324,7 +1324,7 @@ ObjectId id = new ObjectId();
                         .setCanciones(List.of("No He Cambiado", "Ella", "Días Nublados"))
                         .build());
 
-                albums.add(new Album.Builder()
+                albumes.add(new Album.Builder()
                         .setId(new ObjectId())
                         .setNombre("Cruisin' with Junior")
                         .setImagenPortada("cruisin_with_junior.jpg")
@@ -1344,6 +1344,6 @@ ObjectId id = new ObjectId();
 
         }
 
-        return albums;
+        return albumes;
     }
 }
