@@ -13,8 +13,6 @@ import com.bmd.entities.Favorito;
 import com.bmd.entities.Usuario;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import static com.mongodb.client.model.Filters.and;
-import static com.mongodb.client.model.Filters.elemMatch;
 import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.client.model.Projections;
 import static com.mongodb.client.model.Projections.fields;
@@ -175,26 +173,41 @@ public class FavoritoDAO implements IFavoritoDAO {
     public void eliminarFavoritoPorGenero(String genero, ObjectId idUsuario) 
             throws DAOException {
         try {
-            MongoCollection<Usuario> collection = conexion.
-                    getCollection("usuarios", Usuario.class);
-            Usuario usuario = collection.find(eq("_id", idUsuario)).first();
+            // Validación de Parámetros
+            if (genero == null || genero.isEmpty()) {
+                throw new DAOException("El parámetro género no puede ser nulo o vacío");
+            }
+            if (idUsuario == null) {
+                throw new DAOException("El parámetro idUsuario no puede ser nulo");
+            }
+
+            // Obtener la colección de usuarios
+            MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
+
+            // Construir el filtro para encontrar al usuario
+            Bson filtro = eq("_id", idUsuario);
+            Usuario usuario = collection.find(filtro).first();
+
             if (usuario == null) {
                 throw new DAOException("Usuario no encontrado");
             }
 
-            List<Favorito> favoritosActualizados = new ArrayList<>();
-            for (Favorito favorito : usuario.getFavoritos()) {
-                if (!favorito.getGenero().equals(genero)) {
-                    favoritosActualizados.add(favorito);
-                }
-            }
+            // Imprimir los detalles para depuración
+            System.out.println("Usuario encontrado: " + usuario);
 
-            collection.updateOne(eq("_id", idUsuario), Updates.set("favoritos", 
-                    favoritosActualizados));
+            // Construir la actualización para eliminar favoritos por género
+            Bson update = Updates.pull("favoritos", Filters.eq("genero", genero));
+
+            // Realizar la actualización
+            UpdateResult result = collection.updateOne(filtro, update);
+
+            System.out.println("Favoritos eliminados exitosamente por género: " + genero);
+
         } catch (Exception e) {
             throw new DAOException("Error al eliminar favoritos por género", e);
         }
     }
+
 
     /**
      * Metodo para obtener una lista de Artistas que se encuentren marcados

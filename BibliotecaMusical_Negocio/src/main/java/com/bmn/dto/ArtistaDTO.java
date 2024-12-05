@@ -74,7 +74,8 @@ public class ArtistaDTO {
                 ", tipoArtista: " + tipoArtista + 
                 ", nombre: " + nombre + 
                 ", imagen: " + imagen + 
-                ", genero: " + genero;
+                ", genero: " + genero +
+                ", favorito: " + favorito;
     }
     
     public static class Builder {

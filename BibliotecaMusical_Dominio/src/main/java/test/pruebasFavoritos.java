@@ -33,7 +33,7 @@ public class pruebasFavoritos {
         IFavoritoDAO favoritoDAO = new FavoritoDAO(conexion);  
         
         Favorito favorito1 = new Favorito();
-        favorito1.setIdUsuario(new ObjectId("674fc2f4f736902f3ddd3e5f"));
+        favorito1.setIdUsuario(new ObjectId("675103d18cedb854fe404ec7"));
         favorito1.setIdReferencia(new ObjectId("604c77f2a1b5b7844c8b4583"));
         favorito1.setTipo("ARTISTA");
         favorito1.setGenero("Pop");
@@ -41,7 +41,7 @@ public class pruebasFavoritos {
         favorito1.setFechaAgregacion(LocalDate.of(2023, 5, 10));
 
         Favorito favorito2 = new Favorito();
-        favorito2.setIdUsuario(new ObjectId("674fc2f4f736902f3ddd3e5f"));
+        favorito2.setIdUsuario(new ObjectId("675103d18cedb854fe404ec7"));
         favorito2.setIdReferencia(new ObjectId("604c77f2a1b5b7844c8b4581"));
         favorito2.setTipo("ALBUM");
         favorito2.setGenero("Pop");
@@ -49,7 +49,7 @@ public class pruebasFavoritos {
         favorito2.setFechaAgregacion(LocalDate.of(2022, 3, 20));
 
         Favorito favorito3 = new Favorito();
-        favorito3.setIdUsuario(new ObjectId("674fc2f4f736902f3ddd3e5f"));
+        favorito3.setIdUsuario(new ObjectId("675103d18cedb854fe404ec7"));
         favorito3.setIdReferencia(new ObjectId("604c77f2a1b5b7844c8b4571"));
         favorito3.setTipo("CANCION");
         favorito3.setGenero("Afrobeat");
@@ -57,7 +57,7 @@ public class pruebasFavoritos {
         favorito3.setFechaAgregacion(LocalDate.of(2021, 7, 15));
 
         Favorito favorito4 = new Favorito();
-        favorito4.setIdUsuario(new ObjectId("674fc2f4f736902f3ddd3e5f"));
+        favorito4.setIdUsuario(new ObjectId("675103d18cedb854fe404ec7"));
         favorito4.setIdReferencia(new ObjectId("604c77f2a1b5b7844c8b4571"));
         favorito4.setTipo("CANCION");
         favorito4.setGenero("Afrobeat");
@@ -65,7 +65,7 @@ public class pruebasFavoritos {
         favorito4.setFechaAgregacion(LocalDate.of(2020, 11, 5));
 
         Favorito favorito5 = new Favorito();
-        favorito5.setIdUsuario(new ObjectId("674fc2f4f736902f3ddd3e5f"));
+        favorito5.setIdUsuario(new ObjectId("675103d18cedb854fe404ec7"));
         favorito5.setIdReferencia(new ObjectId("604c77f2a1b5b7844c8b4571"));
         favorito5.setTipo("CANCION");
         favorito5.setGenero("Hip-Hop");
@@ -73,8 +73,8 @@ public class pruebasFavoritos {
         favorito5.setFechaAgregacion(LocalDate.of(2024, 1, 25));
         
         
-         favoritoDAO.eliminarFavorito(new ObjectId("604c77f2a1b5b7844c8b4583"), 
-                new ObjectId("674fc2f4f736902f3ddd3e5f"), "ARTISTA");
+//         favoritoDAO.eliminarFavorito(new ObjectId("604c77f2a1b5b7844c8b4583"), 
+//                new ObjectId("674fc2f4f736902f3ddd3e5f"), "ARTISTA");
 //        
 //        if (favorito) {
 //            System.out.println("si existe");
@@ -82,7 +82,7 @@ public class pruebasFavoritos {
 //        else{
 //            System.out.println("no existe");
 //        }
-//        
+////        
 //        favoritoDAO.agregarFavorito(favorito1);
 //        favoritoDAO.agregarFavorito(favorito2);
 //        favoritoDAO.agregarFavorito(favorito3);

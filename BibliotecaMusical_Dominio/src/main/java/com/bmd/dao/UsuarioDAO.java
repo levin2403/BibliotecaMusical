@@ -11,7 +11,9 @@ import com.bmd.entities.Usuario;
 import com.mongodb.client.MongoCollection;
 import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.UpdateResult;
 import java.util.List;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 /**
@@ -126,13 +128,41 @@ public class UsuarioDAO implements IUsuarioDAO {
     @Override
     public void eliminarRestringido(String genero, ObjectId idUsuario) throws DAOException {
         try {
+            // Validación de Parámetros
+            if (genero == null || genero.isEmpty()) {
+                throw new DAOException("El parámetro género no puede ser nulo o vacío");
+            }
+            if (idUsuario == null) {
+                throw new DAOException("El parámetro idUsuario no puede ser nulo");
+            }
+
+            // Obtener la colección de usuarios
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
-            collection.updateOne(eq("_id", idUsuario), 
-                                 Updates.pull("restringidos", genero));
+
+            // Construir el filtro para encontrar al usuario
+            Bson filtro = eq("_id", idUsuario);
+
+            // Construir la actualización para eliminar el género de la lista "restringidos"
+            Bson update = Updates.pull("restringidos", genero);
+
+            // Realizar la actualización
+            UpdateResult result = collection.updateOne(filtro, update);
+            System.out.println("Result Modified Count: " + result.getModifiedCount());
+
+            // Verificar si se modificó algún documento
+            if (result.getModifiedCount() == 0) {
+                throw new DAOException("No se encontró el género restringido especificado para el usuario");
+            }
+
+            System.out.println("Género restringido eliminado exitosamente: " + genero);
+
         } catch (Exception e) {
+            System.err.println("Excepción: " + e.getMessage());
             throw new DAOException("Error al eliminar el género restringido", e);
         }
     }
+
+
 
     /**
      * Obtiene una lista de todos los generos baneados por el usuario.
@@ -180,10 +210,16 @@ public class UsuarioDAO implements IUsuarioDAO {
                 return false;
             }
 
-            return generosRestringidos.contains(genero);
+            for (String generoRestringido : generosRestringidos) {
+                if (generoRestringido.equalsIgnoreCase(genero)) {
+                    return true;
+                }
+            }
+            
         } catch (Exception e) {
             throw new DAOException("Error al verificar la existencia del género restringido", e);
         }
+        return false;
     }
 
 
