@@ -44,11 +44,13 @@ public class ObtenerArtistasFiltradosBO implements IObtenerArtistasFiltradosBO {
     private List<ArtistaVistaDTO> procesar(String nombre, Genero genero) throws BOException {
         try{
             
-            String genero1 = genero.name();
+            String genero1 = (genero == null) ? null : genero.name();
             
-            ObjectId idUsuario = UsuarioST.getInstance().getId();
+            String nombre1 = (nombre == null || nombre.isEmpty()) ? null : nombre;
             
-            List<Artista> artistas = artistaDAO.buscarPorFiltro(nombre, genero1, idUsuario);
+            ObjectId idUsuario = new ObjectId("675115941049164060addf81");
+            
+            List<Artista> artistas = artistaDAO.buscarPorFiltro(nombre1, genero1, idUsuario);
             List<ArtistaVistaDTO> artistasDTO = new ArrayList<>();
             
             for (Artista artista : artistas) {

@@ -10,6 +10,7 @@ import com.bmd.daoInterfaces.IArtistaDAO;
 import com.bmd.entities.Artista;
 import com.bmd.entities.Usuario;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.nin;
@@ -18,6 +19,7 @@ import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Projections.include;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
@@ -77,12 +79,13 @@ public class ArtistaDAO implements IArtistaDAO {
 
             // Añadir filtros opcionales
             if (nombre != null && !nombre.isEmpty()) {
-                filtros.add(eq("nombre", nombre));
+                // Usar una expresión regular para buscar coincidencias parciales en los nombres
+                filtros.add(Filters.regex("nombre", ".*" + Pattern.quote(nombre) + ".*", "i"));
             }
             if (genero != null && !genero.isEmpty()) {
                 filtros.add(eq("genero", genero));
             }
-            if (idUsuario != null && idUsuario != null) {
+            if (idUsuario != null) {
                 // Filtro para excluir géneros restringidos por el usuario
                 MongoCollection<Usuario> usuarioCollection = conexion.getCollection("usuarios", Usuario.class);
                 Usuario usuario = usuarioCollection.find(eq("_id", idUsuario)).first();
@@ -116,6 +119,7 @@ public class ArtistaDAO implements IArtistaDAO {
             throw new DAOException("Error al buscar artistas por filtro", e);
         }
     }
+
 
 
 
