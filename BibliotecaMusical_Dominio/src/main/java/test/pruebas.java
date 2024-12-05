@@ -60,10 +60,12 @@ public class pruebas {
         .setFavoritos(new ArrayList<>())
         .setGenerosRestringidos(Arrays.asList("Afrobeat"))
         .build();
-
-        usuarioDAO.añadirUsuario(usuario1);
-        usuarioDAO.añadirUsuario(usuario2);
-        usuarioDAO.añadirUsuario(usuario3);
+    
+//        usuarioDAO.eliminarRestringido("Afrobeat", new ObjectId("675115941049164060addf81"));
+//
+//        usuarioDAO.añadirUsuario(usuario1);
+//        usuarioDAO.añadirUsuario(usuario2);
+//        usuarioDAO.añadirUsuario(usuario3);
 
         
     }

@@ -55,7 +55,7 @@ public class ObtenerArtistaBO implements IObtenerArtistaBO {
             Artista artista = artistaDAO.buscarPorId(new ObjectId(idArtista));
             
             //obtenemos el id del usuario registrado
-            ObjectId idUsuario = new ObjectId("674fc2f4f736902f3ddd3e5f");
+            ObjectId idUsuario = UsuarioST.getInstance().getId();
             
             boolean favorito = verificarFavorito(new ObjectId(idArtista), idUsuario);
             

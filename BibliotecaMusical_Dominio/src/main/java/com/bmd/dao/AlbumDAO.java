@@ -10,6 +10,7 @@ import com.bmd.daoInterfaces.IAlbumDAO;
 import com.bmd.entities.Album;
 import com.bmd.entities.Usuario;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.nin;
@@ -19,6 +20,7 @@ import static com.mongodb.client.model.Projections.include;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
@@ -86,7 +88,7 @@ public class AlbumDAO implements IAlbumDAO {
      * @param genero Genero del album.
      * @param idUsuario
      * @return
-     * @throws DAOException En caso de excepcion en la consulta.
+     * @throws com.bdm.excepciones.DAOException
      */
     @Override
     public List<Album> BuscarPorFiltro(String nombre, LocalDate fecha, String genero, ObjectId idUsuario) throws DAOException {
@@ -97,7 +99,8 @@ public class AlbumDAO implements IAlbumDAO {
 
             // Añadir filtros opcionales
             if (nombre != null && !nombre.isEmpty()) {
-                filtros.add(eq("nombre", nombre));
+                // Usar una expresión regular para buscar coincidencias parciales en los nombres
+                filtros.add(Filters.regex("nombre", ".*" + Pattern.quote(nombre) + ".*", "i"));
             }
             if (fecha != null) {
                 filtros.add(eq("fecha_lanzamiento", fecha));
@@ -105,7 +108,7 @@ public class AlbumDAO implements IAlbumDAO {
             if (genero != null && !genero.isEmpty()) {
                 filtros.add(eq("genero", genero));
             }
-            if (idUsuario != null && idUsuario != null) {
+            if (idUsuario != null) {
                 // Filtro para excluir géneros restringidos por el usuario
                 MongoCollection<Usuario> usuarioCollection = conexion.getCollection("usuarios", Usuario.class);
                 Usuario usuario = usuarioCollection.find(eq("_id", idUsuario)).first();
@@ -117,7 +120,7 @@ public class AlbumDAO implements IAlbumDAO {
             // Proyección para incluir solo los campos necesarios del Álbum y del Artista
             Bson projection = fields(
                 include("id", "nombre", "imagen_portada"),
-                Projections.computed("artista", fields(include("id","nombre", "imagen")))
+                Projections.computed("artista", fields(include("id", "nombre", "imagen")))
             );
 
             // Consulta con los filtros y la proyección
@@ -139,6 +142,7 @@ public class AlbumDAO implements IAlbumDAO {
             throw new DAOException("Error al buscar álbumes por filtro", e);
         }
     }
+
 
 
     @Override

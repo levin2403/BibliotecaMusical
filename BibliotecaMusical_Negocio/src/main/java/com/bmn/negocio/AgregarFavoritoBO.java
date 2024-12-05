@@ -10,6 +10,7 @@ import com.bmd.entities.Favorito;
 import com.bmn.dto.FavoritoDTO;
 import com.bmn.excepciones.BOException;
 import com.bmn.interfaces.IAgregarFavoritoBO;
+import com.bmn.singletonUsuario.UsuarioST;
 import org.bson.types.ObjectId;
 
 /**
@@ -53,7 +54,7 @@ public class AgregarFavoritoBO implements IAgregarFavoritoBO {
             ObjectId idReferencia = favorito.getIdReferencia();
             
             //transformamos al dto a entidad al usuario.
-            ObjectId idUsuario = new ObjectId("674fc2f4f736902f3ddd3e5f");
+            ObjectId idUsuario = UsuarioST.getInstance().getId();
             
             // si no existe dentro de los favoritos del usuario 
             // lo guardamos
