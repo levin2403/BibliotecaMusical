@@ -2,7 +2,6 @@ package controlador;
 
 import java.awt.Component;
 import java.awt.Color;
-import javax.swing.BorderFactory;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JLabel;
