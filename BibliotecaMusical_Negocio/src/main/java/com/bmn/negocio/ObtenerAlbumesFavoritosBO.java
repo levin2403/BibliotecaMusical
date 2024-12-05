@@ -39,11 +39,13 @@ public class ObtenerAlbumesFavoritosBO implements IObtenerAlbumesFavoritosBO {
     //aqui obtendras y convertiras los albumes
     private List<AlbumVistaDTO> procesar(Genero genero, LocalDate fechaAgregacion) throws BOException {
         try{
-            //trasnformamos el genero
-            String genero1 = genero.name();
-            
+           
             //obtenemos el id del usuario logeado
             ObjectId idUsuario = UsuarioST.getInstance().getId();
+            
+            String genero1 = (genero == null) ? null : genero.name();
+            
+            LocalDate fecha = (fechaAgregacion == null) ? null : fechaAgregacion;
             
             //lista traida de la base de datos;
             List<Album> albumes = favoritoDAO.obtenerAlbumesFavoritos(genero1, fechaAgregacion, idUsuario);
@@ -66,9 +68,7 @@ public class ObtenerAlbumesFavoritosBO implements IObtenerAlbumesFavoritosBO {
             album.getNombre(),
             album.getImagenPortada(),
                 new ArtistaVistaDTO(
-                    album.getArtista().getId().toString(),
-                    album.getArtista().getNombre(),
-                    album.getArtista().getImagen()
+                    album.getArtista().getNombre()
                 )
         );
     }

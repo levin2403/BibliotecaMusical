@@ -22,8 +22,7 @@ public class PruebaEliminarRestringido {
         try{
         EliminarRestringidoBO restringido = BOFactory.eliminarRestringidoFactory();
         
-//        restringido.agregarRestringido(Genero.Afrobeat);
-        restringido.eliminarRestringido(Genero.Hip_Hop);
+        restringido.eliminarRestringido(Genero.Afrobeat);
         
         }
         catch(BOException ex){

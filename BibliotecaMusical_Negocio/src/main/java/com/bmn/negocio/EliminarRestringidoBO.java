@@ -37,10 +37,8 @@ public class EliminarRestringidoBO implements IEliminarRestringidoBO {
             //transformamos a usuario entidad.
             ObjectId usuario = UsuarioST.getInstance().getId();
             
-            //si el genero no se encuentra restringido lo añadimos
-            if (usuarioDAO.verificarExistenciaRestringido(genero1, usuario)) { 
-                usuarioDAO.eliminarRestringido(genero1, usuario);
-            }
+            usuarioDAO.eliminarRestringido(genero1, usuario);
+            
         }
         catch(DAOException ex){
             throw new BOException(ex.getMessage());

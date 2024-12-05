@@ -41,14 +41,15 @@ public class ObtenerAlbumesFiltradosBO implements IObtenerAlbumesFiltradosBO {
     private List<AlbumVistaDTO> procesar(String nombre, LocalDate fecha, 
             Genero genero) throws BOException {
        try{
-            //trasnformamos el genero
-            String genero1 = genero.name();
-            
             //obtenemos el id del usuario logeado
             ObjectId idUsuario = UsuarioST.getInstance().getId();
             
+            String nombre1 = (nombre == null || nombre.isEmpty()) ? null : nombre;
+            
+            String genero1 = (genero == null) ? null : genero.name();
+            
             //lista traida de la base de datos;
-            List<Album> albumes = albumDAO.BuscarPorFiltro(nombre, fecha, 
+            List<Album> albumes = albumDAO.BuscarPorFiltro(nombre1, fecha, 
                     genero1, idUsuario);
             List<AlbumVistaDTO> albumesDTO = new ArrayList<>();
             
@@ -69,9 +70,7 @@ public class ObtenerAlbumesFiltradosBO implements IObtenerAlbumesFiltradosBO {
             album.getNombre(),
             album.getImagenPortada(),
                 new ArtistaVistaDTO(
-                    album.getArtista().getId().toString(),
-                    album.getArtista().getNombre(),
-                    album.getArtista().getImagen()
+                    album.getArtista().getNombre()
                 )
         );
     }

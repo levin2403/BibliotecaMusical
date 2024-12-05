@@ -35,9 +35,14 @@ public class ObtenerCancionesFavoritasBO implements IObtenerCancionesFavoritasBO
     
     private List<CancionDTO> procesar(Genero genero, LocalDate fecha) throws BOException {
         try{
-            String genero1 = genero.name();
             
             ObjectId idUsuario = UsuarioST.getInstance().getId();
+            
+            String genero1 = (genero == null) ? null : genero.name();
+            LocalDate local = (fecha == null) ? null : fecha;
+          
+            System.out.println(genero1);
+            System.out.println(fecha);
             
             List<String> canciones = favoritoDAO.obtenerCancionesFavoritas(genero1, fecha, idUsuario);
             List<CancionDTO> cancionesDTO = new ArrayList<>();
@@ -55,6 +60,7 @@ public class ObtenerCancionesFavoritasBO implements IObtenerCancionesFavoritasBO
         catch(DAOException ex){
             throw new BOException(ex.getMessage());
         }   
+          
     }
     
 }

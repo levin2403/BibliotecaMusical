@@ -1,8 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
+
+import com.bmn.dto.UsuarioIniciarSesionDTO;
+import com.bmn.excepciones.BOException;
+import com.bmn.factories.BOFactory;
+import com.bmn.negocio.InicioSesionBO;
+import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -10,11 +20,130 @@ package presentacion;
  */
 public class Inicio extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Inicio
-     */
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    private static final String EMAIL_PLACEHOLDER = "Ingrese su correo electrónico";
+    private static final Color TEXT_COLOR_NORMAL = Color.WHITE;
+    private static final Color TEXT_COLOR_PLACEHOLDER = Color.GRAY;
+
     public Inicio() {
         initComponents();
+        setupUI();
+    }
+
+    private void setupUI() {
+        configureTextFields();
+        configureKeyListeners();
+        setLocationRelativeTo(null);
+    }
+
+    private void configureTextFields() {
+        setupTextField(correoTxt, EMAIL_PLACEHOLDER);
+        setupPasswordField(contraseñaTxt);
+    }
+
+    private void setupTextField(JTextField textField, String placeholder) {
+        textField.setForeground(TEXT_COLOR_PLACEHOLDER);
+        textField.setText(placeholder);
+
+        textField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                    textField.setForeground(TEXT_COLOR_NORMAL);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setForeground(TEXT_COLOR_PLACEHOLDER);
+                    textField.setText(placeholder);
+                }
+                validateEmail();
+            }
+        });
+    }
+
+    private void setupPasswordField(JPasswordField passwordField) {
+        passwordField.setForeground(TEXT_COLOR_NORMAL);
+        passwordField.setEchoChar('•');
+    }
+
+    private void configureKeyListeners() {
+        KeyAdapter enterKeyListener = new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    performLogin();
+                }
+            }
+        };
+
+        correoTxt.addKeyListener(enterKeyListener);
+        contraseñaTxt.addKeyListener(enterKeyListener);
+    }
+
+    private boolean validateEmail() {
+        String email = correoTxt.getText().trim();
+
+        if (email.isEmpty() || email.equals(EMAIL_PLACEHOLDER)) {
+            showError("Por favor, ingrese un correo electrónico", "Error de Validación");
+            return false;
+        }
+
+        if (!Pattern.compile(EMAIL_REGEX).matcher(email).matches()) {
+            showError("El formato del correo electrónico no es válido", "Error de Formato");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void showError(String message, String title) {
+        JOptionPane.showMessageDialog(
+                this,
+                message,
+                title,
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
+
+    private void performLogin() {
+        if (!validateEmail()) {
+            return;
+        }
+
+        String email = correoTxt.getText().trim();
+        String password = new String(contraseñaTxt.getPassword());
+
+        try {
+            InicioSesionBO loginBO = BOFactory.inicioSesionFactory();
+            UsuarioIniciarSesionDTO loginDTO = new UsuarioIniciarSesionDTO(email, password);
+
+            // Intentar iniciar sesión
+            loginBO.iniciarSesion(loginDTO);
+
+            // Si no hay excepciones, la autenticación fue exitosa
+            // Usar el singleton para obtener el usuario autenticado
+            openMainWindow();
+
+        } catch (BOException ex) {
+            showError("Error de Inicio de Sesión: " + ex.getMessage(), "Error");
+        } catch (Exception ex) {
+            showError("Error inesperado: " + ex.getMessage(), "Error del Sistema");
+        }
+    }
+
+    private void openMainWindow() {
+        // Usar el singleton para obtener la instancia del usuario
+        new Entrar().setVisible(true);
+        this.dispose();
+    }
+
+    private void openRegistrationWindow() {
+        this.dispose();
+        new Registro().setVisible(true);
     }
 
     /**
@@ -31,10 +160,10 @@ public class Inicio extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         panelGlowingGradient3 = new javaswingdev.pggb.PanelGlowingGradient();
         jLabel6 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        contraseñaTxt = new javax.swing.JPasswordField();
         panelGlowingGradient2 = new javaswingdev.pggb.PanelGlowingGradient();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        correoTxt = new javax.swing.JTextField();
         registroBtn = new javax.swing.JLabel();
         InicioBtn = new controlador.PanelRound();
         jLabel2 = new javax.swing.JLabel();
@@ -85,10 +214,10 @@ public class Inicio extends javax.swing.JFrame {
         panelGlowingGradient3.add(jLabel6);
         jLabel6.setBounds(30, 30, 121, 30);
 
-        jPasswordField1.setBackground(new java.awt.Color(24, 40, 54));
-        jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
-        panelGlowingGradient3.add(jPasswordField1);
-        jPasswordField1.setBounds(160, 30, 260, 30);
+        contraseñaTxt.setBackground(new java.awt.Color(24, 40, 54));
+        contraseñaTxt.setForeground(new java.awt.Color(255, 255, 255));
+        panelGlowingGradient3.add(contraseñaTxt);
+        contraseñaTxt.setBounds(160, 30, 260, 30);
 
         Fondo.add(panelGlowingGradient3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 450, 91));
 
@@ -103,11 +232,11 @@ public class Inicio extends javax.swing.JFrame {
         panelGlowingGradient2.add(jLabel5);
         jLabel5.setBounds(30, 30, 80, 30);
 
-        jTextField2.setBackground(new java.awt.Color(24, 40, 54));
-        jTextField2.setFont(new java.awt.Font("OCR A Extended", 0, 12)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
-        panelGlowingGradient2.add(jTextField2);
-        jTextField2.setBounds(110, 30, 310, 30);
+        correoTxt.setBackground(new java.awt.Color(24, 40, 54));
+        correoTxt.setFont(new java.awt.Font("OCR A Extended", 0, 12)); // NOI18N
+        correoTxt.setForeground(new java.awt.Color(255, 255, 255));
+        panelGlowingGradient2.add(correoTxt);
+        correoTxt.setBounds(110, 30, 310, 30);
 
         Fondo.add(panelGlowingGradient2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 450, 91));
 
@@ -163,23 +292,23 @@ public class Inicio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
-        new Registro().setVisible(true);
-    }//GEN-LAST:event_registroBtnMouseClicked
-
     private void InicioBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InicioBtnMouseClicked
-        new Entrar().setVisible(true);
+        performLogin();
     }//GEN-LAST:event_InicioBtnMouseClicked
+
+    private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
+        openRegistrationWindow();
+    }//GEN-LAST:event_registroBtnMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
     private controlador.PanelRound InicioBtn;
+    private javax.swing.JPasswordField contraseñaTxt;
+    private javax.swing.JTextField correoTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField2;
     private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient2;
     private javaswingdev.pggb.PanelGlowingGradient panelGlowingGradient3;
     private controlador.PanelRound panelRound1;

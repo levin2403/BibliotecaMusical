@@ -60,7 +60,7 @@ public class ObtenerAlbumBO implements IObtenerAlbumBO {
             }
             
             //obtenemos el id del usuario que se encuentra loggeado.
-            String usuarioId = UsuarioST.getInstance().getId().toString();
+            String usuarioId = UsuarioST.getInstance().toString();
             
             //verificamos si el album es favorito
             verificarFavorito(albumDTO, usuarioId);
