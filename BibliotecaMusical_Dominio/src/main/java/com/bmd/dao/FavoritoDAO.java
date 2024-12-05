@@ -314,6 +314,11 @@ public class FavoritoDAO implements IFavoritoDAO {
     @Override
     public List<Album> obtenerAlbumesFavoritos(String genero, LocalDate fechaAgregacion, ObjectId idUsuario) throws DAOException {
         try {
+            // Validación de Parámetros
+            if (idUsuario == null) {
+                throw new DAOException("El parámetro idUsuario no puede ser nulo");
+            }
+
             MongoCollection<Usuario> collection = conexion.getCollection("usuarios", Usuario.class);
 
             Usuario usuario = collection.find(eq("_id", idUsuario)).first();
@@ -331,13 +336,18 @@ public class FavoritoDAO implements IFavoritoDAO {
                     // Proyección para incluir solo los campos necesarios del Álbum y del Artista
                     Bson projection = fields(
                         include("id", "nombre", "imagen_portada"),
-                        Projections.computed("artista", fields(include("id", "nombre", "imagen")))
+                        Projections.computed("artista", fields(include("_id", "nombre", "imagen")))
                     );
+
+                    // Imprimir los detalles para depuración
+                    System.out.println("Buscando álbum con ID: " + favorito.getIdReferencia());
                     Album album = albumCollection.find(eq("_id", favorito.getIdReferencia()))
                                                  .projection(projection)
                                                  .first();
                     if (album != null) {
                         albumesFavoritos.add(album);
+                    } else {
+                        System.out.println("Álbum no encontrado con ID: " + favorito.getIdReferencia());
                     }
                 }
             }
@@ -347,6 +357,7 @@ public class FavoritoDAO implements IFavoritoDAO {
             throw new DAOException("Error al obtener los álbumes favoritos", e);
         }
     }
+
 
 
 

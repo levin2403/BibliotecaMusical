@@ -15,6 +15,10 @@ public class ArtistaVistaDTO {
     private String imagen;
     private AlbumVistaDTO albumVista;
 
+    public ArtistaVistaDTO(String nombre) {
+        this.nombre = nombre;
+    }
+
     public ArtistaVistaDTO(String id, String nombre, String imagen) {
         this.id = id;
         this.nombre = nombre;
