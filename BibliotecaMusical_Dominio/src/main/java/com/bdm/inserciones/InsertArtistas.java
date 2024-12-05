@@ -1390,8 +1390,98 @@ public class InsertArtistas {
             .setImagen("junior_h.jpg")
             .setGenero("Corridos Tumbados")
             .build());
-
         
+        // Dua Lipa
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Dua Lipa")
+            .setImagen("dua_lipa.jpg")
+            .setGenero("Pop")
+            .build());
+
+        // The Weeknd
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("The Weeknd")
+            .setImagen("the_weeknd.jpg")
+            .setGenero("R&B")
+            .build());
+
+        // Billie Eilish
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Billie Eilish")
+            .setImagen("billie_eilish.jpg")
+            .setGenero("Pop")
+            .build());
+
+        // Shawn Mendes
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Shawn Mendes")
+            .setImagen("shawn_mendes.jpg")
+            .setGenero("Pop")
+            .build());
+
+        // Post Malone
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Post Malone")
+            .setImagen("post_malone.jpg")
+            .setGenero("Hip-Hop")
+            .build());
+        
+        // Harry Styles
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Harry Styles")
+            .setImagen("harry_styles.jpg")
+            .setGenero("Pop")
+            .build());
+
+        // Olivia Rodrigo
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Olivia Rodrigo")
+            .setImagen("olivia_rodrigo.jpg")
+            .setGenero("Pop")
+            .build());
+
+        // Khalid
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Khalid")
+            .setImagen("khalid.jpg")
+            .setGenero("R&B")
+            .build());
+
+        // Lizzo
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Lizzo")
+            .setImagen("lizzo.jpg")
+            .setGenero("Pop")
+            .build());
+
+
+         // Ed Sheeran
+        artistas.add(new Artista.Builder()
+            .setId(new ObjectId())
+            .setTipoArtista("Solista")
+            .setNombre("Ed Sheeran")
+            .setImagen("ed_sheeran.jpg")
+            .setGenero("Pop")
+            .build());
+
         
         
         
