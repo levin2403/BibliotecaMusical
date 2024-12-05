@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
 import com.bmn.dto.UsuarioIniciarSesionDTO;
@@ -11,8 +7,12 @@ import com.bmn.negocio.InicioSesionBO;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -20,125 +20,130 @@ import javax.swing.JOptionPane;
  */
 public class Inicio extends javax.swing.JFrame {
 
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    private static final String EMAIL_PLACEHOLDER = "Ingrese su correo electrónico";
+    private static final Color TEXT_COLOR_NORMAL = Color.WHITE;
+    private static final Color TEXT_COLOR_PLACEHOLDER = Color.GRAY;
+
     public Inicio() {
         initComponents();
-        customizeComponents();
+        setupUI();
     }
 
-    /**
-     * Additional UI customization and input validation
-     */
-    private void customizeComponents() {
-        // Add placeholder and focus listeners to text fields
-        addPlaceholderAndValidation(correoTxt, "Ingrese su correo electrónico");
-
-        // Customize error handling for text fields
-        correoTxt.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                validateEmail();
-            }
-        });
+    private void setupUI() {
+        configureTextFields();
+        configureKeyListeners();
+        setLocationRelativeTo(null);
     }
 
-    /**
-     * Add placeholder text and focus handling to text fields
-     *
-     * @param textField The text field to customize
-     * @param placeholderText The placeholder text to show
-     */
-    private void addPlaceholderAndValidation(javax.swing.JTextField textField, String placeholderText) {
-        textField.setForeground(Color.GRAY);
-        textField.setText(placeholderText);
+    private void configureTextFields() {
+        setupTextField(correoTxt, EMAIL_PLACEHOLDER);
+        setupPasswordField(contraseñaTxt);
+    }
+
+    private void setupTextField(JTextField textField, String placeholder) {
+        textField.setForeground(TEXT_COLOR_PLACEHOLDER);
+        textField.setText(placeholder);
 
         textField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (textField.getText().equals(placeholderText)) {
+                if (textField.getText().equals(placeholder)) {
                     textField.setText("");
-                    textField.setForeground(Color.WHITE);
+                    textField.setForeground(TEXT_COLOR_NORMAL);
                 }
             }
 
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
-                    textField.setForeground(Color.GRAY);
-                    textField.setText(placeholderText);
+                    textField.setForeground(TEXT_COLOR_PLACEHOLDER);
+                    textField.setText(placeholder);
                 }
+                validateEmail();
             }
         });
     }
 
-    /**
-     * Validate email format before login attempt
-     *
-     * @return true if email is valid, false otherwise
-     */
+    private void setupPasswordField(JPasswordField passwordField) {
+        passwordField.setForeground(TEXT_COLOR_NORMAL);
+        passwordField.setEchoChar('•');
+    }
+
+    private void configureKeyListeners() {
+        KeyAdapter enterKeyListener = new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    performLogin();
+                }
+            }
+        };
+
+        correoTxt.addKeyListener(enterKeyListener);
+        contraseñaTxt.addKeyListener(enterKeyListener);
+    }
+
     private boolean validateEmail() {
         String email = correoTxt.getText().trim();
 
-        // Simple email validation regex
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-
-        if (email.isEmpty() || email.equals("Ingrese su correo electrónico")) {
-            JOptionPane.showMessageDialog(this,
-                    "Por favor, ingrese un correo electrónico",
-                    "Error de Validación",
-                    JOptionPane.ERROR_MESSAGE);
+        if (email.isEmpty() || email.equals(EMAIL_PLACEHOLDER)) {
+            showError("Por favor, ingrese un correo electrónico", "Error de Validación");
             return false;
         }
 
-        if (!Pattern.matches(emailRegex, email)) {
-            JOptionPane.showMessageDialog(this,
-                    "El formato del correo electrónico no es válido",
-                    "Error de Formato",
-                    JOptionPane.ERROR_MESSAGE);
+        if (!Pattern.compile(EMAIL_REGEX).matcher(email).matches()) {
+            showError("El formato del correo electrónico no es válido", "Error de Formato");
             return false;
         }
 
         return true;
     }
 
-    /**
-     * Enhanced login method with additional error handling
-     */
+    private void showError(String message, String title) {
+        JOptionPane.showMessageDialog(
+                this,
+                message,
+                title,
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
+
     private void performLogin() {
-        // Validate email first
         if (!validateEmail()) {
             return;
         }
 
-        String correo = correoTxt.getText().trim();
-        String contrasena = new String(contraseñaTxt.getPassword());
+        String email = correoTxt.getText().trim();
+        String password = new String(contraseñaTxt.getPassword());
 
         try {
-            // Use BOFactory to create InicioSesionBO
-            InicioSesionBO inicio = BOFactory.inicioSesionFactory();
+            InicioSesionBO loginBO = BOFactory.inicioSesionFactory();
+            UsuarioIniciarSesionDTO loginDTO = new UsuarioIniciarSesionDTO(email, password);
 
-            // Create DTO and populate
-            UsuarioIniciarSesionDTO usuario
-                    = new UsuarioIniciarSesionDTO(correo, contrasena);
+            // Intentar iniciar sesión
+            loginBO.iniciarSesion(loginDTO);
 
-            // Attempt login
-            inicio.iniciarSesion(usuario);
+            // Si no hay excepciones, la autenticación fue exitosa
+            // Usar el singleton para obtener el usuario autenticado
+            openMainWindow();
 
-            // Open main window if successful
-            new Entrar().setVisible(true);
-            this.dispose(); // Close login window
         } catch (BOException ex) {
-            // Business logic specific error
-            JOptionPane.showMessageDialog(this,
-                    "Error de Inicio de Sesión: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            showError("Error de Inicio de Sesión: " + ex.getMessage(), "Error");
         } catch (Exception ex) {
-            // Unexpected errors
-            JOptionPane.showMessageDialog(this,
-                    "Error inesperado: " + ex.getMessage(),
-                    "Error del Sistema",
-                    JOptionPane.ERROR_MESSAGE);
+            showError("Error inesperado: " + ex.getMessage(), "Error del Sistema");
         }
+    }
+
+    private void openMainWindow() {
+        // Usar el singleton para obtener la instancia del usuario
+        new Entrar().setVisible(true);
+        this.dispose();
+    }
+
+    private void openRegistrationWindow() {
+        this.dispose();
+        new Registro().setVisible(true);
     }
 
     /**
@@ -287,14 +292,13 @@ public class Inicio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
-        dispose();
-        new Registro().setVisible(true);
-    }//GEN-LAST:event_registroBtnMouseClicked
-
     private void InicioBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InicioBtnMouseClicked
         performLogin();
     }//GEN-LAST:event_InicioBtnMouseClicked
+
+    private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
+        openRegistrationWindow();
+    }//GEN-LAST:event_registroBtnMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Fondo;
