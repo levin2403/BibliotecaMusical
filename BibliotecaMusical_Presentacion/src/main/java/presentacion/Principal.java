@@ -29,6 +29,7 @@ public class Principal extends javax.swing.JFrame {
 
     private boolean isMenuVisible = true;
     private Usuario usuarioActual;
+    private List<AlbumVistaDTO> albumes;
 
     public Principal() {
         try {
@@ -201,6 +202,8 @@ public class Principal extends javax.swing.JFrame {
 
             // Call the business logic method to search for albums
             List<AlbumVistaDTO> albumes = obtener.BuscarPorFiltro(null, null, null);
+            
+            this.albumes = albumes;
 
             // Debug: Imprimir número de álbumes
             System.out.println("Número de álbumes encontrados: " + albumes.size());

@@ -60,7 +60,6 @@ public class Inicio extends javax.swing.JFrame {
                     textField.setForeground(TEXT_COLOR_PLACEHOLDER);
                     textField.setText(placeholder);
                 }
-                validateEmail();
             }
         });
     }
@@ -84,22 +83,6 @@ public class Inicio extends javax.swing.JFrame {
         contraseñaTxt.addKeyListener(enterKeyListener);
     }
 
-    private boolean validateEmail() {
-        String email = correoTxt.getText().trim();
-
-        if (email.isEmpty() || email.equals(EMAIL_PLACEHOLDER)) {
-            showError("Por favor, ingrese un correo electrónico", "Error de Validación");
-            return false;
-        }
-
-        if (!Pattern.compile(EMAIL_REGEX).matcher(email).matches()) {
-            showError("El formato del correo electrónico no es válido", "Error de Formato");
-            return false;
-        }
-
-        return true;
-    }
-
     private void showError(String message, String title) {
         JOptionPane.showMessageDialog(
                 this,
@@ -110,9 +93,6 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     private void performLogin() {
-        if (!validateEmail()) {
-            return;
-        }
 
         String email = correoTxt.getText().trim();
         String password = new String(contraseñaTxt.getPassword());
